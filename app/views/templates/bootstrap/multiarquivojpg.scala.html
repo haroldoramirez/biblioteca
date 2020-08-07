@@ -1,0 +1,19 @@
+@(field: Field, label: String = "", placeholder: String = "", help: String = "")
+
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <label for="@field.id" class="col-md-2 control-label">@label <abbr title="obrigatório arquivo JPEG">*</abbr></label>
+    <div class="col-md-10">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <span data-toggle="tooltip" title="" data-container=""><small>Apenas em formado JPEG</small></span>
+            </span>
+            <input
+                    id="@field.id"
+                    type="file"
+                    name="@field.name"
+                    class="form-control my-form-control"
+                    multiple accept="image/jpeg">
+        </div>
+        <span class="help-block"><small>@{field.error.map { error => error.message }}</small></span>
+    </div>
+</div>

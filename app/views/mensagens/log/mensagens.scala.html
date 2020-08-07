@@ -1,0 +1,33 @@
+@(mensagem:String)(tipoMensagem:String)
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/bootstrap/dist/css/bootstrap.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/mensagens.css")">
+        <title>@Messages("app.title") - @Messages("app.messages.title")</title>
+    </head>
+    <body>
+        <div class="row">
+            <div class="container-fluid">
+                <div class="mensagens">
+                    <div class="panel panel-@tipoMensagem">
+                        <div class="panel-heading">
+                            <a type="button" href="@routes.LogController.telaLista()" class="pull-right btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-arrow-left"></span> @Messages("app.messages.back.title")
+                            </a>
+                            <h1 class="panel-title">@Messages("app.messages.title")</h1>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-@tipoMensagem text-center">@mensagem</p>
+                        </div>
+                        <div class="panel-footer text-center">&copy <script>document.write(new Date().getFullYear())</script> - @Messages("app.title")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<div ng-init="init()">
+    <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="p-40 p-r-20 p-20--small">
+                <div class="mdl-color-text--grey-700 sticky" ml-sticky offset="60" body-class="mdl-layout__content">
+                    <h4><i class="material-icons f-left m-r-5"></i> {{Messages('page.list.videos.panel.title')}}</h4>
+                    <p>{{Messages('page.list.panel.text')}}.</p>
+                    <div class="m-t-30">
+                        <ul class="list-bordered">
+                            <li>
+                                <a ng-click="reloadMarcos()" class="mdl-color--deep-orange-cibiogas-text">
+                                    <i class="material-icons m-r-5 f11">grid_on</i>{{Messages('page.list.button.show.title')}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <form>
+                        <div class="mdl-textfield mdl-js-textfield cib-filtros">
+                            <input ng-model="filtro" ng-model-options="{debounce: 500}" class="mdl-textfield__input cib-filtros-input" id="filtro">
+                            <label class="mdl-textfield__label cib-filtros-label" for="filtro"><i class="material-icons">&#xE8B6;</i></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="mdl-grid">
+                <div ng-show="marcos.length == 0" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+                    <div class="mdl-card__title">
+                        <!-- MDL Spinner Component with Single Color -->
+                        <div ng-show="loadingMarcos" class="mdl-spinner mdl-spinner--single-color spinner-loading-cib mdl-js-spinner is-active"></div>
+                    </div>
+                </div>
+                <div ng-repeat="marco in marcos | filter : meuFiltro" class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp marco">
+                    <div class="mdl-card__media">
+                        <img fade-in class="card-image animate-show" ng-src="marco/jpg/{{marco.nomeCapa}}" border="0" alt="{{marco.nomeCapa}}">
+                    </div>
+                    <div class="mdl-card__title">
+                        <h1 class="mdl-card__title-text cartao-marco">{{marco.titulo}}</h1>
+                    </div>
+                    <div class="mdl-card__supporting-text mdl-card__subtitle-text">
+                        <p class="marco-line"><b>{{Messages('card.marks.scope.title')}}: </b>{{marco.ambito}}</p>
+                        <p class="separador-publicacoes"></p>
+                        <p class="marco-line"><b>{{Messages('card.marks.responsible.title')}}: </b>{{marco.responsavel}}</p>
+                        <p class="separador-publicacoes"></p>
+                        <p class="marco-line"><b>{{Messages('card.marks.year.title')}}: </b>{{marco.ano}}</p>
+                        <p class="separador-publicacoes"></p>
+                        <p class="marco-line"><b>{{Messages('card.marks.category.title')}}: </b>{{marco.categoria.nome}}</p>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <div class="mdl-layout-spacer"></div>
+                        <a ng-click="abrirUrl(marco.url)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">{{Messages('card.readmore.button.title')}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

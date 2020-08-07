@@ -1,0 +1,8 @@
+/target
+.idea
+.sbtserver
+project/project
+project/target
+/logs
+deploy
+/public/bower_components

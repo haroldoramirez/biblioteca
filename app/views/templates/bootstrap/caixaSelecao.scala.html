@@ -1,0 +1,11 @@
+@(field: Field, nome: String = "")
+
+<div class="checkbox">
+    <label>
+        <input id="@field.id"
+               type="checkbox"
+               autocomplete="off"
+               name="@field.name" @if(field.value.getOrElse("").equals("on")) {checked}>
+        <strong>@nome</strong>
+    </label>
+</div>

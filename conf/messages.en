@@ -1,0 +1,342 @@
+# Titulo do sistema
+app.title=Biogas Library
+app.messages.title=Message
+app.messages.back.title=return
+app.home.title=Home
+app.error=Internal server error
+app.angular.error=An error has occurred
+app.error.found=Not found
+app.error.access=Unauthorized, Authentication is required
+app.error.url=Unable to validate URL
+app.error.user=Unauthenticated user
+app.404=Error 404
+app.hello=Hello
+app.welcome.message=Welcome
+app.best=Best regards
+app.send.confirm.email.message=It looks like you just registered in the Digital Library of CIBiogás. If you did, to complete the registration process, simply click the link below, or copy and paste it into your browser.
+app.send.register.email.message=Your account was registered successfully!
+app.send.password.email.change.message=The password was successfully changed!
+app.about.member=Become a member
+app.search.field.name=Enter your search
+app.about.title=About
+app.email.title=CIBiogás Digital Library
+app.email.title.password=Password changed
+app.title.cibiogas=International Renewable Energy Center
+app.welcome.title=Welcome
+app.confirm.email.title=Confirm your email
+app.member.signup.title=Sign up
+app.about.biogas.title=About Biogas
+app.right.title=Copyright
+app.incompatible.browser.detected.title=Incompatible browser detected
+app.incompatible.browser.message.title=recommends you use a modern web browser by upgrading to the latest version of
+
+# Slide
+app.home.ead.title=Refresher Course in Biogas Energy
+app.home.biodigesters.title=Course Operationalization in Biodigesters
+app.home.gestao.title=Course Territorial Management Applied Water and Energy
+app.home.message.1=This is the Biogas Digital Library of the International Center for Renewable Energy-Biogas (CIBiogás). The Library brings together the main articles, books, photos and videos on research in the field of renewable energy, with focus on biogas. The purpose of this Library is to organize, distribute and promote knowledge exchange in the area, aimed at enriching national and international research and knowledge on biogas.
+app.home.message.2=It is possible to find a qualified collection, the content was made available by specialists and researchers of the sector. Access to all digital material is free, just make the previous registration. You can also help strengthen this important research tool, send us your material and it will be evaluated for possible publication.
+app.home.message.3=We invite you to browse information shared here through the features or the search tool. You may also share technical and scientific information on this medium and / or suggestions through the "Contact" tool.
+app.home.message.4=CIBiogás is not responsible for the shared contents. We respect the conditions of use of the authors and we suggest that the users adopt the same procedure.
+
+app.home.card.member=Make your registration to be part of this chain of knowledge and innovation. Access to the articles, photos and videos available is exclusive to members of the Digital Library. Registration is fast, easy and free. Just enter full name, email and create the access password. After completing the data, you will receive an email confirming the accreditation and authorizing access. Good research!
+
+# Mensagens de Email e perfil do usuario
+client.confirm.email.message=Do you want to update your password? will be sent email to your account.
+client.confirm.email.button.update=Update
+client.cancel.email.button=Cancel
+client.send.email.message=The email has been sent!
+client.send.email.to=Email sent to
+client.error=Not authorized
+client.error.operation=Could not perform this operation!
+client.profile.title=Profile
+client.profile.tooltip.title=Password
+client.profile.name=Name
+client.profile.email=Email
+client.profile.last=Last Acess
+
+# Card de fale conosco
+contact.title=Contact
+contact.field.name=Name
+contact.field.email=Email
+contact.field.subject=Subject matter
+contact.field.message=Message
+contact.field.required=Required fields
+contact.button=Send
+
+# Card de localizacao
+contact.location.title=Location
+contact.location.company.title=Company Headquarters
+contact.location.address=Address
+contact.location.email=Email
+contact.location.phone=Phone
+
+# Card Sites
+site.page.title=Sites
+site.title=Title
+site.country.title=Country
+site.address.title=Address
+
+# Card Artigos
+article.page.title=Articles
+article.page.language=Language
+article.page.summary=Summary
+article.page.autors.title=Authors
+article.page.keywords.title=Keywords
+
+# Card Publicações
+publication.page.title=Publications
+
+# Page Evento
+event.page.title=Events
+event.page.button.title=Show All Events
+event.page.all.title=All Events
+
+# Menu Drawer
+menu.1=Home
+menu.2=Courses
+menu.3=Materials
+menu.4=Articles
+menu.5=Books
+menu.6=Videos
+menu.7=Photos
+menu.8=Contacts
+menu.9=Contact us
+menu.10=Rights
+menu.11=Meet our site
+menu.12=Management
+menu.13=Get in
+menu.17=Academic Works
+menu.18=Submit your Work
+menu.19=Technical Notes
+
+# Menu Drawer biogas
+menu.biogas.1=Biogas
+menu.biogas.2=The Biogas
+menu.biogas.3=Case Study
+menu.biogas.4=Tools
+menu.biogas.5=R & D
+menu.biogas.6=Regulatory Marks
+menu.biogas.7=Financial and Economic Aspects
+menu.biogas.8=National Register and Biogasmap
+menu.biogas.9=Events
+menu.biogas.10=News
+menu.biogas.11=Publications
+menu.biogas.12=Sites
+menu.biogas.13=About Biogas
+menu.biogas.14=Contact
+
+# Menu superior lado direito
+menu.top.title.1=Home
+menu.top.title.2=Courses
+menu.top.title.3=Materials
+menu.top.title.4=Articles
+menu.top.title.5=Books
+menu.top.title.6=Videos
+menu.top.title.7=Photos
+menu.top.title.8=Contact us
+menu.top.title.9=Rights
+
+menu.top.title.10=About Biogas
+menu.top.title.11=Case Study
+menu.top.title.12=Tools
+menu.top.title.13=P & D
+menu.top.title.14=Regulatory Marks
+menu.top.title.15=Financial and Economic Aspects
+menu.top.title.16=National Register and Biogasmap
+menu.top.title.17=User
+menu.top.title.18=Member
+menu.top.title.19=Share
+menu.top.title.20=Contact
+
+# Menu Superior lado esquerdo
+menu.14=Profile
+menu.15=Logout
+menu.16=Login
+
+# Login form
+login.page.title=Login
+login.page.description=Enter your email and password to log on
+login.username=Email
+login.password=Password
+login.register=Register
+login=Login
+login.success=User Successfully Authenticated.
+authenticated.page.title=Authenticated
+login.page.or=or login with
+login.page.account.ask=Not registered yet?
+login.page.signup.title=Sign Up
+login.page.forgot.password=Forgotten password?
+login.page.button.reset=Reset password
+login.page.footer.tooltip.title=Go Back to Home
+
+# Login form errors
+login.error=Unknown email or password.
+login.error.found=User not found.
+login.error.field=Please complete with email and password.
+login.error.confirm=The user has not been confirmed! Please check your email!
+login.error.block=Blocked User
+
+# Register form
+register.page.title=Register
+register.username=Full name
+register.email=Email
+register.password=Password
+register.confirm.password=Confirmation
+register=Register
+register.success=User successfully registered.
+register.success.verify=Please check your email account to validate the register. Do not forget to check your spam box.
+register.page.ask=Already have an account?
+login.page.signin.title=Sign In
+register.page.description=Fill all fields, please
+
+# Register form field erros
+register.error.field.name=Name field is empty.
+register.error.field.email=Email field is empty
+register.error.field.email.invalid=Email field is invalid
+register.error.field.password=Password field is empty
+register.error.field.confirmation=Password confirmation field is empty
+register.error.field.password.equals=Passwords do not match
+register.error.field.name.max=Name with a maximum of 60 characters
+register.error.field.email.max=Email with a maximum of 50 characters
+register.error.field.password.max=Password with a maximum of 60 characters
+register.error.field.passwordconfirmation.max=Confirm password with a maximum of 60 characters
+
+# Pagina de ativacao da conta
+confirmation.page.title=Confirmation
+confirmation.success=Your account has been successfully activated!
+confirmation.success.login=You can login
+confirmation.error=Confirmation Error
+confirmation.already.success=This user account has been confirmed. Just log in.
+confirmation.invalid=Your activation code is invalid!
+
+# Register form errors
+register.error.field=Full name, email, and password fields must be filled in.
+register.error.already.registered=User already registered.
+register.bad.password=Passwords do not match.
+
+# Pagina de pedido de modificar senha
+reset.page.title=Reset
+reset.page.description=Please, complete with email
+token.null=Token is null
+reset.token.null=The link to update the password is invalid, please check and try again.
+reset.token.invalid=The link to update the password has expired.
+
+# Pagina de modificar senha
+password.change.page.title=Reset your password
+password.change.page.description=Almost done, just enter your new password below
+password.change=Password
+password.new=New Password
+password.confirm=Confirmation password
+password.register=Reset password
+password.change.email.message=You made a request to change your password in the Digital Library of CIBiogás. Just click the link below, or copy and paste it into your browser.
+password.change.error.field=Please complete with Password and Confirmation.
+password.change.error.field.equals=Passwords do not match.
+password.change.user.error=User not found.
+password.change.success=Password changed successfully! You can now perform authentication.
+
+# Notfound Page or 404
+notfound.page.or=or search with
+
+#Paginas de Administrador
+
+app.library.title=Library
+
+# Cartoes
+card.button.title=More Information
+card.button.back.title=Back
+card.button.publication.title=File
+card.button.detail.title=Read more
+card.button.pdf.title=To View
+card.button.pdf.view=Views
+
+card.detail.publication.date=Publication date
+
+card.event.list.title=Event List
+card.event.name.title=Name
+card.event.local.title=Local
+card.event.institution.title=Institution
+card.event.site.title=Website
+
+search.page.title=Search
+search.page.button.title=Search
+search.page.results=Search results
+
+card.marks.scope.title=Scope
+card.marks.responsible.title=Responsible
+card.marks.year.title=Year/Period
+card.marks.category.title=Category
+
+card.publisher.title.title=Title
+card.publisher.resume.title=Abstract
+card.publisher.language.title=Language
+card.publisher.autor.title=Author
+card.publisher.year.title=Year
+
+card.readmore.button.title=read more
+card.news.published.title=Published in
+
+user.not.found=User not found
+
+#Home
+
+card.home.event.title=Events
+card.home.publications.title=Publications
+card.home.technical.notes.title=Technical notes
+card.home.newuser.title=Make your registration
+card.home.newuserlink.title=Become a member
+card.home.share.title=Share your article
+card.home.news.title=News
+
+card.home.welcome.text.1=This Library will provide you with a wide collection of contents related to biogas, made available by specialists and researchers of the sector. Access to all digital material is free. Just make previous registration.
+card.home.welcome.link.1=Make your registration
+
+card.home.welcome.text.2=We invite you to browse information shared here through the features or the search tool. You can share technical and scientific information, helping to strengthen this important research tool. Send us your material, which will be evaluated for publication.
+card.home.welcome.link.2=Share your article
+
+card.home.registration.text=Make your registration to be part of this network of knowledge and innovation. Access to the articles, photos and videos available is exclusive to members of the Biogas Digital Library. Registration is fast, easy and free. Just enter your full name, email and create the access password.
+card.home.registration.text.1=After completing the data, you will receive an email confirming the accreditation and authorizing access. Good research!
+
+card.home.share.text=You can also help strengthen this tool by sending your texts, studies, works, analyzes or technical and scientific publications on biogas.
+card.home.share.text.1=After evaluation your material will be published in the Library, allowing to increase the knowledge of several interested people in this subject.
+
+#biogas page
+
+biogas.page.ask1.text=What is biogas?
+biogas.page.ask2.text=What is the purpose of biogas?
+biogas.page.ask3.text=What is anaerobic biodegradation?
+
+biogas.page.text.1=Biogas is a mixture of gases composed mainly of methane and carbon dioxide, usually obtained through the treatment of domestic, agricultural and industrial waste, through an anaerobic biodegradation process, that is, in the absence of oxygen.
+biogas.page.text.2=With biogas it is possible to generate electric and thermal energy, in addition to biofuel (biomethane). During the process, there is also biofertilizer production. Therefore, biogas production has been presented by experts as the best alternative to offer optimal conditions of expansion and competitiveness for Brazilian agribusiness.
+biogas.page.text.3=The process of anaerobic biodigestion has been known for a long time and very popular in countries like India and China where the goal is to decompose the waste and the result of this degradation is methane and biofertilizer.
+
+# Become a member page
+
+member.page.ask1.text=May I access the content without registration?
+member.page.answer.ask1.text.1=Without registration it is possible to access contents such as information on courses, events, publications, news, regulation, biogasmap, websites on biogas.
+member.page.asnwer.ask1.text.2=If you register yourself, you will be able to access exclusive content such as articles, photos and videos.
+
+member.page.ask2.text=How to register and access the content?
+member.page.answer.ask2.text=Registration is free of charge. When you fill in all requested fields and registering yourself you will receive an e-mail to activate you account.
+member.page.register.self.text=Register yourself
+
+member.page.ask3.text=May I reproduce/share the contents of the Biogas Library?
+member.page.answer.ask3.text=Some contents are hosted in other sites and links. Therefore, you will need to access the terms and conditions of each of those contents to check the reproduction and sharing rules. Video links may be shared, since Youtube terms with users provided for this possibility.
+
+member.page.ask4.text=How can I publish my article in the Biogas Library?
+member.page.answer.ask4.text=You should fill in the requested information. After our approval your article will be made available in the Library.
+member.page.share.article.text=Share article
+
+member.page.ask5.text=Which are the criteria to select contents to be published?
+member.page.answer.ask5.text=Loyalty to the core theme of the Biogas Library, and quality in the publication.
+
+#Email de Confirmação
+email.button.activate.title=Enable account
+
+# Páginas da lista de conteúdos
+page.list.panel.text=Below you can use selections to filter the items in the gallery
+page.list.videos.panel.title=List
+page.list.button.show.title=Show all
+
+
+

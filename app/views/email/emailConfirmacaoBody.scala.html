@@ -1,0 +1,14 @@
+@(usuario : Usuario)(url : String)
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p>@Messages("app.hello"), @usuario.getNome</p>
+    <p>@Messages("app.send.confirm.email.message")</p>
+    <br>
+    <p><label>Link:</label> @url</p>
+    <br>
+    <p>@Messages("app.best"),<br> @Messages("app.title")</p>
+</body>
+</html>

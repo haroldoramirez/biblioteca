@@ -1,0 +1,41 @@
+button.cib-nav {
+    margin-top: 157px;
+}
+
+.paragrafos-home {
+    margin: -5px 0 16px;
+}
+
+.carousel-biogas {
+    height: 344px;
+    width: auto;
+}
+
+.texto-slide {
+    font-size: 26px;
+    line-height: 40px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    color: white;
+    text-decoration: none;
+    text-shadow: 1px 1px 5px #323232;
+    font-weight: bold;
+}
+
+.animacao {
+    animation: slideAnimacao .7s cubic-bezier(0,1.00,.72,1.10);
+    transform-origin: center bottom;
+}
+
+@keyframes slideAnimacao {
+    from {
+        margin-left: 100%;
+        opacity: 0;
+        transform: scale3d(.75, .75, 1);
+    }
+
+    to {
+        margin-left: 0;
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
+}

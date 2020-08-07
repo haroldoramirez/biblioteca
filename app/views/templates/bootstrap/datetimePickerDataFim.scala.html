@@ -1,0 +1,19 @@
+@(field: Field, label: String = "", placeholder: String = "", help: String = "")
+
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <label for="@field.id" class="col-md-2 control-label">@label <abbr title="obrigatório">*</abbr></label>
+    <div class="col-md-4">
+        <div class="input-group date" id="@field.id">
+            <input
+                id="@field.id"
+                autocomplete="off"
+                type="text"
+                class="form-control"
+                name="@field.name"
+                placeholder="@placeholder"
+                value="@field.value.getOrElse("")"/>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <span class="help-block"><small>@{field.error.map { error => error.message }}</small></span>
+    </div>
+</div>

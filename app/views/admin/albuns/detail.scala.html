@@ -1,0 +1,117 @@
+@(album: Album)
+
+@usuario() = @{
+    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe do Album") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.AlbumController.telaLista()" class="btn btn-default">Albuns</a>
+                <a disabled class="btn btn-default">Detalhe</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-picture-o" aria-hidden="true"></i> Detalhe do Album</h1>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Informações
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opções <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="@routes.AlbumController.telaLista()">Voltar</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a data-toggle="modal" data-target=".bs-example-modal-sm-album" href="">Excluir</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="item-form width-600 margin-bottom-15">
+                    <label class="display-block strong">Título</label>
+                    <p class="display-block margin-left-027em">@album.getTitulo</p>
+                </div>
+                <hr>
+                <div class="item-form width-600 margin-bottom-15">
+                    <label class="display-block strong">Descrição</label>
+                    <p class="display-block margin-left-027em">@album.getDescricao</p>
+                </div>
+                <hr>
+                <div class="item-form width-600 margin-bottom-15">
+                    <label class="display-block strong">Data/Hora de Cadastro</label>
+                    <p type="date" class="display-block margin-left-027em">@album.getDataCadastro.format("dd MMMM yyyy")</p>
+                </div>
+                @if(album.getDataAlteracao != null){
+                <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Alteração</label>
+                        <p class="display-block margin-left-027em">@album.getDataAlteracao.format("dd MMMM yyyy")</p>
+                    </div>
+                }
+                <div class="item-form width-600 margin-bottom-15">
+                    <label class="display-block strong">Total de Fotos:</label>
+                    <p>@album.getFotos.size</p>
+                </div>
+
+                <div class="row">
+                    @for(foto <- album.getFotos) {
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="panel-heading">
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Opções <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="@routes.FotoController.telaEditar(album.getNomePasta, foto.getNomeArquivo)">Editar</a></li>
+                                        @if(usuario.isAdmin) {
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="@routes.FotoController.remover(album.getNomePasta, foto.getNomeArquivo)">Excluir</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <a data-title="@foto.getDescricao" data-lightbox="example-set" href="@routes.FotoController.foto(album.getNomePasta,foto.getNomeArquivo)" class="thumbnail">
+                                        <img class="img-responsive" src="@routes.AlbumController.capa(album.getNomePasta,foto.getNomeArquivo)" alt="@foto.getDescricao">
+                                    </a>
+                                    <div class="item-form width-600 margin-bottom-15">
+                                        <label class="display-block strong">Nome</label>
+                                        <p class="display-block margin-left-027em album-line">@foto.getNome</p>
+                                    </div>
+                                    <div class="item-form width-600 margin-bottom-15">
+                                        <label class="display-block strong">Descrição</label>
+                                        <p class="display-block margin-left-027em album-line">@foto.getDescricao</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-sm-album" tabindex="-1" role="dialog" aria-labelledby="modalLabelAlbum">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@Messages("app.title")</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Deseja remover o album <b>"@album.getTitulo"</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    @form(routes.AlbumController.remover(album.getId)) {
+                        <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                    }
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+}

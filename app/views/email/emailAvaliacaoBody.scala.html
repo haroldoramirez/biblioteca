@@ -1,0 +1,18 @@
+@(avaliacao:Avaliacao)
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h2>Avaliação de Material</h2>
+        <p><b>Nome: </b>@avaliacao.getNome</p>
+        <p><b>Email: </b>@avaliacao.getEmail</p>
+        <p><b>RG: </b>@avaliacao.getRg</p>
+        <p><b>CPF: </b>@avaliacao.getCpf</p>
+        <p><b>Telefone: </b>@avaliacao.getTelefone</p>
+        <p><b>Url do Lattes: </b><a>@avaliacao.getUrlLattes</a></p>
+        <p><b>Url do Documento: </b><a>@avaliacao.getUrlDocumento</a></p>
+        <p><b>Termo: </b>
+            @if(avaliacao.isTermo) { Aceito } else { Não Aceito }
+    </body>
+</html>

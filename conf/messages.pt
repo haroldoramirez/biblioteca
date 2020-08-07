@@ -1,0 +1,291 @@
+# Titulo do sistema
+app.title=Biblioteca do Biogás
+
+# Login
+login.username=Email
+login.password=Senha
+login.register=Cadastrar
+login=Login
+login.error=Email ou senha inválidos.
+login.success=Usuário autenticado com sucesso.
+
+# Register form
+register.username=Nome completo
+register.email=Email
+register.password=Senha
+register.confirm.password=Confirmação
+register=Cadastrar
+register.success=Usuário registado com sucesso.
+
+# Menu
+menu.1=Início
+menu.2=Cursos
+menu.3=Materiais
+menu.4=Artigos
+menu.5=Livros
+menu.6=Vídeos
+menu.7=Fotos
+menu.8=Contato
+menu.9=Fale conosco
+menu.10=Direitos
+menu.11=Conheça o nosso site
+menu.12=Administração
+menu.13=Entrar
+menu.14=Perfil
+menu.15=Sair
+menu.16=Entrar
+menu.17=Trabalhos Acadêmicos
+menu.18=Envie seu Trabalho
+menu.19=Notas Técnicas
+
+register.error.field=Os campos nome completo, email e senha devem ser preenchidos.
+register.error.already.registered=Usuário já esta cadastrado
+app.error=Erro Interno de sistema
+login.error.found=Usuário não encontrado.
+login.error.field=Por favor, preencha os campos email e senha.
+login.error.confirm=O usuário não foi confirmado! Por favor, acesse seu email!
+register.bad.password=Senhas não conferem.
+login.page.title=Login
+register.page.title=Cadastro
+confirmation.page.title=Confirmação
+confirmation.success=Seu registro foi ativado com sucesso!
+authenticated.page.title=Autenticado
+confirmation.already.success=Esta conta de usuário já foi confirmada. Apenas faça o login.
+confirmation.invalid=Seu código de ativação é inválido!
+reset.page.title=Reset
+confirmation.error=Erro de confirmação.
+token.null=O token esta nulo
+reset.token.null=O link para atualizar a senha é inválido, por favor verifique e tente novamente.
+reset.token.invalid=O link para atualizar a senha expirou.
+password.change.page.title=Trocar senha
+password.change=Alterar
+password.confirm=Confirmação da senha
+password.register=Alterar
+app.hello=Olá
+app.best=Atenciosamente
+app.send.confirm.email.message=Parece que você acabou de realizar um registro na nossa Biblioteca Digital do CIBiogás. Se você fez, para completar o processo de registro, basta clicar no link abaixo, ou copie e cole no seu navegador.
+app.welcome.message=Bem vindo
+app.send.register.email.message=A sua conta foi registrada com sucesso!
+password.change.email.message=Você fez um pedido para alterar sua senha na Biblioteca Digital de CIBiogás. Basta clicar no link abaixo, ou copie e cole no seu navegador.
+app.send.password.email.change.message=A senha foi alterada com sucesso!
+password.change.error.field=Por favor, preencha com a senha e confirmação.
+password.change.user.error=Usuário não encontrado.
+password.change.success=Senha alterada com sucesso! Agora você pode realizar a autenticação.
+menu.biogas.1=Biogás
+menu.biogas.2=O Biogás
+menu.biogas.3=Estudos de Casos
+menu.biogas.4=Ferramentas
+menu.biogas.5=P & D
+menu.biogas.6=Marcos Regulatórios
+menu.biogas.7=Aspectos Financeiros e Econômicos
+menu.biogas.8=Registo Nacional e Biogasmap
+client.confirm.email.message=Você quer atualizar sua senha? Será enviado um email para sua conta.
+client.confirm.email.button.update=Atualizar
+client.cancel.email.button=Cancelar
+client.send.email.message=O e-mail foi enviado!
+client.error=Não autorizado
+client.error.operation=Não foi possível realizar esta operação!
+client.profile.title=Perfil
+client.profile.tooltip.title=Senha
+client.profile.name=Nome
+client.profile.email=Email
+contact.title=Contato
+contact.field.name=Nome
+contact.field.email=Email
+contact.field.subject=Assunto
+contact.field.message=Mensagem
+contact.field.required=Campos obrigatórios
+contact.button=Enviar
+contact.location.title=Localização
+contact.location.company.title=Sede
+contact.location.address=Endereço
+contact.location.email=Email
+contact.location.phone=Telefone
+card.button.title=Mais informações
+card.button.publication.title=Arquivo
+card.button.back.title=Voltar
+card.button.detail.title=Leia mais
+card.button.pdf.title=Visualizar
+menu.top.title.1=Início
+menu.top.title.2=Cursos
+menu.top.title.3=Materiais
+menu.top.title.4=Artigos
+menu.top.title.5=Livros
+menu.top.title.6=Vídeos
+menu.top.title.7=Fotos
+menu.top.title.8=Fale conosco
+menu.top.title.9=Direitos
+menu.top.title.10=Sobre o Biogás
+menu.top.title.11=Casos de Estudos
+menu.top.title.12=Ferramentas
+menu.top.title.13=P & D
+menu.top.title.14=Marcos Regulatórios
+menu.top.title.15=Aspectos Financeiros e Econômicos
+menu.top.title.16=Registo Nacional e Biogasmap
+menu.top.title.17=Usuário
+menu.top.title.18=Membro
+menu.top.title.19=Compartilhar
+menu.top.title.20=Contato
+menu.biogas.9=Eventos
+card.event.list.title=Lista de Eventos
+card.event.name.title=Nome
+card.event.local.title=Local
+card.event.institution.title=Instituição
+card.event.site.title=Site do Evento
+register.success.verify=Por favor, acesse sua conta de email para validar o seu registro. Não se esqueça de verificar sua caixa de spam.
+confirmation.success.login=Você pode fazer o login
+app.error.found=Não encontrado
+app.404=Erro 404
+app.error.access=Não autorizado, é necessário a autenticação
+menu.biogas.10=Notícias
+menu.biogas.11=Publicações
+app.about.title=Sobre
+app.about.member=Torne-se um membro
+app.search.field.name=Digite sua pesquisa
+search.page.title=Busca
+search.page.button.title=Buscar
+search.page.results=Resultados da busca
+card.marks.scope.title=Âmbito
+card.marks.responsible.title=Responsável
+card.marks.year.title=Ano/Período
+card.marks.category.title=Categoria
+app.home.ead.title=Curso de Atualização em Energias do Biogás
+app.home.gestao.title=Curso de Gestão Aplicada a Água e Energia
+app.home.biodigesters.title=Curso de Operacionalização em Biodigestores
+login.page.description=Digite seu email e a senha para realizar o login
+login.page.or=ou faça login com
+login.page.account.ask=Ainda não é registrado?
+login.page.forgot.password=Esqueceu a senha?
+register.page.ask=Já é registrado?
+login.page.signup.title=Inscrever-se
+login.page.signin.title=Autenticar
+register.page.description=Por favor, preencha todos os campos
+login.page.button.reset=Trocar a senha
+login.page.footer.tooltip.title=Voltar a página inicial
+app.home.title=Início
+reset.page.description=Preecha o campo email por favor
+password.change.page.description=Quase terminado, basta digitar sua nova senha abaixo
+password.change.error.field.equals=Senhas não conferem.
+password.new=Nova senha
+user.not.found=Usuário não encontrado
+menu.biogas.12=Sites
+app.error.url=Não foi possível validar a URL
+app.error.user=Usuário não autenticado
+client.send.email.to=O email enviado para
+app.email.title=Biblioteca Digital CIBiogás
+app.email.title.password=Senha alterada
+app.title.cibiogas=Centro Internacional de Enegias Renováveis
+notfound.page.or=ou pesquisar com
+register.error.field.confirmation=O campo de confirmação da senha está vazio
+register.error.field.password=O campo de senha está vazio
+register.error.field.email=O campo Email está vazio
+register.error.field.name=Campo de nome está vazio.
+register.error.field.password.equals=Senhas não conferem
+register.error.field.passwordconfirmation.max=Confirma senha com no máximo 60 caracteres
+register.error.field.password.max=Senha com no máximo 60 caracteres
+register.error.field.email.max=Email com no máximo 40 caracteres
+register.error.field.name.max=Nome com no máximo 60 caracteres
+app.angular.error=Ocorreu um erro
+app.library.title=Biblioteca
+app.welcome.title=Bem vindo
+app.confirm.email.title=Confirme seu email
+site.page.title=Sites
+site.title=Título
+site.country.title=País
+site.address.title=Endereço
+article.page.title=Artigos
+publication.page.title=Publicações
+event.page.title=Eventos
+event.page.button.title=Mostrar todos os Eventos
+event.page.all.title=Todos os Eventos
+app.messages.title=Mensagem
+app.messages.back.title=voltar
+card.button.pdf.view=Visualizações
+app.home.message.1=Essa é a Biblioteca Digital do Centro Internacional de Energias Renováveis-Biogás (CIBiogás), que reúne os principais artigos, livros, fotos e vídeos sobre pesquisas na área de energias renováveis, com enfoque em biogás. O espaço tem como objetivo organizar, compartilhar e promover a troca de conhecimento na área, voltado para o enriquecimento de pesquisas nacionais e internacionais.
+app.home.message.2=É possível encontrar um amplo acervo de conteúdos relacionados ao tema, disponibilizados por especialistas e pesquisadores do setor. O acesso a todo material digital  é gratuito, basta realizar o cadastro prévio. Você também pode ajudar a fortalecer esta importante ferramenta de pesquisa, nos envie seu material e ele será avaliado para possível publicação.
+app.home.message.3=Convidamos você a navegar pelas informações compartilhadas aqui por meio dos recursos ou pela ferramenta de busca. Você também poderá compartilhar informações técnicas e científicas neste meio e/ou sugestões por meio da ferramenta “Compartilhe seu Artigo”.
+app.home.message.4=O CIBiogás não se responsabiliza pelos conteúdos compartilhados. Respeitamos as condições de uso dos autores e sugerimos que os usuários adotem o mesmo procedimento.
+client.profile.last=Último acesso
+app.home.card.member=Faça seu cadastro para fazer parte dessa corrente de conhecimento e inovação. O acesso aos artigos, fotos e vídeos disponíveis é exclusivo para membros da Biblioteca Digital.  O cadastro é rápido, fácil e gratuito.  Basta informar nome completo, e-mail e criar a senha de acesso. Após o preenchimento dos dados, você receberá um e-mail confirmando o credenciamento e autorizando o acesso. Boa pesquisa!  
+register.error.field.email.invalid=O campo Email é inválido
+login.error.block=Usuário Bloqueado
+card.news.published.title=Publicado em
+card.readmore.button.title=Leia mais
+card.publisher.year.title=Ano
+card.publisher.autor.title=Autor
+card.publisher.language.title=Idioma
+card.publisher.resume.title=Resumo
+card.publisher.title.title=Título
+article.page.language=Idioma
+article.page.summary=Resumo
+article.page.autors.title=Autores
+article.page.keywords.title=Palavras-chave
+app.member.signup.title=Inscrever-se
+menu.biogas.13=Sobre o Biogás
+menu.biogas.14=Contato
+app.about.biogas.title=Sobre o Biogás
+app.right.title=Direito Autoral
+app.incompatible.browser.detected.title=Navegador incompatível detectado
+app.incompatible.browser.message.title=recomenda o uso de um navegador moderno atualizando para a versão mais recente do
+
+#Home
+
+card.home.event.title=Eventos
+card.home.publications.title=Publicações
+card.home.technical.notes.title=Notas técnicas
+card.home.newuser.title=Seja um membro
+card.home.newuserlink.title=Faça seu registro
+card.home.share.title=Compartilhe seu Artigo
+card.home.news.title=Notícias
+card.detail.publication.date=Data da publicação
+
+card.home.welcome.text.1=É possível encontrar um amplo acervo de conteúdos relacionados ao tema, disponibilizados por especialistas e pesquisadores do setor. O acesso a todo material digital é gratuito, basta realizar o cadastro prévio.
+card.home.welcome.link.1=Faça seu cadastro
+
+card.home.welcome.text.2=Convidamos você a navegar pelas informações compartilhadas aqui por meio dos recursos ou pela ferramenta de busca. Você podera compartilhar informações técnicas e científicas neste meio ajudando a fortalecer esta importante ferramenta de pesquisa, nos envie seu material e ele será avaliado para possível publicação.
+card.home.welcome.link.2=Compartilhe seu Artigo.
+
+card.home.registration.text=Faça seu cadastro para fazer parte dessa corrente de conhecimento e inovação. O acesso aos artigos, fotos e vídeos disponíveis é exclusivo para membros da Biblioteca Digital. O cadastro é rápido, fácil e gratuito. Basta informar nome completo, e-mail e criar a senha de acesso.
+card.home.registration.text.1=Após o preenchimento dos dados, você receberá um e-mail confirmando o credenciamento e autorizando o acesso. Boa pesquisa!
+
+card.home.share.text=Você também pode ajudar a fortalecer esta importante ferramenta de pesquisa, enviando seus textos, estudos, trabalhos, análises ou publicações técnicas e cientificas na área do biogás.
+card.home.share.text.1=Após a avaliação, seu material será publicado em nossa Biblioteca Virtual, permitindo ampliar o conhecimento de vários interessados neste assunto.
+
+#biogas page
+
+biogas.page.ask1.text=O que é o biogás?
+biogas.page.ask2.text=Qual a finalidade do biogás?
+biogas.page.ask3.text=O que é biodegradação anaeróbia?
+
+biogas.page.text.1=O biogás é uma mistura de gases composta principalmente por metano e dióxido de carbono, obtida normalmente através do tratamento de resíduos domésticos, agropecuários e industriais, por meio de processo de biodegradação anaeróbia, ou seja, na ausência de oxigênio.
+biogas.page.text.2=Com o biogás é possível gerar energias elétrica e térmica, além de biocombustível (biometano). Durante o processo, também há produção de biofertilizante. Por isso, a produção de biogás tem sido apresentada por especialistas como a melhor alternativa para oferecer condições ideais de expansão e competitividade para o agronegócio brasileiro.
+biogas.page.text.3=O processo de biodigestão anaeróbica é conhecido a muito tempo e bem popular em países como Índia e China onde o objetivo é decompor os dejetos e o resultado dessa degradação é o metano e o biofertilizante.
+
+# Become a member page
+
+member.page.ask1.text=Posso acessar o conteúdo sem registro?
+member.page.answer.ask1.text.1=Sem registro, é possível acessar conteúdos como informações sobre cursos, eventos, publicações, notícias, regulamentos, biogasmap, sites sobre biogás.
+member.page.asnwer.ask1.text.2=Se você se registrar, você poderá acessar conteúdo exclusivo, como artigos, fotos e vídeos.
+
+member.page.ask2.text=Como se registrar e acessar o conteúdo?
+member.page.answer.ask2.text=O registro é gratuito. Quando você preencher todos os campos solicitados e registrar-se, você receberá um e-mail para ativar sua conta.
+member.page.register.self.text=Registre-se
+
+member.page.ask3.text=Posso reproduzir / compartilhar o conteúdo da Biblioteca Biogas?
+member.page.answer.ask3.text=Alguns conteúdos são hospedados em outros sites e links. Portanto, você precisará acessar os termos e condições de cada um desses conteúdos para verificar as regras de reprodução e compartilhamento. Os links de vídeo podem ser compartilhados, desde que os termos do Youtube com usuários fornecidos para essa possibilidade.
+
+member.page.ask4.text=Como posso publicar meu artigo na Biblioteca Biogas?
+member.page.answer.ask4.text=Você deve preencher as informações solicitadas. Após a nossa aprovação, o seu artigo será disponibilizado na Biblioteca.
+member.page.share.article.text=Compartilhar artigo
+
+member.page.ask5.text=Quais são os critérios para selecionar os conteúdos a serem publicados?
+member.page.answer.ask5.text=Lealdade ao tema principal da Biblioteca de Biogás e qualidade na publicação.
+
+#Email de Confirmação
+
+email.button.activate.title=Ativar conta
+
+# Páginas da lista de conteúdos
+page.list.panel.text=Abaixo você pode usar seleções para filtrar os itens na galeria
+page.list.videos.panel.title=Lista
+page.list.button.show.title=Mostrar tudo

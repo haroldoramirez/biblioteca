@@ -1,0 +1,65 @@
+@(id: Long, albumForm: play.data.Form[validators.AlbumFormData])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Editar Albuns de Fotos") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.AlbumController.telaLista()" class="btn btn-default">Albuns</a>
+                <a disabled class="btn btn-default">Editar</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-picture-o" aria-hidden="true"></i> Editar Album</h1>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Informações</div>
+            <div class="panel-body">
+            @form(routes.AlbumController.editar(id), 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "albumForm") {
+
+                @if(albumForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="alert alert-danger text-center">@albumForm.globalError.message</p>
+                        </div>
+                    </div>
+                }
+
+                    @*titulo*@
+                @texto(albumForm("titulo"),
+                    label = "Título:",
+                    placeholder = "Insira o título")
+
+                    @*descricao*@
+                @textoarea(albumForm("descricao"),
+                    label = "Descrição:",
+                    placeholder = "Insira uma descrição",
+                    caracteres = "500")
+
+                    @*Arquivo*@
+                @multiarquivojpg(albumForm("arquivo"),
+                    label = "Fotos:")
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-12">
+                        <button id="btnSalvar" type="submit" class="btn btn-primary pull-right">Editar</button>
+                        <a class="btn btn-default" type="button" href="@routes.AlbumController.telaLista()">Cancelar</a>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        var form = document.getElementById("albumForm");
+        form.elements[0].focus();
+    };
+</script>

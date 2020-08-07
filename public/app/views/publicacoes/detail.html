@@ -1,0 +1,46 @@
+<!--Tela Detalhe das Publicacoes-->
+<div ng-init="init()">
+    <div class="publicacao-detalhe-max-width">
+        <div ng-show="loadingPublicacao == true" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="mdl-card__title">
+                <!-- MDL Spinner Component with Single Color -->
+                <div ng-show="loadingPublicacao" class="mdl-spinner mdl-spinner--single-color spinner-loading-cib mdl-js-spinner is-active"></div>
+            </div>
+        </div>
+        <div class="mdl-grid">
+            <div ng-hide="loadingPublicacao == true" class="mdl-color--white mdl-shadow--3dp mdl-color-text--grey-800 mdl-cell mdl-cell--12-col publicacao-detalhe">
+                <div class="mdl-card__media">
+                    <img fade-in class="card-image-detail animate-show" ng-src="publicacao/jpg/{{publicacao.nomeCapa}}" border="0" alt="{{publicacao.nomeCapa}}">
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <h5>{{Messages('card.publisher.title.title')}}</h5>
+                    <p>{{publicacao.titulo}}</p>
+                    <p class="separador-publicacoes"></p>
+                    <h5>{{Messages('card.publisher.resume.title')}}</h5>
+                    <p>{{publicacao.resumo}}</p>
+                    <p class="separador-publicacoes"></p>
+                    <h5>{{Messages('card.publisher.language.title')}}</h5>
+                    <p>{{publicacao.idioma.nome}}</p>
+                    <p class="separador-publicacoes"></p>
+                    <h5>{{Messages('card.publisher.autor.title')}}</h5>
+                    <p>{{publicacao.autor}}</p>
+                    <p class="separador-publicacoes"></p>
+                    <h5>{{Messages('card.publisher.year.title')}}</h5>
+                    <p>{{publicacao.ano}}</p>
+                    <p class="separador-publicacoes"></p>
+                    <h5>{{Messages('article.page.keywords.title')}}</h5>
+                    <p>{{publicacao.palavraChave}}</p>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a ui-sref="publicacoes" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        {{Messages('card.button.back.title')}}
+                    </a>
+                    <div class="mdl-layout-spacer"></div>
+                    <a ng-click="abrirLink(publicacao)" target="_blank" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        {{Messages('card.button.publication.title')}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

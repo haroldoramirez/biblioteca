@@ -1,0 +1,205 @@
+@(avaliacao: Avaliacao)
+
+@usuario() = @{
+    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe da Avaliação") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.AvaliacaoController.telaLista()" class="btn btn-default">Avaliações</a>
+                <a disabled class="btn btn-default">Detalhe</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-leanpub" aria-hidden="true"></i> Detalhe da Avaliação</h1>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.AvaliacaoController.telaLista()">Voltar</a></li>
+                            @if(avaliacao.isAvaliar) {
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@routes.AvaliacaoController.aprovar(avaliacao.getId)">Aprovar</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@routes.AvaliacaoController.reprovar(avaliacao.getId)">Não Aprovar</a></li>
+                            }
+                            @if(usuario.isAdmin) {
+                                <li role="separator" class="divider"></li>
+                                <li><a data-toggle="modal" data-target=".bs-example-modal-sm" href="">Excluir</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Nome</label>
+                        <p class="display-block margin-left-027em">@avaliacao.getNome</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Email</label>
+                        <p class="display-block margin-left-027em">@avaliacao.getEmail</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">CPF</label>
+                        <p class="display-block margin-left-027em">@avaliacao.getCpf</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">RG</label>
+                        <p class="display-block margin-left-027em">@avaliacao.getRg</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Telefone</label>
+                        <p class="display-block margin-left-027em">@avaliacao.getTelefone</p>
+                    </div>
+                    @if(avaliacao.getUrlLattes == null || avaliacao.getUrlLattes.length == 0) {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Url Lattes</label>
+                            <p class="display-block margin-left-027em text-warning">não informado</p>
+                        </div>
+                    } else {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Url Lattes</label>
+                            <p class="display-block margin-left-027em"><a target="_blank" href="@avaliacao.getUrlLattes">@avaliacao.getUrlLattes</a></p>
+                        </div>
+                    }
+                    @if(avaliacao.getTitulo == null || avaliacao.getTitulo.length == 0) {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Título</label>
+                            <p class="display-block margin-left-027em text-warning">não informado</p>
+                        </div>
+                    } else {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Título</label>
+                            <p class="display-block margin-left-027em">@avaliacao.getTitulo</p>
+                        </div>
+                    }
+
+                    @if(avaliacao.getMensagem == null || avaliacao.getMensagem.length == 0){
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Informação</label>
+                        <p class="display-block margin-left-027em text-warning">não informado</p>
+                    </div>
+                    } else {
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Informação</label>
+                        <p class="display-block margin-left-027em">@avaliacao.getMensagem</p>
+                    </div>
+                    }
+
+                    @if(avaliacao.getOutrosAutores == null || avaliacao.getOutrosAutores.length == 0) {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Outros Autores</label>
+                            <p class="display-block margin-left-027em text-warning">não informado</p>
+                        </div>
+                    } else {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Outros Autores</label>
+                            <p class="display-block margin-left-027em">@avaliacao.getOutrosAutores</p>
+                        </div>
+                    }
+                    @if(avaliacao.getUrlDocumento == null || avaliacao.getUrlDocumento.length == 0){
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Url do Documento</label>
+                            <p class="display-block margin-left-027em text-warning">não informado</p>
+                        </div>
+                    } else {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Url do Documento</label>
+                            <p class="display-block margin-left-027em"><a target="_blank" href="@avaliacao.getUrlDocumento">@avaliacao.getUrlDocumento</a></p>
+                        </div>
+                    }
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Status</label>
+                        @if(avaliacao.isAvaliar) {
+                            <p class="display-block margin-left-027em text-primary">Avaliar</p>
+                        }
+                        @if(avaliacao.isAprovado) {
+                            <p class="display-block margin-left-027em text-success">Aprovado</p>
+                        }
+                        @if(avaliacao.isReprovado) {
+                            <p class="display-block margin-left-027em text-danger">Não Aprovado</p>
+                        }
+                    </div>
+                    @if(avaliacao.isTermo){
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Termo</label>
+                            <p class="display-block margin-left-027em text-success">Aceito</p>
+                        </div>
+                    }else{
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Termo</label>
+                            <p class="display-block margin-left-027em text-danger">Não Aceito</p>
+                        </div>
+                    }
+
+                    @if(avaliacao.getNomeArquivo == null || avaliacao.getNomeArquivo.length == 0 || avaliacao.getNomeArquivo.equals("não selecionado")){
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Nome do arquivo</label>
+                            <p class="display-block margin-left-027em text-warning">não informado</p>
+                        </div>
+                    } else {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Nome do arquivo</label>
+                            <p class="display-block margin-left-027em">@avaliacao.getNomeArquivo -> <a target="_blank" href="@routes.AvaliacaoController.pdfAdmin(avaliacao.getNomeArquivo)">Visualizar</a></p>
+                        </div>
+                    }
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Criação</label>
+                        <p type="date" class="display-block margin-left-027em">@avaliacao.getDataCadastro.format("dd MMMM yyyy")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@Messages("app.title")</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Deseja remover a avaliação com título <b>"@avaliacao.getTitulo"</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    @form(routes.AvaliacaoController.remover(avaliacao.getId)){
+                        <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                    }
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+}

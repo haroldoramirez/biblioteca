@@ -1,0 +1,85 @@
+@(id: Long, usuarioForm: play.data.Form[validators.UsuarioAdminFormData], papeis:List[String])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Editar Usuário") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.UsuarioController.telaLista()" class="btn btn-default">Usuários</a>
+            <a disabled class="btn btn-default">Editar</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-user" aria-hidden="true"></i> Editar Usuário</h1>
+    </div>
+</div>
+<div class="container">
+@form(routes.UsuarioController.editar(id), 'class -> "form-horizontal", 'id -> "usuarioForm", 'autocomplete -> "off") {
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Editar Usuário</div>
+                <div class="panel-body">
+
+                    @if(usuarioForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <p class="alert alert-danger text-center">@usuarioForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    @*nome*@
+                    @texto(usuarioForm("nome"),
+                    label = "Nome Completo:",
+                    placeholder = "Insira o nome")
+
+
+                    @*email*@
+                    @texto(usuarioForm("email"),
+                    label = "Email:",
+                    placeholder = "Insira o email")
+
+                    @*senha*@
+                    @textoSenha(usuarioForm("senha"),
+                    label = "Senha:",
+                    placeholder = "Insira a senha")
+
+                    @*Radio papeis*@
+                    @radiobotao(usuarioForm("papel"),
+                    label = "Papéis:",
+                    buttonNameList = papeis)
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr >
+    @*botoes*@
+    <div class="form-group">
+        <div class="col-md-12">
+            <button data-loading-text="Loading..." id="btnSalvar" type="submit" class="btn btn-success pull-right" autocomplete="off">Salvar</button>
+            <a class="btn btn-default" type="button" href="@routes.UsuarioController.telaLista()">Cancelar</a>
+        </div>
+    </div>
+    }
+</div>
+}
+
+
+<script type="text/javascript">
+
+    window.onload = function() {
+        var form = document.getElementById("usuarioForm");
+        form.elements[0].focus();
+
+        $('#btnSalvar').on('click', function () {
+            var $btn = $(this).button('loading');
+        });
+
+    };
+
+</script>

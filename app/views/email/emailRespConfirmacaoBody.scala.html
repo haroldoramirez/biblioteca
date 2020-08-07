@@ -1,0 +1,124 @@
+@(usuario : Usuario)(url : String)
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@Messages("app.title") - CIBIOGÁS</title>
+    </head>
+    <body style="margin: 0; padding: 0; min-width: 100%!important;" bgcolor="#f6f8f1">
+        <table width="100%" bgcolor="#f6f8f1" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                        <!--[if (gte mso 9)|(IE)]>
+            <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td>
+                      <![endif]-->
+                    <table bgcolor="#ffffff" style="width: 100%; max-width: 600px;" align="center" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td bgcolor="#cfd8dc" style="padding: 40px 30px 20px 30px">
+                                <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td height="70" style="padding: 0 20px 20px 0;">
+                                            <img style="height: auto;" src="https://gallery.mailchimp.com/e348220cdbefe0755a59e3be0/images/34f00adf-3b93-471a-a745-e1795deaac9f.png" width="70" height="70" border="0" alt="icon"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table width="425" align="left" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+                        <![endif]-->
+                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 425px;">
+                                    <tr>
+                                        <td height="70">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td style="padding: 0 0 0 3px; font-size: 15px; color: #153643; font-family: sans-serif; letter-spacing: 10px;">CIBIOGÁS</td>
+                                                </tr>
+                                                <tr>
+                                                        <!--h1-->
+                                                    <td style="padding: 5px 0 0 0;font-size: 33px; line-height: 38px; font-weight: bold; color: #153643; font-family: sans-serif;">@Messages("app.title")</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold; color: #153643; font-family: sans-serif;">@Messages("app.hello"), @usuario.getNome</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 16px; line-height: 22px; color: #153643; font-family: sans-serif;">@Messages("app.send.confirm.email.message")</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
+                            <!--[if (gte mso 9)|(IE)]>
+                        <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+                            <![endif]-->
+                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 425px;">
+                                    <tr>
+                                        <td>
+                                            <table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                        <!--bodycopy-->
+                                                    <td style="font-size: 16px; line-height: 22px; color: #153643; font-family: sans-serif;">
+                                                        <textarea rows="4" style="width: 100%;" readonly>@url</textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 20px 0 0 0;">
+                                                        <table bgcolor="#f58634" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td style="text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px;" height="45">
+                                                                    <a type="button" style="color: #ffffff; text-decoration: none;" href="@url">@Messages("email.button.activate.title")</a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 20px 30px 15px 30px;" bgcolor="#383838">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td align="center" style="font-family: sans-serif; font-size: 14px; color: #ffffff;">&reg; @Messages("app.title.cibiogas"), 2017<br/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                        <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            <![endif]-->
+        </table>
+        </td>
+        </tr>
+        </table>
+    </body>
+</html>

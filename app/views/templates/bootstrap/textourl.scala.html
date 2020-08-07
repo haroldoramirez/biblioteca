@@ -1,0 +1,20 @@
+@(field: Field, label: String = "", placeholder: String = "", help: String = "")
+
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <label for="@field.id" class="col-md-2 control-label">@label <abbr title="obrigatório endereço válido">*</abbr></label>
+    <div class="col-md-10">
+        <div class="input-group">
+            <input type="text"
+                   class="form-control"
+                   id="@field.id"
+                   autocomplete="off"
+                   name="@field.name"
+                   value="@field.value.getOrElse("")"
+            placeholder="@placeholder"/>
+            <span class="input-group-addon ">
+                 <input type="radio" id="radio-url" name="radio-url" value='radio-value' checked="checked">
+            </span>
+        </div>
+        <span class="help-block"><small>@{field.error.map { error => error.message }}</small></span>
+    </div>
+</div>

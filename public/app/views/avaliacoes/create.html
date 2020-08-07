@@ -1,0 +1,216 @@
+<div class="mdl-grid">
+    <div class="compartilhar-max-width compartilhar-artigo">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+            <div style="background-image:url(assets/images/cib/share1.webp)" class="mdl-card__title">
+                <h1 class="mdl-card__title-text">{{Messages('card.home.share.title')}}</h1>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <p>A Biblioteca do Biogás foi criada com o objetivo de centralizar os conhecimentos produzidos em biogás no Brasil.</p>
+                <p>Aqui você poderá compartilhar seus artigos produzidos de duas formas:</p>
+                <ol>
+                    <li>Por meio do link de Revista de Produção Científica (o usuário será redirecionado para o endereço e terá acesso as informações diretamente no link fornecido);</li>
+                    <li>Por meio de arquivo PDF, nesse caso o usuário se responsabiliza pelo compartilhamento de informações de sua autoria;</li>
+                </ol>
+                <p>
+                    As produções aqui disponibilizadas não refletem necessariamente a opinião ou posicionamento científico do CIBiogás ou da equipe da Biblioteca Virtual.
+                    Buscamos centralizar conhecimentos de biogás com o intuito de fomentar o uso desse recurso.
+                </p>
+                <p>Leia os <a href="" ng-click="opendialogtermo()">Termos</a></p>
+                <form name="avaliacaoForm">
+
+                    <!--Nome-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input ng-minlength="3" maxlength="200" class="mdl-textfield__input" type="text" name="nome" id="nome" ng-model="avaliacao.nome" ng-required="true">
+                        <label class="mdl-textfield__label" for="nome">Nome *</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.nome.$error.required && avaliacaoForm.nome.$dirty">Campo obrigatório</p>
+
+                    <!--Email-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input ng-minlength="3" maxlength="150" class="mdl-textfield__input" type="email" name="email" id="email" ng-model="avaliacao.email" ng-required="true">
+                        <label class="mdl-textfield__label" for="email">Email *</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.email.$error.required && avaliacaoForm.email.$dirty">Campo obrigatório</p>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.email.$error.email">Digite um email válido</p>
+
+                    <!--Telefone-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input maxlength="18" class="mdl-textfield__input" type="text" name="telefone" id="telefone" ng-model="avaliacao.telefone" ng-required="true" ng-pattern="/^\d+$/">
+                        <label class="mdl-textfield__label" for="telefone">Telefone *</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.telefone.$error.required && avaliacaoForm.telefone.$dirty">Campo obrigatório</p>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.telefone.$error.pattern">O campo deve ser preenchido apenas com números</p>
+
+                    <!--CPF-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input ng-minlength="11" class="mdl-textfield__input" type="text" name="cpf" id="cpf" ng-model="avaliacao.cpf" ng-required="true" ng-pattern="/^\d+$/">
+                        <label class="mdl-textfield__label" for="cpf">CPF *</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.cpf.$error.required && avaliacaoForm.cpf.$dirty">Campo obrigatório</p>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.cpf.$error.pattern">O campo deve ser preenchido apenas com números</p>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.cpf.$error.minlength">O campo com no mínimo 11 caractéres</p>
+
+                    <!--RG-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input maxlength="18" class="mdl-textfield__input" type="text" name="rg" id="rg" ng-model="avaliacao.rg" ng-required="true" ng-pattern="/^\d+$/">
+                        <label class="mdl-textfield__label" for="rg">RG *</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.rg.$error.required && avaliacaoForm.rg.$dirty">Campo obrigatório</p>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.rg.$error.pattern">O campo deve ser preenchido apenas com números</p>
+
+                    <!--Lattes-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input maxlength="450" class="mdl-textfield__input" type="url" name="urlLattes" id="urlLattes" ng-model="avaliacao.urlLattes">
+                        <label class="mdl-textfield__label" for="urlLattes">Endereço Lattes</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.urlLattes.$error.url">O endereço do lattes é inválido</p>
+
+                    <!--Titulo documento-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input maxlength="400" class="mdl-textfield__input" type="text" name="titulo" id="titulo" ng-model="avaliacao.titulo" ng-required="true">
+                        <label class="mdl-textfield__label" for="titulo">Título do Documento *</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.titulo.$error.required && avaliacaoForm.titulo.$dirty">Campo obrigatório</p>
+
+                    <!--Outros Autores-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input maxlength="600" class="mdl-textfield__input" type="text" name="outrosAutores" id="outrosAutores" ng-model="avaliacao.outrosAutores">
+                        <label class="mdl-textfield__label" for="outrosAutores">Autores</label>
+                    </div>
+
+                    <!--Informacoes sobre a publicacao-->
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <textarea maxlength="400" class="mdl-textfield__input" type="text" rows= "4" id="mensagem" ng-model="avaliacao.mensagem"></textarea>
+                        <label class="mdl-textfield__label" for="mensagem">Informações sobre a publicação</label>
+                    </div>
+
+                    <!--Link documento-->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input maxlength="450" class="mdl-textfield__input" type="url" name="urlDocumento" id="urlDocumento" ng-model="avaliacao.urlDocumento">
+                        <label class="mdl-textfield__label" for="urlDocumento">Link do Documento</label>
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.urlDocumento.$error.url">O Link do documento é inválido</p>
+
+                    <p>ou</p>
+
+                    <!--arquivo-->
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="file" ngf-select ng-model="arquivoPdf" name="file" accept="application/pdf" ngf-max-size="10MB">
+                    </div>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.file.$error.maxSize">Arquivo com no máximo 10MB</p>
+                    <div style="padding: 10px;"></div>
+
+                    <!--botao termo-->
+                    <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events">
+                        <input type="checkbox" id="chkbox1" class="mdl-checkbox__input" ng-model="avaliacao.termo" name="termo" ng-required="true">
+                        <span class="mdl-checkbox__label">Aceito os termos</span>
+                        <span class="mdl-checkbox__focus-helper"></span>
+                        <span class="mdl-checkbox__box-outline">
+                        <span class="mdl-checkbox__tick-outline"></span>
+                    </span>
+                        <span class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center">
+                        <span class="mdl-ripple is-animating" style="width: 103.823px; height: 103.823px; transform: translate(-50%, -50%) translate(18px, 18px);"></span>
+                    </span>
+                    </label>
+                    <p style="color: #d50000;" ng-show="avaliacaoForm.termo.$error.required && avaliacaoForm.termo.$dirty">Campo obrigatório</p>
+                    <div style="padding: 10px;"></div>
+
+                    <!--Botao enviar-->
+                    <p>
+                        <button type="submit" ng-click="uploadPdf(arquivoPdf)" ng-disabled="avaliacaoForm.$invalid" id="save" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                            {{Messages('contact.button')}}
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="dialogTermo">
+    <div class="mdl-dialog__content">
+        <h4>Termos e Condições de Aceite e Uso da Biblioteca Digital do CIBiogás</h4>
+        <p><b>Abril, 2017</b></p>
+        <p>
+            O endereço eletrônico www.cibiogas.org/biblioteca é um site de divulgação e compartilhamento de informações e conhecimentos relacionados a utilização de energias alternativas
+            com enfoque no Biogás do Centro Internacional de Energias Renováveis – CIBiogás - ER,   associação sem fins lucrativas, inscrita no CNPJ sob o nº 18.366.966/0001-02, com sede
+            na Avenida Tancredo Neves, nº 1300, Edifício das Águas, sala 11, Itaipu Binacional, Foz do Iguaçu/PR, CEP: 85866-900.
+        </p>
+        <p>
+            As regras para o cadastramento de usuário, estão previstas neste termo, devendo o usuário, pessoa física ou jurídica, declarar aceitá-las.
+        </p>
+        <p>
+            O presente Termo e Condições de Aceite e Uso pode ser modificado a qualquer tempo, sem necessidade de notificação prévia, sendo que tais modificações tornar-se-ão válidas a
+            partir da data de sua veiculação no site, revogando as anteriores.
+        </p>
+        <h4>Do Conteúdo e da Propriedade Intelectual</h4>
+        <p>
+            O usuário aceita e declara compreender que o CIBiogás envidará seus maiores esforços para assegurar que as informações, materiais, dados e ferramentas virtuais oferecidos neste
+            site estejam tão atualizados, precisos e completos quanto possível, mas que, em nenhuma circunstância, poderá ser responsabilizado por fatos que não lhe sejam exclusivamente
+            atribuíveis quanto à integridade, atualidade, exatidão, sigilo e utilização de tais informações, materiais, dados e ferramentas virtuais.
+        </p>
+        <p>
+            O usuário aceita e declara compreender que, em razão do peculiar ambiente da Internet, o CIBiogás não poderá garantir que o acesso ao site seja livre de erros ou problemas decorrentes
+            de casos fortuitos, internos ou externos, casos de força maior ou ainda de outros casos não inteiramente sujeitos ao controle direto dos administradores do site.
+        </p>
+        <p>
+            O usuário aceita e declara compreender que qualquer texto, marca, áudio, imagem, ou “CONTEÚDO” veiculados nos site <a href="https://biblioteca.cibiogas.org">biblioteca.cibiogas.org</a> são protegidos por direitos de propriedade
+            intelectual pertencentes ao CIBiogás ou parceiros e autores que autorizaram a divulgação, razão pela qual não podem ser copiados, reproduzidos ou simplesmente republicados em nenhuma
+            hipótese, salvo se expressamente autorizado pelo respectivo detentor dos referidos direitos.
+        </p>
+        <p>
+            O usuário aceita e declara compreender que o CIBiogás em sua biblioteca poderá disponibilizar em seu endereço eletrônico, links de acesso para outros sites e endereços
+            virtuais, sem qualquer responsabilidade pelos serviços ou funcionalidades ali dispostos, sendo a decisão de utilização e a forma de relacionamento com aqueles de
+            exclusiva responsabilidade do usuário, que inclusive isenta o CIBiogás de fiscalizar o conteúdo ou zelar pela integridade de tais sites ou endereços virtuais.
+        </p>
+        <h4>Do Cadastro de Usuário</h4>
+        <p>
+            O usuário poderá cadastrar-se em nossa biblioteca, autorizando o envio de mala direta, e-mail, newsletters e demais comunicações, exclusivamente pelo CIBiogás,
+            que como política de privacidade estabelece que todas as informações pessoais recebidas pelos usuários não serão repassadas para terceiros.
+        </p>
+        <h4>Licenças de Conteúdos</h4>
+        <p>
+            Ao enviar conteúdo ou informação para o site, incluindo textos, tais como comentários, artigos científicos, fotografias, vídeos e outros materiais, o usuário autoriza
+            a utilização destes de forma gratuita, não exclusiva, perpétua, em âmbito nacional e internacional, desobrigando o CIBiogás de qualquer forma de remuneração, compensação,
+            retenção ou indenização. Eventuais omissões não implicam limitação de uso do conteúdo enviado pelo usuário aos sites.
+        </p>
+        <p>
+            Em caso de discordância com a utilização do conteúdo enviado aos sites, autorizado concomitantemente ao envio, aquele não deverá ser efetuado.
+            O usuário apenas deverá enviar conteúdo e materiais originais, de sua autoria ou dos quais possua direitos autorais, que por sua vez, serão indicados quando divulgados nos sites.
+        </p>
+        <p>
+            Inexiste por parte do CIBiogás qualquer obrigação de uso dos conteúdos enviados pelos usuários, assim como existe o direito de usá-los, ainda que esse direito não seja exercido.
+        </p>
+        <p>Caso o usuário não tenha mais interesse no compartilhamento de seus arquivos, o usuário deverá encaminhar um e-mail solicitando a retirada do acesso ao seus conteúdos.</p>
+        <h4>Deveres do Usuário</h4>
+        <p>Ao disponibilizar essa ferramenta ao usuário interessado na disseminação de conhecimentos em energias renováveis com enfoque em biogás, <strong>os usuários se comprometerão a não:</strong></p>
+        <ul>
+            <li>
+                Disseminar conteúdo ilegal, ofensivo, violento ou que viole a privacidade e a intimidade de terceiros;
+            </li>
+            <li>
+                Violar propriedade intelectual de terceiros;
+            </li>
+            <li>
+                Disseminar vírus ou código de computador malicioso, arquivos ou programas desenvolvidos para coletar dados não autorizados, interromper, destruir ou limitar a funcionalidade do sítio,
+                de qualquer software ou hardware de computador ou equipamentos de telecomunicações em geral (malware ou spyware);
+            </li>
+            <li>
+                Disfarçar ou ocultar o número de IP (internet protocol) que identifica sua conexão à internet;
+            </li>
+            <li>
+                Usar qualquer dos elementos do site ou dos sites para fins comerciais, publicitários ou de qualquer outra forma não autorizada e que não represente a finalidade principal deste;
+            </li>
+        </ul>
+        <p>Em caso de violação de quaisquer dos termos e condições de uso dos sites, estamos autorizados a bloquear o acesso e os conteúdos compartilhados, informando o usuário da respectiva suspensão.</p>
+        <h4>Condições Gerais</h4>
+        <p>O CIBiogás se reserva o direito de modificar a qualquer momento a apresentação, configuração e disponibilização da biblioteca do biogás.</p>
+        <p>O CIBiogás poderá a qualquer momento, interromper ou cancelar o acesso a biblioteca, ao seu livre e exclusivo critério, em virtude do uso em desacordo com os dispositivos aqui previstos,
+            conforme acima previsto, ou ainda, por qualquer outro motivo, inclusive o encerramento de suas atividades, estando isento, de qualquer responsabilidade perante aos usuários.
+        </p>
+        <p>Os termos e condições estabelecidos neste Termo e Condições de Aceite e Uso do Site são regidos pela legislação brasileira. Elegem o foro da Comarca de Foz do Iguaçu - Paraná,
+            com renúncia expressa a qualquer outro, por mais privilegiados que possam parecer, para dirimir qualquer avença relativa ao presente.
+        </p>
+        <h4>Ajuda</h4>
+        <p>Em caso de dúvidas ou problemas ligados ao site, entre em contato conosco pelo e-mail biblioteca@cibiogas.org ou pela ferramenta <a ui-sref="contato">Contato</a></p>
+    </div>
+</script>

@@ -1,0 +1,131 @@
+@(usuario: Usuario)
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe do Usuário") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.UsuarioController.telaLista()" class="btn btn-default">Usuários</a>
+            <a disabled class="btn btn-default">Detalhe</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-user" aria-hidden="true"></i> Detalhe do Usuário</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Detalhe do Usuário
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.UsuarioController.telaLista()">Voltar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@routes.UsuarioController.telaEditar(usuario.getId)">Editar</a></li>
+                            <li role="separator" class="divider"></li>
+                            @if(!usuario.isValidado) {
+                            <li><a href="@routes.UsuarioController.enviarToken(usuario.getId)">Enviar email com o Token</a></li>
+                            <li><a href="@routes.UsuarioController.confirmaAdmin(usuario.getId)">Confirmar Conta</a></li>
+                            }
+                            @if(usuario.isAtivo) {
+                            <li><a href="@routes.UsuarioController.bloquear(usuario.getId)">Bloquear</a></li>
+                            } else {
+                            <li><a href="@routes.UsuarioController.desbloquear(usuario.getId)">Desbloquear</a></li>
+                            }
+                            <li role="separator" class="divider"></li>
+                            <li><a data-toggle="modal" data-target=".bs-example-modal-sm" href="">Excluir</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Nome</label>
+                            <p class="display-block margin-left-027em">@usuario.getNome</p>
+                        </div>
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Email</label>
+                            <p class="display-block margin-left-027em">@usuario.getEmail</p>
+                        </div>
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Confirmado</label>
+                            @if(usuario.getValidado) {
+                            <p class="text-success display-block margin-left-027em">Sim</p>
+                            } else {
+                            <p class="text-danger display-block margin-left-027em">Não</p>
+                            }
+
+                        </div>
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Status</label>
+                            @if(usuario.isAtivo) {
+                            <p class="text-success display-block margin-left-027em">Ativo</p>
+                            } else {
+                            <p class="text-danger display-block margin-left-027em">Bloqueado</p>
+                            }
+
+                        </div>
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Papel</label>
+                            @if(usuario.isAdmin) {
+                            <p class="display-block margin-left-027em text-danger">Administrador</p>
+                            }
+                            @if(usuario.isGerente) {
+                            <p class="display-block margin-left-027em text-primary">Gerente</p>
+                            }
+                            @if(usuario.isUsuario){
+                            <p class="display-block margin-left-027em text-success">Usuário</p>
+                            }
+                        </div>
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Data/Hora de Cadastro</label>
+                            <p type="date" class="display-block margin-left-027em">@usuario.getDataCadastro.format("dd MMMM yyyy")</p>
+                        </div>
+                        @if(usuario.getDataAlteracao != null){
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Data/Hora de Alteração</label>
+                            <p class="display-block margin-left-027em">@usuario.getDataAlteracao.format("dd MMMM yyyy")</p>
+                        </div>
+                        }
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Ultimo Acesso</label>
+                            <p type="date" class="display-block margin-left-027em">@usuario.getUltimoAcesso.getTime.format("dd MMMM yyyy - HH:mm:ss")</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Deseja remover o usuário <b>"@usuario.getNome"</b>?</p>
+            </div>
+            <div class="modal-footer">
+                @form(routes.UsuarioController.remover(usuario.getId)) {
+                <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

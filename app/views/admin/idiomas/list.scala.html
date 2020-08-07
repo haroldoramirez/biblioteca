@@ -1,0 +1,166 @@
+@****************************************
+* lista de idiomas    *
+****************************************@
+
+@import views.html.helper.form
+@(currentPage: com.avaje.ebean.PagedList[Idioma],
+    currentSortBy: String,
+    currentOrder: String,
+    currentFilter: String)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+
+    var sortBy = currentSortBy
+    var order = currentOrder
+
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+
+    // Generate the link
+    routes.IdiomaController.telaLista(newPage, sortBy, order, currentFilter)
+
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+@views.html.admin.main(Messages("app.title") + " | Idiomas") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.IdiomaController.telaLista()" class="btn btn-default">Idiomas</a>
+            <a disabled class="btn btn-default">Lista</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-language" aria-hidden="true"></i> Lista de Idiomas</h1>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <a type="button" href="@routes.IdiomaController.telaNovo()" class="pull-right btn btn-success"><span class="fa fa-plus"></span> Cadastrar</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well well-sm">
+                        @form(link(0, "titulo"), 'id -> "filtroForm") {
+                        <!-- INICIO - input-group -->
+                        <div class="input-group col-md-4">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar idioma por título" maxlength="100">
+                            <span class="input-group-btn">
+                                <input type="submit" id="searchSubmit" value="Filtrar" class="btn btn-primary">
+                                <a type="button" href="@routes.IdiomaController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
+                            </span>
+                        </div>
+                        <!-- FIM - input-group -->
+                        }
+                    </div>
+                </div>
+            </div>
+            @if(currentPage.getTotalRowCount == 0) {
+            <div class="well well-sm">
+                <em>Nenhuma informação encontrada com a palavra <strong>"@currentFilter"</strong>.</em>
+            </div>
+            } else {
+            <div class="table-responsive">
+                <table border="1" class="table table-bordered table-hover dataTable">
+                    <thead>
+                    <tr role="row">
+                        @header("nome", "Nome")
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for(idioma <- currentPage.getList) {
+                    <tr>
+                        <td><a href="@routes.IdiomaController.telaDetalhe(idioma.getId)">@idioma.getNome</a></td>
+                    </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            @*INICIO - Linha da paginacao*@
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+                        Visualizando @currentPage.getDisplayXtoYofZ(" até ", " total ")</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_simple_numbers pull-right">
+                        <ul class="pagination">
+                            @if(currentPage.hasPrev) {
+                            <li class="paginate_button previous">
+                                <a href="@link(currentPage.getPageIndex - 1, null)">Anterior</a>
+                            </li>
+                            } else {
+                            <li class="paginate_button previous disabled">
+                                <a>Anterior</a>
+                            </li>
+                            }
+                            @if(currentPage.hasNext) {
+                            <li class="paginate_button next">
+                                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo</a>
+                            </li>
+                            } else {
+                            <li class="paginate_button next disabled">
+                                <a>Próximo</a>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @*FIM - Linha da paginacao*@
+            }
+        </div>
+    </div>
+</div>
+
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+
+        $('.btn-primary').attr('disabled',true);
+
+        $('#searchbox').keyup(function() {
+
+            if($(this).val().length !=0){
+                $('.btn-primary').attr('disabled', false);
+            } else {
+                $('.btn-primary').attr('disabled', true);
+            }
+
+        });
+
+        var table = document.getElementsByTagName('table')[0];
+
+        if (table != undefined) {
+            resizableGrid(table);
+        }
+    };
+</script>

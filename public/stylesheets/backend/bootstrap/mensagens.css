@@ -1,0 +1,24 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #e9e9e9;
+}
+
+p {
+  margin: 0 0 0;
+}
+
+.mensagens {
+  max-width: 700px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.mensagens .mensagens-heading,
+.mensagens .checkbox {
+  margin-bottom: 10px;
+}
+
+.mensagem {
+    margin-bottom: 3px;
+}
