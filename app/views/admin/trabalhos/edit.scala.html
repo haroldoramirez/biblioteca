@@ -4,7 +4,7 @@
 @import templates.bootstrap._
 
 @views.html.admin.main(Messages("app.title")) {
-@views.html.admin.header("Trabalhos Científicos", "glyphicon glyphicon-education")
+@views.html.admin.header("Trabalhos Acadêmicos", "glyphicon glyphicon-education")
 <div class="container">
     @form(routes.TrabalhoController.editar(id), 'class -> "form-horizontal", 'id -> "trabalhoForm") {
 

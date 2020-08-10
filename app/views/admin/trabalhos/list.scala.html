@@ -47,7 +47,7 @@
 }
 
 @views.html.admin.main(Messages("app.title")) {
-    @views.html.admin.header("Trabalhos Científicos", "glyphicon glyphicon-education")
+    @views.html.admin.header("Trabalhos Acadêmicos", "glyphicon glyphicon-education")
     <div class="col-sm-12">
         @views.html.admin.notificacoes()
         <div class="panel panel-default">
@@ -92,7 +92,7 @@
                                 @header("idioma", "Idioma", "width: 100px")
                                 @header("autores", "Autor/Autores", "width: 180px")
                                 @header("numeroAcesso", "Acessos", "width: 100px")
-                                <th style="width: 120px;">Fonte</th>
+                                <th style="width: 90px;">Fonte</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -104,9 +104,9 @@
                                 <td>@trabalho.getAutores</td>
                                 <td>@trabalho.getNumeroAcesso</td>
                                 @if(trabalho.getUrl == null || trabalho.getUrl.isEmpty || trabalho.getUrl.equals("https://cibiogas.org")) {
-                                    <td><a data-placement="left" data-toggle="tooltip" title="Acessar" class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.TrabalhoController.pdfAdmin(trabalho.getNomeArquivo)">Arquivo local <i class="fa fa-external-link"></i></a></td>
+                                    <td><a class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.TrabalhoController.pdfAdmin(trabalho.getNomeArquivo)">Local <i class="fa fa-external-link"></i></a></td>
                                 } else {
-                                    <td><a data-placement="left" data-toggle="tooltip" title="Acessar" class="btn btn-success btn-xs" type="button" target="_blank" href="@trabalho.getUrl">Fonte externa <i class="fa fa-external-link"></i></a></td>
+                                    <td><a class="btn btn-success btn-xs" type="button" target="_blank" href="@trabalho.getUrl">Externo <i class="fa fa-external-link"></i></a></td>
                                 }
                             </tr>
                             }
@@ -154,8 +154,6 @@
 <script type="text/javascript">
     //executa depois que a pagina carregar
     window.onload = function() {
-
-        $('[data-toggle="tooltip"]').tooltip();
 
         let table = document.getElementsByTagName('table')[0];
         let campo = document.getElementById("searchBox");

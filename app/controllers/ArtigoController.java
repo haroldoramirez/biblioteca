@@ -18,14 +18,13 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
-import secured.SecuredUser;
 import validators.ArtigoFormData;
+import validators.Formatador;
 import views.html.admin.artigos.list;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
@@ -36,43 +35,21 @@ import static validators.ValidaPDF.isPDF2;
 
 public class ArtigoController extends Controller {
 
-    static private LogController logController = new LogController();
-    static private DynamicForm form = Form.form();
+    static private final LogController logController = new LogController();
+    static private final DynamicForm form = Form.form();
 
-    private String mensagem;
-    private String tipoMensagem;
     private Boolean temUrl;
     private Boolean temArquivo;
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -99,7 +76,7 @@ public class ArtigoController extends Controller {
         Form<DynamicForm.Dynamic> requestForm = form.bindFromRequest();
         DynamicForm formData = form.fill(requestForm.data());
         try {
-            return ok(list.render(Artigo.page(page, 18, sortBy, order, filter, autor), sortBy, order, filter, autor, formData));
+            return ok(list.render(Artigo.page(page, 13, sortBy, order, filter, autor), sortBy, order, filter, autor, formData));
         } catch (Exception e) {
             Logger.error(e.getMessage());
             return badRequest(views.html.error.render(e.getMessage()));
@@ -211,7 +188,7 @@ public class ArtigoController extends Controller {
                 if (arquivo != null) {
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String pdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -270,9 +247,8 @@ public class ArtigoController extends Controller {
 
                 }
 
-                tipoMensagem = "success";
-                mensagem = "Artigo '" + artigo.getTitulo() + "' foi cadastrado com sucesso.";
-                return created(views.html.mensagens.artigo.mensagens.render(mensagem, tipoMensagem));
+                flash("success", "Artigo com título '" + artigo.getTitulo() + "' cadastrado com sucesso.");
+                return redirect(routes.ArtigoController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 Logger.error(e.getMessage());
@@ -325,7 +301,7 @@ public class ArtigoController extends Controller {
 
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String novoNomePdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -345,9 +321,8 @@ public class ArtigoController extends Controller {
                     artigo.setDataAlteracao(new Date());
                     artigo.update();
 
-                    tipoMensagem = "info";
-                    mensagem = "Artigo '" + artigo.getTitulo() + "' atualizado com sucesso.";
-                    return ok(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+                    flash("info", "Atualizado artigo com título '" + artigo.getTitulo() + "'");
+                    return redirect(routes.ArtigoController.telaLista(0, "titulo", "asc", "", ""));
                 }
 
                 //Converte os dados do formularios para uma instancia do Objeto
@@ -361,9 +336,8 @@ public class ArtigoController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Artigo '" + artigo.getTitulo() + "' atualizado com sucesso.";
-                return ok(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Atualizado artigo com título '" + artigo.getTitulo() + "'");
+                return redirect(routes.ArtigoController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -408,9 +382,8 @@ public class ArtigoController extends Controller {
                 File file = arquivo.getFile();
 
                 if (!isPDF2(file)) {
-                    tipoMensagem = "danger";
-                    mensagem = "Selecione um arquivo no formato PDF";
-                    return badRequest(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+                    artigoForm.reject("Arquivo inválido. Selecione um arquivo no formato PDF");
+                    return badRequest(views.html.admin.artigos.detail.render(artigoForm, artigo, temUrl));
                 }
 
                 //necessario para excluir o arquivo antigo
@@ -432,13 +405,11 @@ public class ArtigoController extends Controller {
                         artigo.setDataAlteracao(new Date());
                         artigo.update();
 
-                        tipoMensagem = "info";
-                        mensagem = "Pdf do Artigo '" + artigo.getTitulo() + "' foi atualizado com sucesso.";
-                        return ok(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+                        flash("success", "O Arquivo PDF do artigo '" + artigo.getTitulo() + "' foi alterado com sucesso");
+                        return redirect(routes.ArtigoController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato PDF é aceito";
-                        return badRequest(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+                        artigoForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato PDF");
+                        return badRequest(views.html.admin.artigos.detail.render(artigoForm, artigo, temArquivo));
                     }
                 }
             } else {
@@ -446,14 +417,12 @@ public class ArtigoController extends Controller {
                 return ok(views.html.admin.artigos.detail.render(artigoForm, artigo, temArquivo));
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.artigo.mensagens.render(mensagem, tipoMensagem));
+            artigoForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.artigos.detail.render(artigoForm, artigo, temArquivo));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
     }
 
     /**
@@ -511,14 +480,12 @@ public class ArtigoController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Artigo '" + artigo.getTitulo() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído artigo com título - " + artigo.getTitulo());
+            return redirect(routes.ArtigoController.telaLista(0, "titulo", "asc", "", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.artigo.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.ArtigoController.telaLista(0, "titulo", "asc", "", ""));
         }
 
     }
@@ -550,7 +517,6 @@ public class ArtigoController extends Controller {
      *
      * @return a list of all artigos in json
      */
-    @Security.Authenticated(SecuredUser.class)
     public Result buscaTodos() {
         try {
             return ok(Json.toJson(Ebean.find(Artigo.class)
@@ -570,7 +536,6 @@ public class ArtigoController extends Controller {
      * @param nomeArquivo variavel string
      * @return ok pdf by name
      */
-    @Security.Authenticated(SecuredUser.class)
     public Result pdf(String nomeArquivo) {
 
         String diretorioDePdfsArtigos = Play.application().configuration().getString("diretorioDePdfsArtigos");
@@ -598,7 +563,6 @@ public class ArtigoController extends Controller {
      * @param filtro variavel string
      * @return a list of filter artigos in json
      */
-    @Security.Authenticated(SecuredUser.class)
     public Result filtra(String filtro) {
         try {
             Query<Artigo> query = Ebean.createQuery(Artigo.class, "find artigo where (titulo like :titulo)");
@@ -619,7 +583,6 @@ public class ArtigoController extends Controller {
      * @param titulo variavel string
      * @return ok apos realizado o incrementador
      */
-    @Security.Authenticated(SecuredUser.class)
     public Result acessoLink(String titulo) {
 
         Integer incrementador;

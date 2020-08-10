@@ -18,7 +18,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
-import secured.SecuredUser;
+import validators.Formatador;
 import validators.PublicacaoFormData;
 import views.html.admin.publicacoes.list;
 
@@ -28,7 +28,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Optional;
@@ -38,11 +37,9 @@ import static validators.ValidaPDF.isPDF2;
 
 public class PublicacaoController extends Controller {
 
-    static private LogController logController = new LogController();
-    static private DynamicForm form = Form.form();
+    static private final LogController logController = new LogController();
+    static private final DynamicForm form = Form.form();
 
-    private String mensagem;
-    private String tipoMensagem;
     private Boolean temUrl;
     private Boolean temArquivo;
 
@@ -52,38 +49,17 @@ public class PublicacaoController extends Controller {
     @Inject
     private PublicacaoDAO publicacaoDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
      * metodo responsavel por modificar o tamanho da imagem depois que foi salvo na pasta
      *
-     * @param originalImage
      * @return a imagem com tamanho apropriado - modifica a imagem na pasta
      */
     private static BufferedImage modificarTamanhoImg(BufferedImage originalImage, int type, int IMG_WIDTH, int IMG_HEIGHT) {
@@ -116,7 +92,7 @@ public class PublicacaoController extends Controller {
         Form<DynamicForm.Dynamic> requestForm = form.bindFromRequest();
         DynamicForm formData = form.fill(requestForm.data());
         try {
-            return ok(list.render(Publicacao.page(page, 18, sortBy, order, filter, autor), sortBy, order, filter, autor, formData));
+            return ok(list.render(Publicacao.page(page, 13, sortBy, order, filter, autor), sortBy, order, filter, autor, formData));
         } catch (Exception e) {
             Logger.error(e.getMessage());
             return badRequest(views.html.error.render(e.getMessage()));
@@ -226,7 +202,7 @@ public class PublicacaoController extends Controller {
 
                 String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                arquivoTitulo = formatarTitulo(arquivoTitulo);
+                arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                 /*Nome e extensao do arquivo*/
                 pdf = arquivoTitulo + extensaoPadraoDePdfs;
@@ -303,9 +279,8 @@ public class PublicacaoController extends Controller {
 
                 FileUtils.copyFile(imagemPadrao, imagemDestino);
 
-                tipoMensagem = "success";
-                mensagem = "Publicação '" + publicacao.getTitulo() + "' foi cadastrada com sucesso.";
-                return created(views.html.mensagens.publicacao.mensagens.render(mensagem, tipoMensagem));
+                flash("success", "A Publicação com título '" + publicacao.getTitulo() + "' cadastrado com sucesso.");
+                return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 Logger.error(e.getMessage());
@@ -357,7 +332,7 @@ public class PublicacaoController extends Controller {
 
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String novoNomePdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -377,9 +352,8 @@ public class PublicacaoController extends Controller {
                     publicacao.setDataAlteracao(new Date());
                     publicacao.update();
 
-                    tipoMensagem = "info";
-                    mensagem = "Publicação '" + publicacao.getTitulo() + "' atualizado com sucesso.";
-                    return ok(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                    flash("info", "Atualizado Publicação com título '" + publicacao.getTitulo() + "'");
+                    return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
                 }
 
                 //Converte os dados do formularios para uma instancia do Objeto
@@ -390,13 +364,12 @@ public class PublicacaoController extends Controller {
                 publicacao.update();
 
                 if (usuarioAtual().isPresent()) {
-                    formatter.format("Usuário: '%1s' atualizou a Publicacao: '%2s'.", usuarioAtual().get().getEmail(), publicacao.getTitulo());
+                    formatter.format("Usuário: '%1s' atualizou a Publicação: '%2s'.", usuarioAtual().get().getEmail(), publicacao.getTitulo());
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Publicação '" + publicacao.getTitulo() + "' atualizado com sucesso.";
-                return ok(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Atualizado Publicação com título '" + publicacao.getTitulo() + "'");
+                return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -475,54 +448,13 @@ public class PublicacaoController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Publicação '" + publicacao.getTitulo() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído publicacao com título - " + publicacao.getTitulo());
+            return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
         }
-    }
-
-    /**
-     * Retrieve a list of all publications
-     *
-     * File Routes - GET     /publicacoes
-     *
-     * @return a list of all publications in Json
-     */
-    @Security.Authenticated(SecuredUser.class)
-    public Result buscaTodos() {
-        try {
-            return ok(Json.toJson(Ebean.find(Publicacao.class)
-                    .order()
-                    .asc("titulo")
-                    .findList()));
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-            return badRequest(Json.toJson(Messages.get("app.error")));
-        }
-    }
-
-    /**
-     * return object from id
-     *
-     * @param id identification
-     * @return ok a json object
-     */
-    @Security.Authenticated(SecuredUser.class)
-    public Result detalhe(Long id) {
-
-        Optional<Publicacao> possivelPublicacao = publicacaoDAO.comId(id);
-
-        if (possivelPublicacao.isPresent()) {
-            Publicacao publicacao = possivelPublicacao.get();
-            return ok(Json.toJson(publicacao));
-        }
-
-        return badRequest(Json.toJson(Messages.get("app.error")));
     }
 
     /**
@@ -548,10 +480,10 @@ public class PublicacaoController extends Controller {
     }
 
     /**
-     * Update a artigo file from id
+     * Update a Publicacao file from id
      *
      * @param id identificador
-     * @return a artigo file updated with a form
+     * @return a Publicacao file updated with a form
      */
     @Security.Authenticated(SecuredAdmin.class)
     public Result editarPdf(Long id) {
@@ -582,9 +514,8 @@ public class PublicacaoController extends Controller {
                 File file = arquivo.getFile();
 
                 if (!isPDF2(file)) {
-                    tipoMensagem = "danger";
-                    mensagem = "Selecione um arquivo no formato PDF";
-                    return badRequest(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                    publicacaoForm.reject("Arquivo inválido. Selecione um arquivo no formato PDF");
+                    return badRequest(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temUrl));
                 }
 
                 //necessario para excluir o arquivo antigo
@@ -606,13 +537,11 @@ public class PublicacaoController extends Controller {
                         publicacao.setDataAlteracao(new Date());
                         publicacao.update();
 
-                        tipoMensagem = "info";
-                        mensagem = "Pdf da Publicação '" + publicacao.getTitulo() + "' foi atualizado com sucesso.";
-                        return ok(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                        flash("success", "O Arquivo PDF do da Publicação '" + publicacao.getTitulo() + "' foi alterado com sucesso");
+                        return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato PDF é aceito";
-                        return badRequest(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                        publicacaoForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato PDF");
+                        return badRequest(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
                     }
                 }
             } else {
@@ -620,14 +549,12 @@ public class PublicacaoController extends Controller {
                 return ok(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.publicacao.mensagens.render(mensagem, tipoMensagem));
+            publicacaoForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
     }
 
     @Security.Authenticated(SecuredAdmin.class)
@@ -658,7 +585,7 @@ public class PublicacaoController extends Controller {
                 //Pega o arquivo pdf da requisicao recebida
                 File file = arquivo.getFile();
 
-                //necessario para excluir o artigo antigo
+                //necessario para excluir o Publicacao antigo
                 File jpgAntiga = new File(diretorioDeFotosPublicacoes, publicacao.getNomeCapa());
 
                 if (tipoDeConteudo.equals(contentTypePadraoDeImagens)) {
@@ -686,29 +613,25 @@ public class PublicacaoController extends Controller {
                         publicacao.setId(id);
                         publicacao.setDataAlteracao(new Date());
                         publicacao.update();
-
-                        tipoMensagem = "info";
-                        mensagem = "Imagem da Publicação '" + publicacao.getTitulo() + "' foi atualizada com sucesso.";
-                        return ok(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                        
+                        flash("info", "Imagem da Publicação com título '" + publicacao.getTitulo() + "'");
+                        return redirect(routes.PublicacaoController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato JPG ou JPEG é aceito.";
-                        return badRequest(views.html.mensagens.publicacao.mensagens.render(mensagem,tipoMensagem));
+                        publicacaoForm.reject("Selecione um arquivo no formato JPEG");
+                        return ok(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
                     }
                 }
             } else {
-            publicacaoForm.reject("Selecione um arquivo no formato JPEG");
-            return ok(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
-        }
+                publicacaoForm.reject("Selecione um arquivo no formato JPEG");
+                return ok(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
+            }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.publicacao.mensagens.render(mensagem, tipoMensagem));
+            publicacaoForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.publicacoes.detail.render(publicacaoForm, publicacao, temArquivo));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
 
     }
 
@@ -801,6 +724,43 @@ public class PublicacaoController extends Controller {
             return badRequest(views.html.error.render(e.getMessage()));
 
         }
+    }
+
+    /**
+     * Retrieve a list of all publications
+     *
+     * File Routes - GET     /publicacoes
+     *
+     * @return a list of all publications in Json
+     */
+    public Result buscaTodos() {
+        try {
+            return ok(Json.toJson(Ebean.find(Publicacao.class)
+                    .order()
+                    .asc("titulo")
+                    .findList()));
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+            return badRequest(Json.toJson(Messages.get("app.error")));
+        }
+    }
+
+    /**
+     * return object from id
+     *
+     * @param id identification
+     * @return ok a json object
+     */
+    public Result detalhe(Long id) {
+
+        Optional<Publicacao> possivelPublicacao = publicacaoDAO.comId(id);
+
+        if (possivelPublicacao.isPresent()) {
+            Publicacao publicacao = possivelPublicacao.get();
+            return ok(Json.toJson(publicacao));
+        }
+
+        return badRequest(Json.toJson(Messages.get("app.error")));
     }
 
 }
