@@ -40,24 +40,16 @@
 @**********************************
 * Helper generating table headers *
 ***********************************@
-@header(key:String, title:String) = {
-    <th rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
+@header(key:String, title:String, largura: String) = {
+    <th style="@largura" rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
         <a href="@link(0, key)">@title</a>
     </th>
 }
 
-@views.html.admin.main(Messages("app.title") + " | Trabalhos") {
-    <div class="col-md-12">
-        <div class="page-header header-biogas">
-            <div class="btn-group btn-breadcrumb pull-right">
-                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-                <a href="@routes.TrabalhoController.telaLista()" class="btn btn-default">Trabalhos</a>
-                <a disabled class="btn btn-default">Lista</a>
-            </div>
-            <h1 class="font-style"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> Lista de Trabalhos Acadêmicos</h1>
-        </div>
-    </div>
+@views.html.admin.main(Messages("app.title")) {
+    @views.html.admin.header("Trabalhos Científicos", "glyphicon glyphicon-education")
     <div class="col-sm-12">
+        @views.html.admin.notificacoes()
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
@@ -75,10 +67,9 @@
                                 </div>
                                 <!-- INICIO - input-group -->
                                 <div class="input-group col-md-4">
-                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                    <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar trabalho acadêmico por título" maxlength="100">
+                                    <input class="form-control" type="search" id="searchBox" name="f" value="@currentFilter" placeholder="Filtrar por título..." maxlength="70">
                                     <span class="input-group-btn">
-                                        <input type="submit" id="searchSubmit" value="Filtrar" class="btn btn-primary">
+                                        <button type="submit" id="searchSubmit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                                         <a type="button" href="@routes.TrabalhoController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
                                     </span>
                                 </div>
@@ -89,20 +80,19 @@
                 </div>
                 @if(currentPage.getTotalRowCount == 0) {
                     <div class="well well-sm">
-                        <em>Nenhuma informação encontrada com a palavra <strong>"@currentFilter"</strong>.</em>
+                        <em>Nenhuma informação encontrada com o valor <strong>"@currentFilter"</strong>.</em>
                     </div>
                 } else {
                     <div class="table-responsive">
                         <table border="1" class="table table-bordered table-hover dataTable">
                             <thead>
                             <tr role="row">
-                                @header("titulo", "Título")
-                                <th>Resumo</th>
-                                @header("idioma", "Idioma")
-                                @header("autores", "Autor/Autores")
-                                <th>Data de Cadastro</th>
-                                @header("numeroAcesso", "Acessos")
-                                <th>Fonte</th>
+                                @header("titulo", "Título", "max-width: 150px")
+                                <th style="max-width: 100px;">Resumo</th>
+                                @header("idioma", "Idioma", "width: 100px")
+                                @header("autores", "Autor/Autores", "width: 180px")
+                                @header("numeroAcesso", "Acessos", "width: 100px")
+                                <th style="width: 120px;">Fonte</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -112,12 +102,11 @@
                                 <td>@trabalho.getResumo</td>
                                 <td>@trabalho.getIdioma.getNome</td>
                                 <td>@trabalho.getAutores</td>
-                                <td>@trabalho.getDataCadastro.format("dd MMMM yyyy")</td>
                                 <td>@trabalho.getNumeroAcesso</td>
                                 @if(trabalho.getUrl == null || trabalho.getUrl.isEmpty || trabalho.getUrl.equals("https://cibiogas.org")) {
-                                <td><a data-placement="right" data-toggle="tooltip" title="Acessar" class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.TrabalhoController.pdfAdmin(trabalho.getNomeArquivo)">Arquivo local</a></td>
+                                    <td><a data-placement="left" data-toggle="tooltip" title="Acessar" class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.TrabalhoController.pdfAdmin(trabalho.getNomeArquivo)">Arquivo local <i class="fa fa-external-link"></i></a></td>
                                 } else {
-                                <td><a data-placement="right" data-toggle="tooltip" title="Acessar" class="btn btn-success btn-xs" type="button" target="_blank" href="@trabalho.getUrl">Fonte externa</a></td>
+                                    <td><a data-placement="left" data-toggle="tooltip" title="Acessar" class="btn btn-success btn-xs" type="button" target="_blank" href="@trabalho.getUrl">Fonte externa <i class="fa fa-external-link"></i></a></td>
                                 }
                             </tr>
                             }
@@ -135,7 +124,7 @@
                                 <ul class="pagination">
                                     @if(currentPage.hasPrev) {
                                     <li class="paginate_button previous">
-                                        <a href="@link(currentPage.getPageIndex - 1, null)">Anterior</a>
+                                        <a href="@link(currentPage.getPageIndex - 1, null)"><i class="fa fa-arrow-left"></i> Anterior</a>
                                     </li>
                                     } else {
                                     <li class="paginate_button previous disabled">
@@ -144,7 +133,7 @@
                                     }
                                     @if(currentPage.hasNext) {
                                     <li class="paginate_button next">
-                                        <a href="@link(currentPage.getPageIndex + 1, null)">Próximo</a>
+                                        <a href="@link(currentPage.getPageIndex + 1, null)">Próximo <i class="fa fa-arrow-right"></i></a>
                                     </li>
                                     } else {
                                     <li class="paginate_button next disabled">
@@ -169,6 +158,7 @@
         $('[data-toggle="tooltip"]').tooltip();
 
         let table = document.getElementsByTagName('table')[0];
+        let campo = document.getElementById("searchBox");
 
         if (table != undefined) {
             resizableGrid(table);
@@ -178,11 +168,13 @@
         $("#autor").change( function() {
 
             if ($(this).is(":checked")) {
-                $("#searchbox").attr("placeholder", "Filtrar trabalho acadêmico por autor");
+                $("#searchBox").attr("placeholder", "Filtrar por autor...");
             }
             else {
-                $("#searchbox").attr("placeholder", "Filtrar trabalho acadêmico por título");
+                $("#searchBox").attr("placeholder", "Filtrar por título...");
             }
+
+            campo.focus();
 
         });
 

@@ -259,30 +259,6 @@ values ('Planos e Leis', 'now', 'now');
 insert into categoria (nome, data_cadastro, data_alteracao)
 values ('Regulação', 'now', 'now');
 
-insert into evento (nome, data_inicio, data_fim, site, localidade, instituicao, data_cadastro, data_alteracao)
-values ('Seminário Técnico sobre Geração Distribuída', 'now', 'now', 'https://www.abiogas.org.br/seminariotecnicogdbi', 'São Paulo SP', 'Associação Brasileira de Biogás e Biometano (Abiogás)', 'now', 'now');
-
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('Abiogás', 'https://www.abiogas.org.br/', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('Embrapa', 'https://www.embrapa.br/', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('Spirit Desing', 'http://www.spiritdesign.com/pt', 79, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('Biomassa e Bioenergia', 'http://www.biomassabioenergia.com.br/', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('DVO', 'http://www.dvoinc.com/', 229, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('Cana Bioenergia', 'http://www.canalbioenergia.com.br/', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('ABRAGEL Associação Brasileira de Geração de Energia Limpa', 'http://www.abragel.org.br', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('ANEEL Agência Nacional de Energia Elétrica', 'http://www.aneel.gov.br', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('EPE Empresa de Pesquisa Energética', 'http://www.epe.gov.br', 30, 'now', 'now');
-insert into site (titulo, url, pais_id, data_cadastro, data_alteracao)
-values ('MME Ministério das Minas e Energia', 'http://www.mme.gov.br', 30, 'now', 'now');
-
 insert into idioma (nome, data_cadastro, data_alteracao) values ('Português', 'now', 'now');
 insert into idioma (nome, data_cadastro, data_alteracao) values ('Inglês', 'now', 'now');
 insert into idioma (nome, data_cadastro, data_alteracao) values ('Espanhol', 'now', 'now');

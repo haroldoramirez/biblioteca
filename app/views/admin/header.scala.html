@@ -1,0 +1,10 @@
+@(titulo: String, icone: String)
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a class="btn btn-static">@titulo</a>
+        </div>
+        <h1 class="font-style"><i class="@icone" aria-hidden="true"></i> @titulo</h1>
+    </div>
+</div>

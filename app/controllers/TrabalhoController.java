@@ -18,14 +18,13 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
-import secured.SecuredUser;
+import validators.Formatador;
 import validators.TrabalhoFormData;
 import views.html.admin.trabalhos.list;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
@@ -36,43 +35,21 @@ import static validators.ValidaPDF.isPDF2;
 
 public class TrabalhoController extends Controller {
 
-    static private LogController logController = new LogController();
-    static private DynamicForm form = Form.form();
+    static private final LogController logController = new LogController();
+    static private final DynamicForm form = Form.form();
 
-    private String mensagem;
-    private String tipoMensagem;
     private Boolean temUrl;
     private Boolean temArquivo;
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -99,7 +76,7 @@ public class TrabalhoController extends Controller {
         Form<DynamicForm.Dynamic> requestForm = form.bindFromRequest();
         DynamicForm formData = form.fill(requestForm.data());
         try {
-            return ok(list.render(Trabalho.page(page, 18, sortBy, order, filter, autor), sortBy, order, filter, autor, formData));
+            return ok(list.render(Trabalho.page(page, 13, sortBy, order, filter, autor), sortBy, order, filter, autor, formData));
         } catch (Exception e) {
             Logger.error(e.getMessage());
             return badRequest(views.html.error.render(e.getMessage()));
@@ -116,11 +93,8 @@ public class TrabalhoController extends Controller {
         Form<TrabalhoFormData> trabalhoForm = form(TrabalhoFormData.class);
 
         try {
-            Trabalho trabalho = Ebean.find(Trabalho.class, id);
 
-            if (trabalho == null) {
-                return notFound(views.html.mensagens.erro.naoEncontrado.render("Trabalho não encontrado"));
-            }
+            Trabalho trabalho = Ebean.find(Trabalho.class, id);
 
             if (trabalho.getNomeArquivo() == null || trabalho.getNomeArquivo().isEmpty()) {
                 temArquivo = false;
@@ -211,7 +185,7 @@ public class TrabalhoController extends Controller {
                 if (arquivo != null) {
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String pdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -270,9 +244,8 @@ public class TrabalhoController extends Controller {
 
                 }
 
-                tipoMensagem = "success";
-                mensagem = "Trabalho '" + trabalho.getTitulo() + "' foi cadastrado com sucesso.";
-                return created(views.html.mensagens.trabalho.mensagens.render(mensagem, tipoMensagem));
+                flash("success", "Trabalho com título '" + trabalho.getTitulo() + "' cadastrado com sucesso.");
+                return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 Logger.error(e.getMessage());
@@ -324,7 +297,7 @@ public class TrabalhoController extends Controller {
 
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String novoNomePdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -344,9 +317,8 @@ public class TrabalhoController extends Controller {
                     trabalho.setDataAlteracao(new Date());
                     trabalho.update();
 
-                    tipoMensagem = "info";
-                    mensagem = "Trabalho '" + trabalho.getTitulo() + "' atualizado com sucesso.";
-                    return ok(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
+                    flash("info", "Atualizado trabalho com título '" + trabalho.getTitulo() + "'");
+                    return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
                 }
 
                 //Converte os dados do formularios para uma instancia do Objeto
@@ -360,9 +332,8 @@ public class TrabalhoController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Trabalho '" + trabalho.getTitulo() + "' atualizado com sucesso.";
-                return ok(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Atualizado trabalho com título '" + trabalho.getTitulo() + "'");
+                return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -400,16 +371,14 @@ public class TrabalhoController extends Controller {
 
                 //Pega o nome do arquivo encontrado na base de dados
                 String arquivoTitulo = trabalho.getNomeArquivo();
-
                 String tipoDeConteudo = arquivo.getContentType();
 
                 //Pega o arquivo pdf da requisicao recebida
                 File file = arquivo.getFile();
 
                 if (!isPDF2(file)) {
-                    tipoMensagem = "danger";
-                    mensagem = "Selecione um arquivo no formato PDF";
-                    return badRequest(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
+                    trabalhoForm.reject("Arquivo inválido. Selecione um arquivo no formato PDF");
+                    return badRequest(views.html.admin.trabalhos.detail.render(trabalhoForm, trabalho, temUrl));
                 }
 
                 //necessario para excluir o arquivo antigo
@@ -431,13 +400,11 @@ public class TrabalhoController extends Controller {
                         trabalho.setDataAlteracao(new Date());
                         trabalho.update();
 
-                        tipoMensagem = "info";
-                        mensagem = "Pdf do Trabalho '" + trabalho.getTitulo() + "' foi atualizado com sucesso.";
-                        return ok(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
+                        flash("success", "O Arquivo do trabaho '" + trabalho.getTitulo() + "' foi alterado com sucesso");
+                        return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato PDF é aceito";
-                        return badRequest(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
+                        trabalhoForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato PDF");
+                        return badRequest(views.html.admin.trabalhos.detail.render(trabalhoForm, trabalho, temArquivo));
                     }
                 }
             } else {
@@ -445,14 +412,12 @@ public class TrabalhoController extends Controller {
                 return ok(views.html.admin.trabalhos.detail.render(trabalhoForm, trabalho, temArquivo));
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.trabalho.mensagens.render(mensagem, tipoMensagem));
+            trabalhoForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.trabalhos.detail.render(trabalhoForm, trabalho, temArquivo));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
     }
 
     /**
@@ -510,32 +475,12 @@ public class TrabalhoController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Trabalho '" + trabalho.getTitulo() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído trabalho com título - " + trabalho.getTitulo());
+            return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.trabalho.mensagens.render(mensagem,tipoMensagem));
-        }
-
-    }
-
-    /**
-     * Retrieve a list of all objects
-     *
-     * @return a list of all objects in json
-     */
-    public Result buscaTodos() {
-        try {
-            return ok(Json.toJson(Ebean.find(Trabalho.class)
-                    .order()
-                    .asc("titulo")
-                    .findList()));
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-            return badRequest(Json.toJson(Messages.get("app.error")));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
         }
 
     }
@@ -558,6 +503,44 @@ public class TrabalhoController extends Controller {
             Logger.error(e.toString());
             return badRequest(views.html.error.render(e.getMessage()));
 
+        }
+
+    }
+
+    /**
+     * Retrieve a list of trabalhos from a filter
+     *
+     * @param filtro variavel string
+     * @return a list of filter trabalhos in json
+     */
+    public Result filtra(String filtro) {
+        try {
+            Query<Trabalho> query = Ebean.createQuery(Trabalho.class, "find trabalho where (titulo like :titulo)");
+            query.setParameter("titulo", "%" + filtro + "%");
+            List<Trabalho> filtroDeTrabalhos = query.findList();
+
+            return ok(Json.toJson(filtroDeTrabalhos));
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+            return badRequest(Json.toJson(Messages.get("app.error")));
+        }
+
+    }
+
+    /**
+     * Retrieve a list of all objects
+     *
+     * @return a list of all objects in json
+     */
+    public Result buscaTodos() {
+        try {
+            return ok(Json.toJson(Ebean.find(Trabalho.class)
+                    .order()
+                    .asc("titulo")
+                    .findList()));
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+            return badRequest(Json.toJson(Messages.get("app.error")));
         }
 
     }
@@ -590,27 +573,6 @@ public class TrabalhoController extends Controller {
     }
 
     /**
-     * Retrieve a list of trabalhos from a filter
-     *
-     * @param filtro variavel string
-     * @return a list of filter trabalhos in json
-     */
-    @Security.Authenticated(SecuredUser.class)
-    public Result filtra(String filtro) {
-        try {
-            Query<Trabalho> query = Ebean.createQuery(Trabalho.class, "find trabalho where (titulo like :titulo)");
-            query.setParameter("titulo", "%" + filtro + "%");
-            List<Trabalho> filtroDeTrabalhos = query.findList();
-
-            return ok(Json.toJson(filtroDeTrabalhos));
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-            return badRequest(Json.toJson(Messages.get("app.error")));
-        }
-
-    }
-
-    /**
      * return ok
      *
      * @param titulo variavel string
@@ -618,7 +580,7 @@ public class TrabalhoController extends Controller {
      */
     public Result acessoLink(String titulo) {
 
-        Integer incrementador;
+        int incrementador;
 
         try {
             Trabalho trabalho = Ebean.find(Trabalho.class).where().eq("titulo", titulo).findUnique();

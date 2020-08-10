@@ -3,17 +3,8 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Editar Trabalho Acadêmico") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.TrabalhoController.telaLista()" class="btn btn-default">Trabalhos</a>
-            <a disabled class="btn btn-default">Cadastro</a>
-        </div>
-        <h1 class="font-style"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> Editar Trabalho Acadêmico</h1>
-    </div>
-</div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Trabalhos Científicos", "glyphicon glyphicon-education")
 <div class="container">
     @form(routes.TrabalhoController.editar(id), 'class -> "form-horizontal", 'id -> "trabalhoForm") {
 
@@ -96,7 +87,7 @@
     <div class="form-group">
         <div class="col-md-12">
             <button data-loading-text="Loading..." id="btnSalvar" type="submit" class="btn btn-success pull-right" autocomplete="off">Salvar</button>
-            <a class="btn btn-default" type="button" href="@routes.TrabalhoController.telaLista()">Cancelar</a>
+            <a class="btn btn-default" type="button" href="@routes.TrabalhoController.telaDetalhe(id)">Cancelar</a>
         </div>
     </div>
     }

@@ -1,0 +1,23 @@
+@if(!flash.isEmpty) {
+    <div class="row">
+        <section class="container-fluid">
+            @for(key <- flash.keySet) {
+            <div class="alert alert-@key alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @if(key.equals("success")) {
+                    <p><strong><i class="icon fa fa-check"></i> @key</strong> - @flash.get(key)</p>
+                }
+                @if(key.equals("info")) {
+                    <p><strong><i class="icon fa fa-info"></i> @key</strong> - @flash.get(key)</p>
+                }
+                @if(key.equals("danger")) {
+                    <p><strong><i class="icon fa fa-ban"></i> @key</strong> - @flash.get(key)</p>
+                }
+                @if(key.equals("warning")) {
+                    <p><strong><i class="icon fa fa-warning"></i> @key</strong> - @flash.get(key)</p>
+                }
+            </div>
+            }
+        </section>
+    </div>
+}

@@ -12,16 +12,15 @@
     Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
 }
 
-@views.html.admin.main(Messages("app.title") + " | Dashboard") {
+@views.html.admin.main(Messages("app.title")) {
+
+    @header("Início", "fa fa-home")
 
     <div class="col-md-12">
-        <div class="page-header header-biogas">
-            <div class="btn-group btn-breadcrumb pull-right">
-                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-                <a disabled class="btn btn-default">Início</a>
-            </div>
-            <h1 class="font-style"><i class="fa fa-home" aria-hidden="true"></i> Dashboard</h1>
-        </div>
+        <section class="jumbotron">
+            <h1>@Messages("app.title")</h1>
+            <p>Bem vindo, <strong>@usuario.getNome()</strong>! este é seu painel.</p>
+        </section>
     </div>
 
     @*Painel Azul*@

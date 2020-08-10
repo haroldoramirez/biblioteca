@@ -17,7 +17,7 @@ public class AdminController extends Controller {
      * @return mostra a pagina inicial caso o usuario seja admin
      */
     public Result painel(int page, String sortBy, String order, String filter, String autor) {
-        return ok(views.html.admin.inicio.render(Publicacao.page(page, 10, sortBy, order, filter, autor),
+        return ok(views.html.admin.dashboard.render(Publicacao.page(page, 10, sortBy, order, filter, autor),
                 Usuario.page(page, 10, sortBy, order, filter),
                 Avaliacao.page(page, 10, sortBy, order, filter),
                 Usuario.last(),

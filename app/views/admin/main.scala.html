@@ -1,9 +1,5 @@
 @(title: String)(content: Html)
 
-@usuario() = @{
-    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
-}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,89 +19,7 @@
 </head>
 <body>
     <div id="wrap">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="@routes.AdminController.painel()">@Messages("app.title")</a>
-                </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li @if(request.path.contains("/painel")){ class="active" }>
-                            <a href="@routes.AdminController.painel()"><span class="fa fa-home"></span> Início</a></li>
-                        <li @if(request.path.contains("/admin/trabalho")){ class="active" }>
-                            <a href="@routes.TrabalhoController.telaLista()"><span class="glyphicon glyphicon-education"></span> Trabalhos</a></li>
-                        <li @if(request.path.contains("/admin/artigo")){ class="active" }>
-                            <a href="@routes.ArtigoController.telaLista()"><span class="fa fa-file-text-o"></span> Artigos</a></li>
-                        <li @if(request.path.contains("/admin/publicacao")){ class="active" }>
-                            <a href="@routes.PublicacaoController.telaLista()"><span class="fa fa-file-text"></span> Publicações</a></li>
-                        <li @if(request.path.contains("/admin/notatecnica")){ class="active" }>
-                            <a href="@routes.NotaTecnicaController.telaLista()"><span class="fa fa-book"></span> Notas Técnicas</a></li>
-                        <li @if(request.path.contains("/admin/marco")){ class="active" }>
-                            <a href="@routes.MarcoController.telaLista()"><span class="fa fa-thumb-tack"></span> Marcos Regulatórios</a></li>
-                        <li @if(request.path.contains("/admin/album")){ class="active" }>
-                            <a href="@routes.AlbumController.telaLista()"><span class="fa fa-picture-o"></span> Albuns</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li></li>
-                        <li @if(request.path.contains("/admin/adicionais")){ class="active" } class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-cog" aria-hidden="true"></span>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                @if(usuario.isAdmin) {
-                                    <li class="dropdown-header">Usuário</li>
-                                    <span class="label label-danger center-block">@usuario.getEmail</span>
-                                    <li role="separator" class="divider"></li>
-                                } else {
-                                    <li class="dropdown-header">Usuário</li>
-                                    <span class="label label-primary center-block">@usuario.getEmail</span>
-                                    <li role="separator" class="divider"></li>
-                                }
-                                <li><a href="@routes.Application.index"><span class="fa fa-sign-in"></span> Home</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Adicionais</li>
-                                <li @if(request.path.contains("/idioma")) {
-                                    class="active" }><a href="@routes.IdiomaController.telaLista()"><span class="fa fa-language"></span> Idiomas</a></li>
-                                <li @if(request.path.contains("/pais")) {
-                                    class="active" }><a href="@routes.PaisController.telaLista()"><span class="fa fa-flag"></span> Paises</a></li>
-                                <li @if(request.path.contains("/categoria")) {
-                                    class="active" }><a href="@routes.CategoriaController.telaLista()"><span class="fa fa-bookmark"></span> Categorias</a></li>
-                                <li @if(request.path.contains("/home")) {
-                                    class="active" }><a href="@routes.HomeController.telaLista()"><span class="fa fa-file-image-o"></span> Imagens da Home</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li @if(request.path.contains("/contato")) {
-                                    class="active" }><a href="@routes.ContatoController.telaLista()"><span class="fa fa-address-book-o"></span> Contatos</a></li>
-                                <li @if(request.path.contains("/avaliacao")) {
-                                    class="active" }><a href="@routes.AvaliacaoController.telaLista()"><span class="fa fa-leanpub"></span> Avaliações</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Sistema</li>
-                                @if(usuario().isAdmin) {
-                                    <li @if(request.path.contains("/usuario")) {
-                                        class="active" }><a href="@routes.UsuarioController.telaLista()"><span class="fa fa-users"></span> Usuários</a></li>
-                                }
-                                <li @if(request.path.contains("/log")) {
-                                    class="active" }><a href="@routes.LogController.telaLista()"><span class="fa fa-file"></span> Logs</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Autenticação</li>
-                                <li><a href="@routes.LoginController.logout"><span class="fa fa-sign-out"></span> Sair</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-
-        @notificacoes()
+        @menu()
         @*Inicio do Conteudo da pagina*@
         <div class="container-fluid">
             <div class="row">
@@ -116,11 +30,7 @@
         <div id="push"></div>
     </div>
 
-    <div id="footer">
-        <div class="container">
-            <p class="muted credit">&copy; <script>document.write(new Date().getFullYear())</script> - @Messages("app.title") - @Messages("app.title.cibiogas")</p>
-        </div>
-    </div>
+    @footerAdmin()
 
     <script src="@routes.Assets.versioned("bower_components/jquery/dist/jquery.min.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("bower_components/bootstrap/dist/js/bootstrap.min.js")" type="text/javascript"></script>
