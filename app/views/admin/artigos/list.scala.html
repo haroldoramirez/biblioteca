@@ -42,7 +42,7 @@
 ***********************************@
 @header(key:String, title:String, largura: String) = {
     <th style="@largura" rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
-    <a href="@link(0, key)">@title</a>
+        <a href="@link(0, key)">@title</a>
     </th>
 }
 
@@ -58,7 +58,7 @@
                         <a type="button" href="@routes.ArtigoController.telaNovo()" class="pull-right btn btn-success"><span class="fa fa-plus"></span> Cadastrar</a>
                     </div>
                 </div>
-                <hr>
+                <br>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well-sm">

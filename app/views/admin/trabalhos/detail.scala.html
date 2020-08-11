@@ -9,12 +9,20 @@
 
 @views.html.admin.main(Messages("app.title")) {
 @views.html.admin.header("Trabalhos Acadêmicos", "glyphicon glyphicon-education")
+@if(trabalhoForm.hasGlobalErrors) {
+    <div class="form-group">
+        <div class="col-md-12">
+            <p class="alert alert-danger text-center"><strong><i class="icon fa fa-ban"></i> Ocorreu um erro</strong> - @trabalhoForm.globalError.message</p>
+        </div>
+    </div>
+}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Informações
                     <div class="btn-group pull-right">
+                        <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs" type="button"><span class="fa fa-info-circle"></span></a>
                         <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Opções <span class="caret"></span>
                         </button>
@@ -32,86 +40,79 @@
                     </div>
                 </div>
                 <div class="panel-body">
-
-                    <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs pull-right" type="button"><span class="fa fa-info-circle"></span></a>
-
-                    @if(trabalhoForm.hasGlobalErrors) {
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <p class="alert alert-danger text-center">@trabalhoForm.globalError.message</p>
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Título</label>
+                                    <p class="display-block margin-left-027em">@trabalho.getTitulo</p>
+                                </div>
+                                <hr>
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Resumo</label>
+                                    <p class="display-block margin-left-027em">@trabalho.getResumo</p>
+                                </div>
+                                <hr>
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Idioma</label>
+                                    <p class="display-block margin-left-027em">@trabalho.getIdioma.getNome</p>
+                                </div>
+                                <hr>
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Autor/Autores</label>
+                                    <p class="display-block margin-left-027em">@trabalho.getAutores</p>
+                                </div>
+                                @if(trabalho.getPalavraChave != null) {
+                                <hr>
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Palavras Chave</label>
+                                    <p class="display-block margin-left-027em">@trabalho.getPalavraChave</p>
+                                </div>
+                                }
+                                <hr>
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Número de Acessos</label>
+                                    <p class="display-block margin-left-027em">@trabalho.getNumeroAcesso</p>
+                                </div>
+                                <hr>
+                                <div class="item-form width-600 margin-bottom-15">
+                                    <label class="display-block strong">Data/Hora de Cadastro</label>
+                                    <p type="date" class="display-block margin-left-027em">@trabalho.getDataCadastro.format("dd MMMM yyyy")</p>
+                                </div>
+                                @if(trabalho.getDataAlteracao != null){
+                                    <hr>
+                                    <div class="item-form width-600 margin-bottom-15">
+                                        <label class="display-block strong">Data/Hora de Alteração</label>
+                                        <p class="display-block margin-left-027em">@trabalho.getDataAlteracao.format("dd MMMM yyyy")</p>
+                                    </div>
+                                }
                             </div>
                         </div>
-                    }
-
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Título</label>
-                        <p class="display-block margin-left-027em">@trabalho.getTitulo</p>
                     </div>
-                    <hr>
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Resumo</label>
-                        <p class="display-block margin-left-027em">@trabalho.getResumo</p>
-                    </div>
-                    <hr>
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Idioma</label>
-                        <p class="display-block margin-left-027em">@trabalho.getIdioma.getNome</p>
-                    </div>
-                    <hr>
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Autor/Autores</label>
-                        <p class="display-block margin-left-027em">@trabalho.getAutores</p>
-                    </div>
-                    @if(trabalho.getPalavraChave != null) {
-                    <hr>
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Palavras Chave</label>
-                        <p class="display-block margin-left-027em">@trabalho.getPalavraChave</p>
-                    </div>
-                    }
-                    <hr>
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Número de Acessos</label>
-                        <p class="display-block margin-left-027em">@trabalho.getNumeroAcesso</p>
-                    </div>
-                    <hr>
-                    <div class="item-form width-600 margin-bottom-15">
-                        <label class="display-block strong">Data/Hora de Cadastro</label>
-                        <p type="date" class="display-block margin-left-027em">@trabalho.getDataCadastro.format("dd MMMM yyyy")</p>
-                    </div>
-                    @if(trabalho.getDataAlteracao != null){
-                        <hr>
-                        <div class="item-form width-600 margin-bottom-15">
-                            <label class="display-block strong">Data/Hora de Alteração</label>
-                            <p class="display-block margin-left-027em">@trabalho.getDataAlteracao.format("dd MMMM yyyy")</p>
+                    @if(trabalho.getNomeArquivo != null && trabalho.getNomeArquivo != "arquivo.pdf" && trabalho.getNomeArquivo != "") {
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <label class="display-block strong">Arquivo local</label>
+                                <p class="display-block margin-left-027em">@trabalho.getNomeArquivo</p>
+                                <object data="@routes.TrabalhoController.pdfAdmin(trabalho.getNomeArquivo)" width="100%" height="600px"></object>
+                            </div>
                         </div>
+                    </div>
+                    }
+                    @if(trabalho.getUrl != null && trabalho.getUrl != "") {
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <label class="display-block strong">Fonte</label>
+                                <p><a class="btn btn-success btn-xs" type="button" target="_blank" href="@trabalho.getUrl">Acessar <i class="fa fa-external-link"></i></a></p>
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
         </div>
-        @if(trabalho.getNomeArquivo != null && trabalho.getNomeArquivo != "arquivo.pdf" && trabalho.getNomeArquivo != "") {
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Fonte</div>
-                    <div class="panel-body">
-                        <label class="display-block strong">Arquivo PDF</label>
-                        <p class="display-block margin-left-027em">@trabalho.getNomeArquivo</p>
-                        <object data="@routes.TrabalhoController.pdfAdmin(trabalho.getNomeArquivo)" width="100%" height="600px"></object>
-                    </div>
-                </div>
-            </div>
-        }
-        @if(trabalho.getUrl != null && trabalho.getUrl != "") {
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Fonte</div>
-                <div class="panel-body">
-                    <label class="display-block strong">URL</label>
-                    <p class="display-block margin-left-027em">@trabalho.getUrl</p>
-                </div>
-            </div>
-        </div>
-        }
     </div>
 </div>
 }

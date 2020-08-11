@@ -1,5 +1,5 @@
 @****************************************
-* lista de notas tecnicas    *
+* lista de publicacoes    *
 ****************************************@
 
 @import views.html.helper.form
@@ -40,128 +40,116 @@ routes.NotaTecnicaController.telaLista(newPage, sortBy, order, currentFilter, cu
 @**********************************
 * Helper generating table headers *
 ***********************************@
-@header(key:String, title:String) = {
-<th rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
+@header(key:String, title:String, largura: String) = {
+<th style="@largura" rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
 <a href="@link(0, key)">@title</a>
 </th>
 }
 
-
-@views.html.admin.main(Messages("app.title") + " | Notas Técnicas") {
-<div class="col-md-12">
-  <div class="page-header header-biogas">
-    <div class="btn-group btn-breadcrumb pull-right">
-      <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-      <a href="@routes.NotaTecnicaController.telaLista()" class="btn btn-default">Lista de Notas Técnicas</a>
-      <a disabled class="btn btn-default">Lista</a>
-    </div>
-    <h1 class="font-style"><i class="fa fa-file-text-o" aria-hidden="true"></i> Lista de Notas Técnicas</h1>
-  </div>
-</div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Notas Técnicas", "fa fa-book")
 <div class="col-sm-12">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-12">
-          <a type="button" href="@routes.NotaTecnicaController.telaNovo()" class="pull-right btn btn-success"><span class="fa fa-plus"></span> Cadastrar</a>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="well well-sm">
-            @form(link(0, "titulo"), 'id -> "filtroForm") {
-            <div class="pull-right">
-              @caixaSelecao(listForm("autor"), nome = "Filtrar por autor")
+    @views.html.admin.notificacoes()
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <a type="button" href="@routes.NotaTecnicaController.telaNovo()" class="pull-right btn btn-success"><span class="fa fa-plus"></span> Cadastrar</a>
+                </div>
             </div>
-            <!-- INICIO - input-group -->
-            <div class="input-group col-md-4">
-              <span class="input-group-addon"><i class="fa fa-search"></i></span>
-              <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar notas técnicas por título" maxlength="100">
-              <span class="input-group-btn">
-                  <input type="submit" id="searchSubmit" value="Filtrar" class="btn btn-primary">
-                  <a type="button" href="@routes.NotaTecnicaController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
-              </span>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well well-sm">
+                        @form(link(0, "titulo"), 'id -> "filtroForm") {
+                        <div class="pull-right">
+                            @caixaSelecao(listForm("autor"), nome = "Filtrar por autor")
+                        </div>
+                        <!-- INICIO - input-group -->
+                        <div class="input-group col-md-4">
+                            <input class="form-control" type="search" id="searchBox" name="f" value="@currentFilter" placeholder="Filtrar por título..." maxlength="70">
+                            <span class="input-group-btn">
+                              <button type="submit" id="searchSubmit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                              <a type="button" href="@routes.NotaTecnicaController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
+                          </span>
+                        </div>
+                        <!-- FIM - input-group -->
+                        }
+                    </div>
+                </div>
             </div>
-            <!-- FIM - input-group -->
-            }
-          </div>
-        </div>
-      </div>
-      @if(currentPage.getTotalRowCount == 0) {
-      <div class="well well-sm">
-        <em>Nenhuma informação encontrada com a palavra <strong>"@currentFilter"</strong>.</em>
-      </div>
-      } else {
-      <div class="table-responsive">
-        <table border="1" class="table table-bordered table-hover dataTable">
-          <thead>
-          <tr role="row">
-            @header("titulo", "Título")
-            <th>Resumo</th>
-            @header("idioma", "Idioma")
-            @header("autor", "Autor/Autores")
-            @header("ano", "Ano")
-            <th>Data de Cadastro</th>
-            @header("numeroAcesso", "Acessos")
-            <th>Fonte</th>
-          </tr>
-          </thead>
-          <tbody>
-          @for(notaTecnica <- currentPage.getList) {
-          <tr>
-            <td><a href="@routes.NotaTecnicaController.telaDetalhe(notaTecnica.getId)">@notaTecnica.getTitulo</a></td>
-            <td>@notaTecnica.getResumo</td>
-            <td>@notaTecnica.getIdioma.getNome</td>
-            <td>@notaTecnica.getAutor</td>
-            <td>@notaTecnica.getAno</td>
-            <td>@notaTecnica.getDataCadastro.format("dd MMMM yyyy")</td>
-            <td>@notaTecnica.getNumeroAcesso</td>
-            @if(notaTecnica.getUrl == null || notaTecnica.getUrl.isEmpty || notaTecnica.getUrl.equals("https://cibiogas.org")) {
-            <td><a data-placement="right" data-toggle="tooltip" title="Acessar" class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.NotaTecnicaController.pdfAdmin(notaTecnica.getNomeArquivo)">Arquivo local</a></td>
+            @if(currentPage.getTotalRowCount == 0) {
+            <div class="well well-sm">
+                <em>Nenhuma informação encontrada com o valor <strong>"@currentFilter"</strong>.</em>
+            </div>
             } else {
-            <td><a data-placement="right" data-toggle="tooltip" title="Acessar" class="btn btn-success btn-xs" type="button" target="_blank" href="@notaTecnica.getUrl">Fonte externa</a></td>
+            <div class="table-responsive">
+                <table border="1" class="table table-bordered table-hover dataTable">
+                    <thead>
+                    <tr role="row">
+                        @header("titulo", "Título", "max-width: 150px")
+                        <th style="max-width: 100px;">Resumo</th>
+                        @header("idioma", "Idioma", "width: 100px")
+                        @header("autor", "Autor/Autores", "width: 180px")
+                        @header("ano", "Ano", "width: 100px")
+                        @header("numeroAcesso", "Acessos", "width: 100px")
+                        <th style="width: 90px;">Fonte</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for(notaTecnica <- currentPage.getList) {
+                    <tr>
+                        <td><a href="@routes.NotaTecnicaController.telaDetalhe(notaTecnica.getId)">@notaTecnica.getTitulo</a></td>
+                        <td>@notaTecnica.getResumo</td>
+                        <td>@notaTecnica.getIdioma.getNome</td>
+                        <td>@notaTecnica.getAutor</td>
+                        <td>@notaTecnica.getAno</td>
+                        <td>@notaTecnica.getNumeroAcesso</td>
+                        @if(notaTecnica.getUrl == null || notaTecnica.getUrl.isEmpty || notaTecnica.getUrl.equals("https://cibiogas.org")) {
+                        <td><a class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.NotaTecnicaController.pdfAdmin(notaTecnica.getNomeArquivo)">Local <i class="fa fa-external-link"></i></a></td>
+                        } else {
+                        <td><a class="btn btn-success btn-xs" type="button" target="_blank" href="@notaTecnica.getUrl">Externo <i class="fa fa-external-link"></i></a></td>
+                        }
+                    </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            @*INICIO - Linha da paginacao*@
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+                        Visualizando @currentPage.getDisplayXtoYofZ(" até ", " total ")</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_simple_numbers pull-right">
+                        <ul class="pagination">
+                            @if(currentPage.hasPrev) {
+                            <li class="paginate_button previous">
+                                <a href="@link(currentPage.getPageIndex - 1, null)"><i class="fa fa-arrow-left"></i> Anterior</a>
+                            </li>
+                            } else {
+                            <li class="paginate_button previous disabled">
+                                <a>Anterior</a>
+                            </li>
+                            }
+                            @if(currentPage.hasNext) {
+                            <li class="paginate_button next">
+                                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo <i class="fa fa-arrow-right"></i></a>
+                            </li>
+                            } else {
+                            <li class="paginate_button next disabled">
+                                <a>Próximo</a>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @*FIM - Linha da paginacao*@
             }
-          </tr>
-          }
-          </tbody>
-        </table>
-      </div>
-      @*INICIO - Linha da paginacao*@
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
-            Visualizando @currentPage.getDisplayXtoYofZ(" até ", " total ")</div>
         </div>
-        <div class="col-sm-6">
-          <div class="dataTables_paginate paging_simple_numbers pull-right">
-            <ul class="pagination">
-              @if(currentPage.hasPrev) {
-              <li class="paginate_button previous">
-                <a href="@link(currentPage.getPageIndex - 1, null)">Anterior</a>
-              </li>
-              } else {
-              <li class="paginate_button previous disabled">
-                <a>Anterior</a>
-              </li>
-              }
-              @if(currentPage.hasNext) {
-              <li class="paginate_button next">
-                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo</a>
-              </li>
-              } else {
-              <li class="paginate_button next disabled">
-                <a>Próximo</a>
-              </li>
-              }
-            </ul>
-          </div>
-        </div>
-      </div>
-      @*FIM - Linha da paginacao*@
-      }
     </div>
-  </div>
 </div>
 }
 
@@ -169,9 +157,8 @@ routes.NotaTecnicaController.telaLista(newPage, sortBy, order, currentFilter, cu
     //executa depois que a pagina carregar
     window.onload = function() {
 
-        $('[data-toggle="tooltip"]').tooltip();
-
         let table = document.getElementsByTagName('table')[0];
+        let campo = document.getElementById("searchBox");
 
         if (table != undefined) {
             resizableGrid(table);
@@ -181,11 +168,13 @@ routes.NotaTecnicaController.telaLista(newPage, sortBy, order, currentFilter, cu
         $("#autor").change( function() {
 
             if ($(this).is(":checked")) {
-                $("#searchbox").attr("placeholder", "Filtrar notas técnicas por autor");
+                $("#searchBox").attr("placeholder", "Filtrar por autor...");
             }
             else {
-                $("#searchbox").attr("placeholder", "Filtrar notas técnicas por título");
+                $("#searchBox").attr("placeholder", "Filtrar por título...");
             }
+
+            campo.focus();
 
         });
 
