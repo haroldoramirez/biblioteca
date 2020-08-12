@@ -59,7 +59,7 @@
                 <div class="col-md-12">
                     <div class="well well-sm">
                         @form(link(0, "titulo"), 'id -> "filtroForm") {
-                        <!-- INICIO - input-group -->
+                            <!-- INICIO - input-group -->
                             <div class="input-group col-md-4">
                                 <input class="form-control" type="search" id="searchBox" name="f" value="@currentFilter" placeholder="Filtrar por título..." maxlength="70">
                                 <span class="input-group-btn">
@@ -74,7 +74,7 @@
             </div>
             @if(currentPage.getTotalRowCount == 0) {
             <div class="well well-sm">
-                <em>Nenhuma informação encontrada com a palavra <strong>"@currentFilter"</strong>.</em>
+                <em>Nenhuma informação encontrada com o valor <strong>"@currentFilter"</strong>.</em>
             </div>
             } else {
             <div class="table-responsive">

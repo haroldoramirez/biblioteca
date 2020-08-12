@@ -43,19 +43,10 @@
     </th>
 }
 
-@views.html.admin.main(Messages("app.title") + " | Imagens da Home") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.HomeController.telaLista()" class="btn btn-default">Imagens da Home</a>
-            <a disabled class="btn btn-default">Lista</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagens da Home</h1>
-    </div>
-</div>
-
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Imagens na Home", "fa fa-file-image-o")
 <div class="col-sm-12">
+    @views.html.admin.notificacoes()
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
@@ -63,19 +54,18 @@
                     <a type="button" href="@routes.HomeController.telaNovo()" class="pull-right btn btn-success"><span class="fa fa-plus"></span> Cadastrar</a>
                 </div>
             </div>
-            <hr>
+            <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="well well-sm">
                         @form(link(0, "titulo"), 'id -> "filtroForm") {
                         <!-- INICIO - input-group -->
                         <div class="input-group col-md-4">
-                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                            <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar foto por descricao" maxlength="100">
+                            <input class="form-control" type="search" id="searchBox" name="f" value="@currentFilter" placeholder="Filtrar por nome..." maxlength="70">
                             <span class="input-group-btn">
-                                <input type="submit" id="searchSubmit" value="Filtrar" class="btn btn-primary">
-                                <a type="button" href="@routes.HomeController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
-                            </span>
+                              <button type="submit" id="searchSubmit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                              <a type="button" href="@routes.HomeController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
+                          </span>
                         </div>
                         <!-- FIM - input-group -->
                         }
@@ -84,7 +74,7 @@
             </div>
             @if(currentPage.getTotalRowCount == 0) {
                 <div class="well well-sm">
-                    <em>Nenhuma informação encontrada com a palavra <strong>"@currentFilter"</strong>.</em>
+                    <em>Nenhuma informação encontrada com o valor <strong>"@currentFilter"</strong>.</em>
                 </div>
             } else {
                 @for(home <- currentPage.getList) {
@@ -126,7 +116,7 @@
 
         $('.btn-primary').attr('disabled',true);
 
-        $('#searchbox').keyup(function() {
+        $('#searchBox').keyup(function() {
 
             if($(this).val().length !=0){
                 $('.btn-primary').attr('disabled', false);

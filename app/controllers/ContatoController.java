@@ -23,18 +23,14 @@ import java.util.Optional;
 
 public class ContatoController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    String mensagem;
-    String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     @Inject
@@ -143,14 +139,12 @@ public class ContatoController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Contato '" + contato.getNome() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.contato.mensagens.render(mensagem,tipoMensagem));
+            flash("info", "Contato com nome '" + contato.getNome() + "' excluído com sucesso.");
+            return redirect(routes.ContatoController.telaLista(0, "dataCadastro", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.contato.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.ContatoController.telaLista(0, "dataCadastro", "asc", ""));
         }
     }
 
@@ -173,6 +167,5 @@ public class ContatoController extends Controller {
             Logger.error(e.getMessage());
         }
     }
-
 
 }

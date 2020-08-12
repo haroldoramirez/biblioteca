@@ -6,18 +6,8 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Cadastro de Imagens na Home") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.HomeController.telaLista()" class="btn btn-default">Sites</a>
-            <a disabled class="btn btn-default">Cadastro</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-file-image-o" aria-hidden="true"></i> Cadastro de Imagens na Home</h1>
-    </div>
-</div>
-<!--Tela de Cadastro-->
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Imagens na Home", "fa fa-file-image-o")
 <div class="container">
 @form(routes.HomeController.inserir, 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "homeForm") {
     <!-- Row start -->

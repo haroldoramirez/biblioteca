@@ -24,18 +24,14 @@ import static play.data.Form.form;
 @Security.Authenticated(SecuredAdmin.class)
 public class IdiomaController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -55,7 +51,7 @@ public class IdiomaController extends Controller {
         try {
             return ok(
                     list.render(
-                            Idioma.page(page, 18, sortBy, order, filter),
+                            Idioma.page(page, 13, sortBy, order, filter),
                             sortBy, order, filter
                     )
             );
@@ -139,9 +135,8 @@ public class IdiomaController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "success";
-                mensagem = "Idioma '" + idioma.getNome() + "' cadastrado com sucesso.";
-                return created(views.html.mensagens.idioma.mensagens.render(mensagem,tipoMensagem));
+                flash("success", "Idioma com nome '" + idioma.getNome() + "' cadastrado com sucesso.");
+                return redirect(routes.IdiomaController.telaLista(0, "nome", "asc", ""));
             } catch (Exception e) {
                 Logger.error(e.getMessage());
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -190,9 +185,8 @@ public class IdiomaController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Idioma '" + idioma.getNome() + "' atualizado com sucesso.";
-                return ok(views.html.mensagens.idioma.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Idioma com nome '" + idioma.getNome() + "' atualizado com sucesso.");
+                return redirect(routes.IdiomaController.telaLista(0, "nome", "asc", ""));
             } catch (Exception e) {
                 formData.reject("Erro interno de sistema");
                 return badRequest(views.html.admin.idiomas.edit.render(id, formData));
@@ -235,14 +229,12 @@ public class IdiomaController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Idioma '" + idioma.getNome() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.idioma.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Idioma com nome '" + idioma.getNome() + "' removido com sucesso.");
+            return redirect(routes.IdiomaController.telaLista(0, "nome", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.idioma.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.IdiomaController.telaLista(0, "nome", "asc", ""));
         }
     }
 

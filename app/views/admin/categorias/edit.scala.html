@@ -3,17 +3,8 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Editar Categoria") {
-    <div class="col-md-12">
-        <div class="page-header header-biogas">
-            <div class="btn-group btn-breadcrumb pull-right">
-                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-                <a href="@routes.CategoriaController.telaLista()" class="btn btn-default">Categorias</a>
-                <a disabled class="btn btn-default">Editar</a>
-            </div>
-            <h1 class="font-style"><i class="fa fa-bookmark" aria-hidden="true"></i> Editar Categoria</h1>
-        </div>
-    </div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Categorias", "fa fa-bookmark")
     <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-heading">Informações</div>

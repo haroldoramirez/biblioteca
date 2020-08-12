@@ -16,6 +16,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
+import validators.Formatador;
 import validators.HomeFormData;
 import views.html.admin.home.list;
 
@@ -25,47 +26,25 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
-import java.util.*;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.Optional;
 
 import static play.data.Form.form;
 
 public class HomeController  extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -171,7 +150,7 @@ public class HomeController  extends Controller {
                     String arquivoTitulo = form().bindFromRequest().get("descricao");
 
                     //solucao para tirar os espacos em branco, acentos do titulo do arquivo e deixa-lo tudo em minusculo
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String jpg = arquivoTitulo + extensaoPadraoDeJpg;
 
@@ -209,9 +188,8 @@ public class HomeController  extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "success";
-                mensagem = "Foto da Home '" + home.getDescricao() + "' cadastrado com sucesso.";
-                return created(views.html.mensagens.home.mensagens.render(mensagem,tipoMensagem));
+                flash("success", "Foto da home com título '" + home.getNomeArquivo() + "' cadastrado com sucesso.");
+                return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
             } catch (Exception e) {
                 Logger.error(e.getMessage());
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -249,14 +227,6 @@ public class HomeController  extends Controller {
         } else {
             try {
 
-                //faz uma busca na base de dados
-                Home homeBusca = Ebean.find(Home.class).where().eq("descricao", formData.data().get("descricao")).findUnique();
-
-                if (homeBusca != null) {
-                    formData.reject("A Imagem com descrição '" + homeBusca.getDescricao() + "' já esta Cadastrada!");
-                    return badRequest(views.html.admin.home.edit.render(nomeArquivo, formData, home));
-                }
-
                 Home novaHome = Home.makeInstance(formData.get());
 
                 novaHome.setId(home.getId());
@@ -270,12 +240,12 @@ public class HomeController  extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Imagem '" + novaHome.getDescricao() + "' atualizada com sucesso.";
-                return ok(views.html.mensagens.home.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Foto da home com título '" + home.getNomeArquivo() + "' atualizado com sucesso.");
+                return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
             } catch (Exception e) {
+                Logger.error(e.getMessage());
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
-                return badRequest(views.html.error.render(e.getMessage()));
+                return badRequest(views.html.admin.home.create.render(formData));
             }
         }
 
@@ -321,14 +291,12 @@ public class HomeController  extends Controller {
                 Logger.info("The File " + jpg.getName() + " is removed!");
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Imagem da home '" + home.getDescricao() + "' excluída com sucesso.";
-            return ok(views.html.mensagens.home.mensagens.render(mensagem,tipoMensagem));
+            flash("info", "Foto da home com título '" + home.getNomeArquivo() + "' excluído com sucesso.");
+            return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.home.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
         }
     }
 
@@ -425,21 +393,18 @@ public class HomeController  extends Controller {
                         flash("success", "Imagem da Home '"+ home.getDescricao() + "' foi atualizada com sucesso.");
                         return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato JPG ou JPEG é aceito.";
-                        return badRequest(views.html.mensagens.home.mensagens.render(mensagem,tipoMensagem));
+                        flash("danger", "Arquivo no formato inválido. Selecione um arquivo no formato JPEG ou JPG");
+                        return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
                     }
                 }
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.home.mensagens.render(mensagem, tipoMensagem));
+            flash("danger", "Erro interno de Sistema. Descrição: " + e.getMessage());
+            return redirect(routes.HomeController.telaLista(0, "dataCadastro", "asc", ""));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
 
     }
 

@@ -23,8 +23,7 @@ public class LogController extends Controller {
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     public Result inserir(String mensagem) {
@@ -105,8 +104,6 @@ public class LogController extends Controller {
      */
     @Security.Authenticated(SecuredAdmin.class)
     public Result remover(Long id) {
-        String mensagem;
-        String tipoMensagem;
 
         //Necessario para verificar se o usuario e gerente
         if(usuarioAtual().isPresent()){
@@ -127,10 +124,9 @@ public class LogController extends Controller {
             flash("success", "Removido log - " + log.getMensagem());
             return redirect(routes.LogController.telaLista(0, "mensagem", "asc", ""));
         } catch (Exception e) {
-            mensagem = "Erro interno de sistema";
-            tipoMensagem = "Erro";
-            Logger.error(e.getMessage());
-            return badRequest(views.html.mensagens.log.mensagens.render(mensagem,tipoMensagem));
+            Logger.error(e.toString());
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.LogController.telaLista(0, "mensagem", "asc", ""));
         }
     }
 

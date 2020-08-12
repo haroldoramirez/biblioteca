@@ -43,42 +43,33 @@ currentFilter: String)
     </th>
 }
 
-@views.html.admin.main(Messages("app.title") + " | Contatos") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.ContatoController.telaLista()" class="btn btn-default">Contatos</a>
-            <a disabled class="btn btn-default">Lista</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-address-book-o" aria-hidden="true"></i> Lista de Contatos</h1>
-    </div>
-</div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Contatos", "fa fa-address-book-o")
 
 <div class="col-sm-12">
+    @views.html.admin.notificacoes()
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="well well-sm">
                         @form(link(0, "titulo"), 'id -> "filtroForm") {
-                        <!-- INICIO - input-group -->
-                        <div class="input-group col-md-4">
-                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                            <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar contato por nome" maxlength="100">
-                            <span class="input-group-btn">
-                                <input type="submit" id="searchSubmit" value="Filtrar" class="btn btn-primary">
-                                <a type="button" href="@routes.ContatoController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
-                            </span>
-                        </div>
-                        <!-- FIM - input-group -->
+                            <!-- INICIO - input-group -->
+                            <div class="input-group col-md-4">
+                                <input class="form-control" type="search" id="searchBox" name="f" value="@currentFilter" placeholder="Filtrar por nome..." maxlength="70">
+                                <span class="input-group-btn">
+                                  <button type="submit" id="searchSubmit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                  <a type="button" href="@routes.ContatoController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
+                              </span>
+                            </div>
+                            <!-- FIM - input-group -->
                         }
                     </div>
                 </div>
             </div>
             @if(currentPage.getTotalRowCount == 0) {
             <div class="well well-sm">
-                <em>Nenhuma informação encontrada com a palavra <strong>"@currentFilter"</strong>.</em>
+                <em>Nenhuma informação encontrada com o valor <strong>"@currentFilter"</strong>.</em>
             </div>
             } else {
             <div class="table-responsive">
@@ -112,7 +103,7 @@ currentFilter: String)
                         <ul class="pagination">
                             @if(currentPage.hasPrev) {
                             <li class="paginate_button previous">
-                                <a href="@link(currentPage.getPageIndex - 1, null)">Anterior</a>
+                                <a href="@link(currentPage.getPageIndex - 1, null)"><i class="fa fa-arrow-left"></i> Anterior</a>
                             </li>
                             } else {
                             <li class="paginate_button previous disabled">
@@ -121,7 +112,7 @@ currentFilter: String)
                             }
                             @if(currentPage.hasNext) {
                             <li class="paginate_button next">
-                                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo</a>
+                                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo <i class="fa fa-arrow-right"></i></a>
                             </li>
                             } else {
                             <li class="paginate_button next disabled">
@@ -145,7 +136,7 @@ currentFilter: String)
 
         $('.btn-primary').attr('disabled',true);
 
-        $('#searchbox').keyup(function() {
+        $('#searchBox').keyup(function() {
 
             if($(this).val().length !=0){
                 $('.btn-primary').attr('disabled', false);

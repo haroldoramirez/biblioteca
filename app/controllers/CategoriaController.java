@@ -24,18 +24,14 @@ import static play.data.Form.form;
 @Security.Authenticated(SecuredAdmin.class)
 public class CategoriaController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -43,7 +39,6 @@ public class CategoriaController extends Controller {
      */
     public Result telaNovo() {
         Form<CategoriaFormData> categoriaForm = form(CategoriaFormData.class);
-
         return ok(views.html.admin.categorias.create.render(categoriaForm));
     }
 
@@ -56,7 +51,7 @@ public class CategoriaController extends Controller {
         try {
             return ok(
                     list.render(
-                            Categoria.page(page, 18, sortBy, order, filter),
+                            Categoria.page(page, 13, sortBy, order, filter),
                             sortBy, order, filter
                     )
             );
@@ -74,7 +69,7 @@ public class CategoriaController extends Controller {
             Categoria categoria = Ebean.find(Categoria.class, id);
 
             if (categoria == null) {
-                return notFound(views.html.mensagens.erro.naoEncontrado.render("Categoria não encontrada"));
+                return notFound(views.html.mensagens.erro.naoEncontrado.render("Categoria não encontrado"));
             }
 
             return ok(views.html.admin.categorias.detail.render(categoria));
@@ -128,7 +123,7 @@ public class CategoriaController extends Controller {
                 Categoria categoriaBusca = Ebean.find(Categoria.class).where().eq("nome", formData.data().get("nome")).findUnique();
 
                 if (categoriaBusca != null) {
-                    formData.reject(new ValidationError("nome", "A Categoria com o nome'" + categoriaBusca.getNome() + "' já esta Cadastrada!"));
+                    formData.reject(new ValidationError("nome", "O Categoria com o nome'" + categoriaBusca.getNome() + "' já esta Cadastrado!"));
                     return badRequest(views.html.admin.categorias.create.render(formData));
                 }
 
@@ -136,13 +131,12 @@ public class CategoriaController extends Controller {
                 categoria.save();
 
                 if (usuarioAtual().isPresent()) {
-                    formatter.format("Usuário: '%1s' cadastrou uma nova Categoria: '%2s'.", usuarioAtual().get().getEmail(), categoria.getNome());
+                    formatter.format("Usuário: '%1s' cadastrou um novo Categoria: '%2s'.", usuarioAtual().get().getEmail(), categoria.getNome());
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "success";
-                mensagem = "Categoria '" + categoria.getNome() + "' cadastrada com sucesso.";
-                return created(views.html.mensagens.categoria.mensagens.render(mensagem,tipoMensagem));
+                flash("success", "Categoria com nome '" + categoria.getNome() + "' cadastrado com sucesso.");
+                return redirect(routes.CategoriaController.telaLista(0, "nome", "asc", ""));
             } catch (Exception e) {
                 Logger.error(e.getMessage());
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -169,13 +163,14 @@ public class CategoriaController extends Controller {
 
         //verificar se tem erros no formData, caso tiver erros retorna o formulario com os erros caso não tiver continua o processo de alteracao do categoria
         if (formData.hasErrors()) {
+            formData.reject("Existem erros no formulário");
             return badRequest(views.html.admin.categorias.edit.render(id,formData));
         } else {
             try {
                 Categoria categoriaBusca = Ebean.find(Categoria.class, id);
 
                 if (categoriaBusca == null) {
-                    return notFound(views.html.mensagens.erro.naoEncontrado.render("Categoria não encontrada"));
+                    return notFound(views.html.mensagens.erro.naoEncontrado.render("Categoria não encontrado"));
                 }
 
                 //Converte os dados do formulario para uma instancia do Categoria
@@ -186,13 +181,12 @@ public class CategoriaController extends Controller {
                 categoria.update();
 
                 if (usuarioAtual().isPresent()) {
-                    formatter.format("Usuário: '%1s' atualizou a Categoria: '%2s'.", usuarioAtual().get().getEmail(), categoria.getNome());
+                    formatter.format("Usuário: '%1s' atualizou o Categoria: '%2s'.", usuarioAtual().get().getEmail(), categoria.getNome());
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Categoria '" + categoria.getNome() + "' atualizada com sucesso.";
-                return ok(views.html.mensagens.categoria.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Categoria com nome '" + categoria.getNome() + "' atualizado com sucesso.");
+                return redirect(routes.CategoriaController.telaLista(0, "nome", "asc", ""));
             } catch (Exception e) {
                 formData.reject("Erro interno de sistema");
                 return badRequest(views.html.admin.categorias.edit.render(id, formData));
@@ -225,24 +219,22 @@ public class CategoriaController extends Controller {
             Categoria categoria = Ebean.find(Categoria.class, id);
 
             if (categoria == null) {
-                return notFound(views.html.mensagens.erro.naoEncontrado.render("Categoria não encontrada"));
+                return notFound(views.html.mensagens.erro.naoEncontrado.render("Categoria não encontrado"));
             }
 
             Ebean.delete(categoria);
 
             if (usuarioAtual().isPresent()) {
-                formatter.format("Usuário: '%1s' excluiu a Categoria: '%2s'.", usuarioAtual().get().getEmail(), categoria.getNome());
+                formatter.format("Usuário: '%1s' excluiu o Categoria: '%2s'.", usuarioAtual().get().getEmail(), categoria.getNome());
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Categoria '" + categoria.getNome() + "' excluída com sucesso.";
-            return ok(views.html.mensagens.categoria.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Categoria com nome '" + categoria.getNome() + "' removido com sucesso.");
+            return redirect(routes.CategoriaController.telaLista(0, "nome", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.categoria.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.CategoriaController.telaLista(0, "nome", "asc", ""));
         }
     }
 

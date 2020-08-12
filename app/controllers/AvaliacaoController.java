@@ -19,12 +19,12 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
+import validators.Formatador;
 import views.html.admin.avaliacoes.list;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Optional;
@@ -35,40 +35,17 @@ import static validators.ValidaPDF.isPDF2;
 
 public class AvaliacaoController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    String mensagem;
-    String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     @Inject
@@ -147,7 +124,7 @@ public class AvaliacaoController extends Controller {
             if (arquivo != null) {
                 String arquivoTitulo = formData.get().getTitulo();
 
-                arquivoTitulo = formatarTitulo(arquivoTitulo);
+                arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                 String pdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -282,14 +259,12 @@ public class AvaliacaoController extends Controller {
 
             Ebean.delete(avaliacao);
 
-            tipoMensagem = "danger";
-            mensagem = "Avaliação '" + avaliacao.getTitulo() + "' excluída com sucesso.";
-            return ok(views.html.mensagens.avaliacao.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído Avaliação com nome - " + avaliacao.getNome());
+            return redirect(routes.AvaliacaoController.telaLista(0, "nome", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.avaliacao.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.AvaliacaoController.telaLista(0, "nome", "asc", ""));
         }
 
     }
@@ -322,14 +297,12 @@ public class AvaliacaoController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "success";
-            mensagem = "Avaliação '" + avaliacao.getTitulo() + "' foi aprovada.";
-            return ok(views.html.mensagens.avaliacao.mensagens.render(mensagem,tipoMensagem));
+            flash("success", "Avaliação com nome - " + avaliacao.getNome() + " aprovada!");
+            return redirect(routes.AvaliacaoController.telaDetalhe(avaliacao.getId()));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.getMessage());
-            return badRequest(views.html.mensagens.avaliacao.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.AvaliacaoController.telaLista(0, "nome", "asc", ""));
         }
 
     }
@@ -362,14 +335,12 @@ public class AvaliacaoController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "success";
-            mensagem = "Avaliação '" + avaliacao.getTitulo() + "' não aprovada.";
-            return ok(views.html.mensagens.avaliacao.mensagens.render(mensagem,tipoMensagem));
+            flash("info", "Avaliação com nome - " + avaliacao.getNome() + " não aprovada!");
+            return redirect(routes.AvaliacaoController.telaDetalhe(avaliacao.getId()));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.getMessage());
-            return badRequest(views.html.mensagens.avaliacao.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.AvaliacaoController.telaLista(0, "nome", "asc", ""));
         }
 
     }

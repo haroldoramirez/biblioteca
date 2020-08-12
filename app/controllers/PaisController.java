@@ -24,18 +24,14 @@ import static play.data.Form.form;
 @Security.Authenticated(SecuredAdmin.class)
 public class PaisController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -43,20 +39,19 @@ public class PaisController extends Controller {
      */
     public Result telaNovo() {
         Form<PaisFormData> paisForm = form(PaisFormData.class);
-
         return ok(views.html.admin.paises.create.render(paisForm));
     }
 
     /**
-     * Retrieve a list of all paiss
+     * Retrieve a list of all paises
      *
-     * @return a list of all paiss in a render template
+     * @return a list of all paises in a render template
      */
     public Result telaLista(int page, String sortBy, String order, String filter) {
         try {
             return ok(
                     list.render(
-                            Pais.page(page, 18, sortBy, order, filter),
+                            Pais.page(page, 13, sortBy, order, filter),
                             sortBy, order, filter
                     )
             );
@@ -116,12 +111,12 @@ public class PaisController extends Controller {
         //Resgata os dados do formulario atraves de uma requisicao e realiza a validacao dos campos
         Form<PaisFormData> formData = Form.form(PaisFormData.class).bindFromRequest();
 
-        //se existir erros nos campos do formulario retorne o paisFormData com os erros
+        //se existir erros nos campos do formulario retorne o PaisFormData com os erros
         if (formData.hasErrors()) {
             return badRequest(views.html.admin.paises.create.render(formData));
         } else {
             try {
-                //Converte os dados do formularios para uma instancia do pais
+                //Converte os dados do formularios para uma instancia do Pais
                 Pais pais = Pais.makeInstance(formData.get());
 
                 //faz uma busca na base de dados do pais
@@ -140,9 +135,8 @@ public class PaisController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "success";
-                mensagem = "pais '" + pais.getNome() + "' cadastrado com sucesso.";
-                return created(views.html.mensagens.pais.mensagens.render(mensagem,tipoMensagem));
+                flash("success", "Pais com nome '" + pais.getNome() + "' cadastrado com sucesso.");
+                return redirect(routes.PaisController.telaLista(0, "nome", "asc", ""));
             } catch (Exception e) {
                 Logger.error(e.getMessage());
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -169,6 +163,7 @@ public class PaisController extends Controller {
 
         //verificar se tem erros no formData, caso tiver erros retorna o formulario com os erros caso não tiver continua o processo de alteracao do pais
         if (formData.hasErrors()) {
+            formData.reject("Existem erros no formulário");
             return badRequest(views.html.admin.paises.edit.render(id,formData));
         } else {
             try {
@@ -178,7 +173,7 @@ public class PaisController extends Controller {
                     return notFound(views.html.mensagens.erro.naoEncontrado.render("Pais não encontrado"));
                 }
 
-                //Converte os dados do formulario para uma instancia do pais
+                //Converte os dados do formulario para uma instancia do Pais
                 Pais pais = Pais.makeInstance(formData.get());
 
                 pais.setId(id);
@@ -190,9 +185,8 @@ public class PaisController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "pais '" + pais.getNome() + "' atualizado com sucesso.";
-                return ok(views.html.mensagens.pais.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Pais com nome '" + pais.getNome() + "' atualizado com sucesso.");
+                return redirect(routes.PaisController.telaLista(0, "nome", "asc", ""));
             } catch (Exception e) {
                 formData.reject("Erro interno de sistema");
                 return badRequest(views.html.admin.paises.edit.render(id, formData));
@@ -235,14 +229,12 @@ public class PaisController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Pais '" + pais.getNome() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.pais.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Pais com nome '" + pais.getNome() + "' removido com sucesso.");
+            return redirect(routes.PaisController.telaLista(0, "nome", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.pais.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.PaisController.telaLista(0, "nome", "asc", ""));
         }
     }
 
