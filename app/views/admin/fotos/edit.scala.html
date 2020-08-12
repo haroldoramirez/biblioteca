@@ -3,17 +3,8 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Editar Foto") {
-    <div class="col-md-12">
-        <div class="page-header header-biogas">
-            <div class="btn-group btn-breadcrumb pull-right">
-                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-                <a href="@routes.ArtigoController.telaLista()" class="btn btn-default">Fotos</a>
-                <a disabled class="btn btn-default">Editar</a>
-            </div>
-            <h1 class="font-style"><i class="fa fa-picture-o" aria-hidden="true"></i> Editar Foto do Album @album.getTitulo</h1>
-        </div>
-    </div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Foto", "fa fa-picture-o")
 <div class="container">
 @form(routes.FotoController.editar(nomePasta, nomeFoto), 'class -> "form-horizontal", 'id -> "fotoForm") {
     <div class="row">
@@ -51,7 +42,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button id="btnSalvar" type="submit" class="btn btn-success pull-right">Editar</button>
-                            <a href="@routes.AlbumController.telaLista()" class="btn btn-default" type="button">Cancelar</a>
+                            <a href="@routes.AlbumController.telaDetalhe(album.getId)" class="btn btn-default" type="button">Cancelar</a>
                         </div>
                     </div>
                     }

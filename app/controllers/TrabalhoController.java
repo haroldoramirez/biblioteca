@@ -400,7 +400,7 @@ public class TrabalhoController extends Controller {
                         trabalho.setDataAlteracao(new Date());
                         trabalho.update();
 
-                        flash("success", "O Arquivo PDF do trabaho '" + trabalho.getTitulo() + "' foi alterado com sucesso");
+                        flash("success", "O Arquivo PDF do Trabalho '" + trabalho.getTitulo() + "' foi alterado com sucesso");
                         return redirect(routes.TrabalhoController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
                         trabalhoForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato PDF");

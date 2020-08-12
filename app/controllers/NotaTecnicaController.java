@@ -18,7 +18,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
-import secured.SecuredUser;
+import validators.Formatador;
 import validators.NotaTecnicaFormData;
 import views.html.admin.notastecnicas.list;
 
@@ -28,7 +28,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Optional;
@@ -41,8 +40,6 @@ public class NotaTecnicaController extends Controller {
     static private final LogController logController = new LogController();
     static private final DynamicForm form = Form.form();
 
-    private String mensagem;
-    private String tipoMensagem;
     private Boolean temUrl;
     private Boolean temArquivo;
 
@@ -52,32 +49,12 @@ public class NotaTecnicaController extends Controller {
     @Inject
     private NotaTecnicaDAO notaTecnicaDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -227,7 +204,7 @@ public class NotaTecnicaController extends Controller {
 
                 String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                arquivoTitulo = formatarTitulo(arquivoTitulo);
+                arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                 /*Nome e extensao do arquivo*/
                 pdf = arquivoTitulo + extensaoPadraoDePdfs;
@@ -304,9 +281,8 @@ public class NotaTecnicaController extends Controller {
 
                 FileUtils.copyFile(imagemPadrao, imagemDestino);
 
-                tipoMensagem = "success";
-                mensagem = "Nota Técnica '" + notaTecnica.getTitulo() + "' foi cadastrada com sucesso.";
-                return created(views.html.mensagens.notatecnica.mensagens.render(mensagem, tipoMensagem));
+                flash("success", "Nota Técnica com título '" + notaTecnica.getTitulo() + "' cadastrado com sucesso.");
+                return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 Logger.error(e.getMessage());
@@ -358,7 +334,7 @@ public class NotaTecnicaController extends Controller {
 
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String novoNomePdf = arquivoTitulo + extensaoPadraoDePdfs;
 
@@ -378,9 +354,8 @@ public class NotaTecnicaController extends Controller {
                     notaTecnica.setDataAlteracao(new Date());
                     notaTecnica.update();
 
-                    tipoMensagem = "info";
-                    mensagem = "Nota Técnica '" + notaTecnica.getTitulo() + "' atualizada com sucesso.";
-                    return ok(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                    flash("info", "Atualizado Nota Técnica com título '" + notaTecnica.getTitulo() + "'");
+                    return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
                 }
 
                 //Converte os dados do formularios para uma instancia do Objeto
@@ -395,9 +370,8 @@ public class NotaTecnicaController extends Controller {
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Nota Técnica '" + notaTecnica.getTitulo() + "' atualizada com sucesso.";
-                return ok(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Atualizado Nota Técnica com título '" + notaTecnica.getTitulo() + "'");
+                return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
 
             } catch (Exception e) {
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -476,14 +450,12 @@ public class NotaTecnicaController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Nota Técnica '" + notaTecnica.getTitulo() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído Nota Técnica com título - " + notaTecnica.getTitulo());
+            return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
         }
     }
 
@@ -544,9 +516,8 @@ public class NotaTecnicaController extends Controller {
                 File file = arquivo.getFile();
 
                 if (!isPDF2(file)) {
-                    tipoMensagem = "danger";
-                    mensagem = "Selecione um arquivo no formato PDF";
-                    return badRequest(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                    notaTecnicaForm.reject("Arquivo inválido. Selecione um arquivo no formato PDF");
+                    return badRequest(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temUrl));
                 }
 
                 //necessario para excluir o arquivo antigo
@@ -568,13 +539,11 @@ public class NotaTecnicaController extends Controller {
                         notaTecnica.setDataAlteracao(new Date());
                         notaTecnica.update();
 
-                        tipoMensagem = "info";
-                        mensagem = "Pdf da Nota Técnica '" + notaTecnica.getTitulo() + "' foi atualizada com sucesso.";
-                        return ok(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                        flash("success", "O Arquivo PDF do Nota Técnica '" + notaTecnica.getTitulo() + "' foi alterado com sucesso");
+                        return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato PDF é aceito";
-                        return badRequest(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                        notaTecnicaForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato PDF");
+                        return badRequest(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temArquivo));
                     }
                 }
             } else {
@@ -582,14 +551,12 @@ public class NotaTecnicaController extends Controller {
                 return ok(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temArquivo));
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.notatecnica.mensagens.render(mensagem, tipoMensagem));
+            notaTecnicaForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temArquivo));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
     }
 
     @Security.Authenticated(SecuredAdmin.class)
@@ -649,28 +616,24 @@ public class NotaTecnicaController extends Controller {
                         notaTecnica.setDataAlteracao(new Date());
                         notaTecnica.update();
 
-                        tipoMensagem = "info";
-                        mensagem = "Imagem da Nota Técnica '" + notaTecnica.getTitulo() + "' foi atualizada com sucesso.";
-                        return ok(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                        flash("success", "A imagem Capa da Nota Técnica '" + notaTecnica.getTitulo() + "' foi alterada com sucesso");
+                        return redirect(routes.NotaTecnicaController.telaLista(0, "titulo", "asc", "", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato JPG ou JPEG é aceito.";
-                        return badRequest(views.html.mensagens.notatecnica.mensagens.render(mensagem,tipoMensagem));
+                        notaTecnicaForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato JPEG ou JPG");
+                        return badRequest(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temArquivo));
                     }
                 }
             } else {
-                notaTecnicaForm.reject("Selecione um arquivo no formato JPEG");
+                notaTecnicaForm.reject("Selecione um arquivo no formato JPEG ou JPG");
                 return ok(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temArquivo));
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.notatecnica.mensagens.render(mensagem, tipoMensagem));
+            notaTecnicaForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.notastecnicas.detail.render(notaTecnicaForm, notaTecnica, temArquivo));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
 
     }
 

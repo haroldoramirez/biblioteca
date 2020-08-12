@@ -18,6 +18,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
 import validators.AlbumFormData;
+import validators.Formatador;
 import views.html.admin.albuns.list;
 
 import javax.imageio.ImageIO;
@@ -26,54 +27,30 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.Normalizer;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 import static play.data.Form.form;
 
 public class AlbumController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
      * metodo responsavel por modificar o tamanho da imagem depois que foi salvo na pasta
      *
-     * @param originalImage
+     * @param originalImage imagem original
      * @return a imagem com tamanho apropriado - modifica a imagem na pasta
      */
     private static BufferedImage modificarTamanhoImg(BufferedImage originalImage, int type, int IMG_WIDTH, int IMG_HEIGHT) {
@@ -224,7 +201,7 @@ public class AlbumController extends Controller {
                 //se todos os arquivos forem jpeg
                 if (verificador) {
 
-                    File diretorio = FileUtils.getFile(diretorioDeFotos + "/" + formatarTitulo(album.getTitulo()));
+                    File diretorio = FileUtils.getFile(diretorioDeFotos + "/" + formatador.formatarTitulo(album.getTitulo()));
 
                     //verificar se e um diretorio caso exista excluir
                     if (diretorio.isDirectory()) {
@@ -244,7 +221,7 @@ public class AlbumController extends Controller {
                         Foto foto = new Foto();
 
                         //solucao para tirar os espacos em branco, acentos do titulo do arquivo e deixa-lo tudo em minusculo
-                        arquivoTitulo = formatarTitulo(arquivoTitulo);
+                        arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                         //nome completo do arquivo
                         String jpg = arquivoTitulo + contador + extensaoPadraoDeJpg;
@@ -255,29 +232,28 @@ public class AlbumController extends Controller {
                         fotos.add(foto);
 
                         //Salva o arquivo dentro do seu respectivo diretorio
-                        FileUtils.copyFile(file, new File(diretorioDeFotos + "/" + formatarTitulo(album.getTitulo()),jpg));
+                        FileUtils.copyFile(file, new File(diretorioDeFotos + "/" + formatador.formatarTitulo(album.getTitulo()),jpg));
                         //Preparando para diminuir o tamanho da imagem
-                        BufferedImage imagemOriginal = ImageIO.read(new File(diretorioDeFotos + "/" + formatarTitulo(album.getTitulo()), jpg)); //adicionar o caminho onde a imagem esta localizada
+                        BufferedImage imagemOriginal = ImageIO.read(new File(diretorioDeFotos + "/" + formatador.formatarTitulo(album.getTitulo()), jpg)); //adicionar o caminho onde a imagem esta localizada
                         int type = imagemOriginal.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : imagemOriginal.getType();
 
                         BufferedImage imagemAlteradaJpg = modificarTamanhoImg(imagemOriginal, type, 1920, 1280);
-                        ImageIO.write(imagemAlteradaJpg, "jpg", new File(diretorioDeFotos + "/" + formatarTitulo(album.getTitulo()), jpg)); //manter o caminho para a nova imagem assim a imagem antiga sera substituida
+                        ImageIO.write(imagemAlteradaJpg, "jpg", new File(diretorioDeFotos + "/" + formatador.formatarTitulo(album.getTitulo()), jpg)); //manter o caminho para a nova imagem assim a imagem antiga sera substituida
                         contador++;
                         Logger.info("File '" + foto.getNome() + "' is created!");
                     }
 
                     album.setFotos(fotos);
                     album.setDataCadastro(new Date());
-                    album.setNomeCapa(formatarTitulo(arquivoTitulo + 0 + extensaoPadraoDeJpg));
+                    album.setNomeCapa(formatador.formatarTitulo(arquivoTitulo + 0 + extensaoPadraoDeJpg));
                     album.setNomePasta(arquivoTitulo);
                     album.save();
                     if (usuarioAtual().isPresent()) {
                         formatter.format("Usuário: '%1s' cadastrou um novo Album: '%2s'.", usuarioAtual().get().getEmail(), album.getTitulo());
                         logController.inserir(sb.toString());
                     }
-                    tipoMensagem = "success";
-                    mensagem = "Album '" + album.getTitulo() + "' cadastrado com sucesso.";
-                    return created(views.html.mensagens.album.mensagens.render(mensagem,tipoMensagem));
+                    flash("success", "Album com título '" + album.getTitulo() + "' cadastrado com sucesso.");
+                    return redirect(routes.AlbumController.telaLista(0, "titulo", "asc", ""));
                 } else {
                     formData.reject(new ValidationError("arquivo", "Selecione todos os arquivos no formato JPEG"));
                     return badRequest(views.html.admin.albuns.create.render(formData));
@@ -327,7 +303,7 @@ public class AlbumController extends Controller {
 
             String diretorioDeFotos = Play.application().configuration().getString("diretorioDeFotos");
 
-            File diretorio = FileUtils.getFile(diretorioDeFotos + "/" + formatarTitulo(album.getTitulo()));
+            File diretorio = FileUtils.getFile(diretorioDeFotos + "/" + formatador.formatarTitulo(album.getTitulo()));
 
             //verificar se e um diretorio
             if (diretorio.isDirectory()) {
@@ -342,14 +318,12 @@ public class AlbumController extends Controller {
                 logController.inserir(sb.toString());
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Album '" + album.getTitulo() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.album.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído Album com título - " + album.getTitulo());
+            return redirect(routes.AlbumController.telaLista(0, "titulo", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.album.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.AlbumController.telaLista(0, "titulo", "asc", ""));
         }
     }
 

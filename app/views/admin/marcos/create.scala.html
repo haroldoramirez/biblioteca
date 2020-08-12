@@ -3,18 +3,8 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Cadastro de Marcos Regulatórios") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.MarcoController.telaLista()" class="btn btn-default">Marcos Regulatórios</a>
-            <a disabled class="btn btn-default">Cadastro</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Cadastro de Marcos Regulatórios</h1>
-    </div>
-</div>
-<!--Tela de Cadastro-->
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Marcos Regulatórios", "fa fa-thumb-tack")
 <div class="container">
 @form(routes.MarcoController.inserir(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "marcoForm") {
     <!-- Row start -->

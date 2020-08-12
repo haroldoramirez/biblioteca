@@ -16,6 +16,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.SecuredAdmin;
+import validators.Formatador;
 import validators.MarcoFormData;
 import views.html.admin.marcos.list;
 
@@ -31,40 +32,17 @@ import static play.data.Form.form;
 
 public class MarcoController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
+    @Inject
+    private Formatador formatador;
+
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
-    }
-
-    /**
-     * metodo responsavel por modificar o titulo do arquivo
-     *
-     * @param str identificador
-     * @return a string formatada
-     */
-    private static String formatarTitulo(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "")
-                .replaceAll(" ","-")
-                .replaceAll(",", "-")
-                .replaceAll("!", "")
-                .replaceAll("/", "-")
-                .replaceAll("[?]", "")
-                .replaceAll("[%]", "")
-                .replaceAll("[']", "")
-                .replaceAll("[´]", "")
-                .replaceAll("[`]", "")
-                .replaceAll("[:]", "")
-                .toLowerCase();
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -182,7 +160,7 @@ public class MarcoController extends Controller {
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
                     //solucao para tirar os espacos em branco, acentos do titulo do arquivo e deixa-lo tudo em minusculo
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String jpg = arquivoTitulo + extensaoPadraoDeJpg;
 
@@ -216,13 +194,12 @@ public class MarcoController extends Controller {
                 marco.save();
 
                 if (usuarioAtual().isPresent()) {
-                    formatter.format("Usuário: '%1s' cadastrou um novo Marco: '%2s'.", usuarioAtual().get().getEmail(), marco.getTitulo());
+                    formatter.format("Usuário: '%1s' cadastrou um novo Marco Regulatório: '%2s'.", usuarioAtual().get().getEmail(), marco.getTitulo());
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "success";
-                mensagem = "Marco '" + marco.getTitulo() + "' cadastrado com sucesso.";
-                return created(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+                flash("success", "Marco Regulatório com título '" + marco.getTitulo() + "' cadastrado com sucesso.");
+                return redirect(routes.MarcoController.telaLista(0, "titulo", "asc", ""));
             } catch (Exception e) {
                 Logger.error(e.getMessage());
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
@@ -270,7 +247,7 @@ public class MarcoController extends Controller {
 
                     String arquivoTitulo = form().bindFromRequest().get("titulo");
 
-                    arquivoTitulo = formatarTitulo(arquivoTitulo);
+                    arquivoTitulo = formatador.formatarTitulo(arquivoTitulo);
 
                     String novoNomeJpg = arquivoTitulo + extensaoPadraoDeJpg;
 
@@ -289,9 +266,8 @@ public class MarcoController extends Controller {
                     marco.setId(id);
                     marco.update();
 
-                    tipoMensagem = "info";
-                    mensagem = "Marco '" + marco.getTitulo() + "' atualizado com sucesso.";
-                    return ok(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+                    flash("info", "Atualizado Marco Regulatório com título '" + marco.getTitulo() + "'");
+                    return redirect(routes.MarcoController.telaLista(0, "titulo", "asc", ""));
                 }
 
                 //Converte os dados do formularios para uma instancia do Objeto
@@ -299,14 +275,14 @@ public class MarcoController extends Controller {
 
                 marco.setId(id);
                 marco.update();
+                
                 if (usuarioAtual().isPresent()) {
                     formatter.format("Usuário: '%1s' atualizou o Marco: '%2s'.", usuarioAtual().get().getEmail(), marco.getTitulo());
                     logController.inserir(sb.toString());
                 }
 
-                tipoMensagem = "info";
-                mensagem = "Marco '" + marco.getTitulo() + "' atualizada com sucesso.";
-                return ok(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+                flash("info", "Atualizado Marco Regulatório com título '" + marco.getTitulo() + "'");
+                return redirect(routes.MarcoController.telaLista(0, "titulo", "asc", ""));
             } catch (Exception e) {
                 formData.reject("Erro interno de Sistema. Descrição: " + e);
                 return badRequest(views.html.admin.marcos.edit.render(id, formData, Marco.makeCategoriaMap(marcoFormData)));
@@ -361,13 +337,11 @@ public class MarcoController extends Controller {
                         marco.setDataAlteracao(new Date());
                         marco.update();
 
-                        tipoMensagem = "info";
-                        mensagem = "Imagem do Marco Regulatório '" + marco.getTitulo() + "' foi atualizado com sucesso.";
-                        return ok(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+                        flash("success", "A imagem Capa do Marco Regulatório '" + marco.getTitulo() + "' foi alterado com sucesso");
+                        return redirect(routes.MarcoController.telaLista(0, "titulo", "asc", ""));
                     } else {
-                        tipoMensagem = "danger";
-                        mensagem = "Apenas arquivos em formato JPG ou JPEG é aceito.";
-                        return badRequest(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+                        marcoForm.reject("Arquivo no formato inválido. Selecione um arquivo no formato JPEG ou JPG");
+                        return badRequest(views.html.admin.marcos.detail.render(marcoForm, marco));
                     }
                 }
             }
@@ -376,14 +350,12 @@ public class MarcoController extends Controller {
                 return ok(views.html.admin.marcos.detail.render(marcoForm, marco));
             }
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
-            Logger.error(e.toString());
-            return badRequest(views.html.mensagens.marco.mensagens.render(mensagem, tipoMensagem));
+            marcoForm.reject("Arquivo no formato inválido." + e.getLocalizedMessage());
+            return badRequest(views.html.admin.marcos.detail.render(marcoForm, marco));
         }
 
         //Buscar uma forma melhor de fazer este retorno
-        return badRequest();
+        return internalServerError("Erro interno de sistema código 500");
     }
 
     /**
@@ -432,14 +404,12 @@ public class MarcoController extends Controller {
                 Logger.info("The File " + jpg.getName() + " is removed!");
             }
 
-            tipoMensagem = "danger";
-            mensagem = "Marco '" + marco.getTitulo() + "' excluído com sucesso.";
-            return ok(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+            flash("warning", "Excluído Marco Regulatório com título - " + marco.getTitulo());
+            return redirect(routes.MarcoController.telaLista(0, "titulo", "asc", ""));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.marco.mensagens.render(mensagem,tipoMensagem));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.MarcoController.telaLista(0, "titulo", "asc", ""));
         }
     }
 

@@ -26,18 +26,14 @@ import java.util.Optional;
 @Security.Authenticated(SecuredAdmin.class)
 public class FotoController extends Controller {
 
-    static private LogController logController = new LogController();
-
-    private String mensagem;
-    private String tipoMensagem;
+    static private final LogController logController = new LogController();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -67,9 +63,8 @@ public class FotoController extends Controller {
                 if (foto.getNomeArquivo().equals(nomeFoto)) {
                     // verifica se a foto a excluir e a mesma da capa do album
                     if(foto.getNomeArquivo().equals(albumBusca.getNomeCapa())) {
-                        tipoMensagem = "warning";
-                        mensagem = "Não remover imagem capa do album!";
-                        return badRequest(views.html.mensagens.foto.mensagens.render(mensagem,tipoMensagem,albumBusca.getId()));
+                        flash("warning", "Não é possível excluir a foto com título - '" + foto.getNome() + "' arquivo padrão do album.");
+                        return redirect(routes.AlbumController.telaLista(0, "titulo", "asc", ""));
                     }
                     Ebean.delete(foto);
                 }
@@ -88,17 +83,15 @@ public class FotoController extends Controller {
             //verifica se e mesmo um arquivo para excluir
             if (jpg.isFile()) {
                 FileUtils.forceDelete(jpg);
-                Logger.info("The File Foto " + jpg.getName() + " of album " + albumBusca.getTitulo() + "is removed!");
+                Logger.info("The File Foto '" + jpg.getName() + "' of album '" + albumBusca.getTitulo() + "' is removed!");
             }
 
-            tipoMensagem = "danger";
-            mensagem = "A foto '" + nomeFoto + "' excluído com sucesso.";
-            return ok(views.html.mensagens.foto.mensagens.render(mensagem,tipoMensagem,albumBusca.getId()));
+            flash("warning", "Foto com título - " + nomeFoto + "excluído com sucesso.");
+            return redirect(routes.AlbumController.telaDetalhe(albumBusca.getId()));
         } catch (Exception e) {
-            tipoMensagem = "danger";
-            mensagem = "Erro interno de Sistema. Descrição: " + e;
             Logger.error(e.toString());
-            return badRequest(views.html.mensagens.foto.mensagens.render(mensagem,tipoMensagem,albumBusca.getId()));
+            flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+            return redirect(routes.AlbumController.telaDetalhe(albumBusca.getId()));
         }
     }
 
@@ -165,17 +158,17 @@ public class FotoController extends Controller {
                             logController.inserir(sb.toString());
                         }
 
-                       tipoMensagem = "info";
-                       mensagem = "Foto '" + novaFoto.getNome() + "' atualizado com sucesso.";
-                       return ok(views.html.mensagens.foto.mensagens.render(mensagem,tipoMensagem,album.getId()));
+                        flash("info", "Foto com título - '" + nomeFoto + "' atualizado com sucesso.");
+                        return redirect(routes.AlbumController.telaDetalhe(album.getId()));
                     }
                 }
             } catch (Exception e) {
-                formData.reject("Erro interno de Sistema. Descrição: " + e);
-                return badRequest(views.html.error.render(e.getMessage()));
+                Logger.error(e.toString());
+                flash("danger", "Não foi possível realizar esta operação " + e.getLocalizedMessage());
+                return redirect(routes.AlbumController.telaDetalhe(album.getId()));
             }
         }
-        return ok();
+        return ok("Foto atualizada.");
     }
 
     public Result foto(String nomePasta, String nomeArquivo) {

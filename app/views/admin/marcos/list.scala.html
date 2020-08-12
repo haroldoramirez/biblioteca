@@ -37,26 +37,16 @@
 @**********************************
 * Helper generating table headers *
 ***********************************@
-
-@header(key:String, title:String) = {
-    <th rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
+@header(key:String, title:String, largura: String) = {
+    <th style="@largura" rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
         <a href="@link(0, key)">@title</a>
     </th>
 }
 
-@views.html.admin.main(Messages("app.title") + " | Marcos Regulatórios") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.MarcoController.telaLista()" class="btn btn-default">Marcos Regulatórios</a>
-            <a disabled class="btn btn-default">Lista</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Lista de Marcos Regulatórios</h1>
-    </div>
-</div>
-
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Marcos Regulatórios", "fa fa-thumb-tack")
 <div class="col-sm-12">
+    @views.html.admin.notificacoes()
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
@@ -64,21 +54,20 @@
                     <a type="button" href="@routes.MarcoController.telaNovo()" class="pull-right btn btn-success"><span class="fa fa-plus"></span> Cadastrar</a>
                 </div>
             </div>
-            <hr>
+            <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="well well-sm">
                         @form(link(0, "titulo"), 'id -> "filtroForm") {
-                        <!-- INICIO - input-group -->
-                        <div class="input-group col-md-4">
-                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                            <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar marco regulatório por título" maxlength="100">
-                            <span class="input-group-btn">
-                                <input type="submit" id="searchSubmit" value="Filtrar" class="btn btn-primary">
-                                <a type="button" href="@routes.MarcoController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
-                            </span>
-                        </div>
-                        <!-- FIM - input-group -->
+                            <!-- INICIO - input-group -->
+                            <div class="input-group col-md-4">
+                                <input class="form-control" type="search" id="searchBox" name="f" value="@currentFilter" placeholder="Filtrar por título..." maxlength="70">
+                                <span class="input-group-btn">
+                                  <button type="submit" id="searchSubmit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                  <a type="button" href="@routes.MarcoController.telaLista()" class="btn btn-default"><span class="fa fa-refresh"></span> Limpar</a>
+                              </span>
+                            </div>
+                            <!-- FIM - input-group -->
                         }
                     </div>
                 </div>
@@ -91,25 +80,23 @@
             <div class="table-responsive">
                 <table border="1" class="table table-bordered table-hover dataTable">
                     <thead>
-                    <tr role="row">
-                        @header("titulo", "Título")
-                        @header("ambito", "Âmbito")
-                        @header("responsavel", "Responsável")
-                        @header("ano", "Ano")
-                        @header("categoria", "Categoria")
-                        <th>URL</th>
-                    </tr>
+                        <tr role="row">
+                            @header("titulo", "Título", "max-width: 150px")
+                            @header("ambito", "Âmbito", "width: 200px")
+                            @header("responsavel", "Responsável", "width: 200px")
+                            @header("ano", "Ano", "width: 100px")
+                            @header("categoria", "Categoria", "width: 200px")
+                        </tr>
                     </thead>
                     <tbody>
                     @for(marco <- currentPage.getList) {
-                    <tr>
-                        <td><a href="@routes.MarcoController.telaDetalhe(marco.getId)">@marco.getTitulo</a></td>
-                        <td>@marco.getAmbito</td>
-                        <td>@marco.getResponsavel</td>
-                        <td>@marco.getAno</td>
-                        <td>@marco.getCategoria.getNome</td>
-                        <td>@marco.getUrl</td>
-                    </tr>
+                        <tr>
+                            <td><a href="@routes.MarcoController.telaDetalhe(marco.getId)">@marco.getTitulo</a></td>
+                            <td>@marco.getAmbito</td>
+                            <td>@marco.getResponsavel</td>
+                            <td>@marco.getAno</td>
+                            <td>@marco.getCategoria.getNome</td>
+                        </tr>
                     }
                     </tbody>
                 </table>
@@ -125,7 +112,7 @@
                         <ul class="pagination">
                             @if(currentPage.hasPrev) {
                             <li class="paginate_button previous">
-                                <a href="@link(currentPage.getPageIndex - 1, null)">Anterior</a>
+                                <a href="@link(currentPage.getPageIndex - 1, null)"><i class="fa fa-arrow-left"></i> Anterior</a>
                             </li>
                             } else {
                             <li class="paginate_button previous disabled">
@@ -134,7 +121,7 @@
                             }
                             @if(currentPage.hasNext) {
                             <li class="paginate_button next">
-                                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo</a>
+                                <a href="@link(currentPage.getPageIndex + 1, null)">Próximo <i class="fa fa-arrow-right"></i></a>
                             </li>
                             } else {
                             <li class="paginate_button next disabled">
@@ -154,24 +141,14 @@
 }
 
 <script type="text/javascript">
+    //executa depois que a pagina carregar
     window.onload = function() {
 
-        $('.btn-primary').attr('disabled',true);
-
-        $('#searchbox').keyup(function() {
-
-            if($(this).val().length !=0){
-                $('.btn-primary').attr('disabled', false);
-            } else {
-                $('.btn-primary').attr('disabled', true);
-            }
-
-        });
-
-        var table = document.getElementsByTagName('table')[0];
+        let table = document.getElementsByTagName('table')[0];
 
         if (table != undefined) {
             resizableGrid(table);
         }
+
     };
 </script>

@@ -41,9 +41,9 @@ routes.NotaTecnicaController.telaLista(newPage, sortBy, order, currentFilter, cu
 * Helper generating table headers *
 ***********************************@
 @header(key:String, title:String, largura: String) = {
-<th style="@largura" rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
-<a href="@link(0, key)">@title</a>
-</th>
+    <th style="@largura" rowspan="1" colspan="1" tabindex="0" class="@key.replace(".","_") sorting @if(currentSortBy == key) @{if(currentOrder == "asc") "sorting_asc headercor" else "sorting_desc headercor"}">
+    <a href="@link(0, key)">@title</a>
+    </th>
 }
 
 @views.html.admin.main(Messages("app.title")) {
@@ -98,19 +98,19 @@ routes.NotaTecnicaController.telaLista(newPage, sortBy, order, currentFilter, cu
                     </thead>
                     <tbody>
                     @for(notaTecnica <- currentPage.getList) {
-                    <tr>
-                        <td><a href="@routes.NotaTecnicaController.telaDetalhe(notaTecnica.getId)">@notaTecnica.getTitulo</a></td>
-                        <td>@notaTecnica.getResumo</td>
-                        <td>@notaTecnica.getIdioma.getNome</td>
-                        <td>@notaTecnica.getAutor</td>
-                        <td>@notaTecnica.getAno</td>
-                        <td>@notaTecnica.getNumeroAcesso</td>
-                        @if(notaTecnica.getUrl == null || notaTecnica.getUrl.isEmpty || notaTecnica.getUrl.equals("https://cibiogas.org")) {
-                        <td><a class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.NotaTecnicaController.pdfAdmin(notaTecnica.getNomeArquivo)">Local <i class="fa fa-external-link"></i></a></td>
-                        } else {
-                        <td><a class="btn btn-success btn-xs" type="button" target="_blank" href="@notaTecnica.getUrl">Externo <i class="fa fa-external-link"></i></a></td>
-                        }
-                    </tr>
+                        <tr>
+                            <td><a href="@routes.NotaTecnicaController.telaDetalhe(notaTecnica.getId)">@notaTecnica.getTitulo</a></td>
+                            <td>@notaTecnica.getResumo</td>
+                            <td>@notaTecnica.getIdioma.getNome</td>
+                            <td>@notaTecnica.getAutor</td>
+                            <td>@notaTecnica.getAno</td>
+                            <td>@notaTecnica.getNumeroAcesso</td>
+                            @if(notaTecnica.getUrl == null || notaTecnica.getUrl.isEmpty || notaTecnica.getUrl.equals("https://cibiogas.org")) {
+                                <td><a class="btn btn-default btn-xs" type="button" target="_blank" href="@routes.NotaTecnicaController.pdfAdmin(notaTecnica.getNomeArquivo)">Local <i class="fa fa-external-link"></i></a></td>
+                            } else {
+                                <td><a class="btn btn-success btn-xs" type="button" target="_blank" href="@notaTecnica.getUrl">Externo <i class="fa fa-external-link"></i></a></td>
+                            }
+                        </tr>
                     }
                     </tbody>
                 </table>

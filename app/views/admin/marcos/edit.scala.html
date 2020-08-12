@@ -3,17 +3,8 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Editar Marco Regulatório") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.MarcoController.telaLista()" class="btn btn-default">Marcos Regulatórios</a>
-            <a disabled class="btn btn-default">Editar</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Editar Marco Regulatório</h1>
-    </div>
-</div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Marcos Regulatórios", "fa fa-thumb-tack")
 <div class="container">
 @form(routes.MarcoController.editar(id), 'class -> "form-horizontal", 'id -> "marcoForm") {
     <!-- Row start -->
@@ -28,12 +19,12 @@
                 <div class="panel-body">
 
                     @if(marcoForm.hasGlobalErrors) {
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-10">
-                            <p class="alert alert-danger text-center">@marcoForm.globalError.message</p>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <p class="alert alert-danger text-center">@marcoForm.globalError.message</p>
+                            </div>
                         </div>
-                    </div>
                     }
 
                     @*titulo*@
@@ -78,7 +69,7 @@
     <div class="form-group">
         <div class="col-md-12">
             <button data-loading-text="Loading..." id="btnSalvar" type="submit" class="btn btn-success pull-right" autocomplete="off">Salvar</button>
-            <a class="btn btn-default" type="button" href="@routes.MarcoController.telaLista()">Cancelar</a>
+            <a class="btn btn-default" type="button" href="@routes.MarcoController.telaDetalhe(id)">Cancelar</a>
         </div>
     </div>
     }

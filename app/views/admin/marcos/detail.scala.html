@@ -7,50 +7,40 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Detalhe do Marco") {
-    <div class="col-md-12">
-        <div class="page-header header-biogas">
-            <div class="btn-group btn-breadcrumb pull-right">
-                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-                <a href="@routes.MarcoController.telaLista()" class="btn btn-default">Marcos Regulatórios</a>
-                <a disabled class="btn btn-default">Detalhe</a>
-            </div>
-            <h1 class="font-style"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Detalhe do Marco Regulatório</h1>
-        </div>
-    </div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Marcos Regulatórios", "fa fa-thumb-tack")
 <div class="container">
+    <div class="row">
+        @if(marcoForm.hasGlobalErrors) {
+            <div class="form-group">
+                <div class="col-md-12">
+                    <p class="alert alert-danger text-center"><strong><i class="icon fa fa-ban"></i> Ocorreu um erro</strong> - @marcoForm.globalError.message</p>
+                </div>
+            </div>
+        }
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Informações
                     <div class="btn-group pull-right">
+                        <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs" type="button"><span class="fa fa-info-circle"></span></a>
                         <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Opções <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="@routes.MarcoController.telaLista()">Voltar</a></li>
-                            <li role="separator" class="divider"></li>
                             <li><a href="@routes.MarcoController.telaEditar(marco.getId)">Editar</a></li>
                             <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Arquivos</li>
                             <li><a data-toggle="modal" href="#modalImagem">Atualizar Imagem</a></li>
                             @if(usuario.isAdmin) {
-                                <li role="separator" class="divider"></li>
-                                <li><a data-toggle="modal" href="#modalRemover">Excluir</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a data-toggle="modal" href="#modalRemover">Excluir</a></li>
                             }
                         </ul>
                     </div>
                 </div>
                 <div class="panel-body">
-
-                    <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs pull-right" type="button"><span class="fa fa-info-circle"></span></a>
-
-                    @if(marcoForm.hasGlobalErrors) {
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <p class="alert alert-danger text-center">@marcoForm.globalError.message</p>
-                        </div>
-                    </div>
-                    }
 
                     <div class="item-form width-600 margin-bottom-15">
                         <label class="display-block strong">Título</label>
@@ -84,7 +74,6 @@
                     <hr>
                     <div class="item-form width-600 margin-bottom-15">
                         <label class="display-block strong">Capa</label>
-                        <p class="display-block margin-left-027em">@marco.getNomeCapa</p>
                     </div>
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-xs-6 thumb">

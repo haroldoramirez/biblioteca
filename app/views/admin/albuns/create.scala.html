@@ -3,21 +3,11 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Cadastro de Albuns de Fotos") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.AlbumController.telaLista()" class="btn btn-default">Albuns</a>
-            <a disabled class="btn btn-default">Cadastro</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-picture-o" aria-hidden="true"></i> Cadastro de Album</h1>
-    </div>
-</div>
-<!--Tela de Cadastro-->
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Albuns", "fa fa-picture-o")
 <div class="container">
 @form(routes.AlbumController.inserir, 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "albumForm") {
-    <!-- Row start -->
+
     <div class="row">
         <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="panel panel-default">
@@ -56,7 +46,6 @@
             </div>
         </div>
     </div>
-    <!-- Row end -->
 
     <hr >
     @*botoes*@
@@ -75,7 +64,7 @@
 <script type="text/javascript">
 
     window.onload = function() {
-        var form = document.getElementById("albumForm");
+        let form = document.getElementById("albumForm");
         form.elements[0].focus();
 
         $('#btnSalvar').on('click', function () {
