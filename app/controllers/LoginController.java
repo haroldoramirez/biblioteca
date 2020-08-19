@@ -10,7 +10,7 @@ import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import secured.SecuredUser;
+import secured.SecuredAdmin;
 
 import javax.inject.Inject;
 import java.util.Formatter;
@@ -18,17 +18,16 @@ import java.util.Optional;
 
 public class LoginController extends Controller {
 
-    static private LogController logController = new LogController();
+    static private final LogController logController = new LogController();
 
-    static private DynamicForm form = Form.form();
+    static private final DynamicForm form = Form.form();
 
     @Inject
     private UsuarioDAO usuarioDAO;
 
     private Optional<Usuario> usuarioAtual() {
         String email = session().get("email");
-        Optional<Usuario> possivelUsuario = usuarioDAO.comEmail(email);
-        return possivelUsuario;
+        return usuarioDAO.comEmail(email);
     }
 
     /**
@@ -67,7 +66,7 @@ public class LoginController extends Controller {
                     session().put("email", possivelUsuario.get().getEmail());
                     formatter.format("Usuário: '%1s' autenticou no sistema.", possivelUsuario.get().getEmail());
                     logController.inserir(sb.toString());
-                    return redirect(routes.Application.index());
+                    return redirect(routes.AdminController.painel(0, "nome", "asc", "", null));
                 } else {
                     DynamicForm formDeErro = form.fill(requestForm.data());
                     formDeErro.reject(Messages.get("login.error.block"));
@@ -91,7 +90,7 @@ public class LoginController extends Controller {
     /**
      * @return redirect telaLogout
      */
-    @Security.Authenticated(SecuredUser.class)
+    @Security.Authenticated(SecuredAdmin.class)
     public Result logout() {
 
         StringBuilder sb = new StringBuilder();

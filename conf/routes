@@ -71,10 +71,7 @@ GET     /admin/adicionais/avaliacao/pdf/:titulo                         controll
 
 
 # Adicionais Usuario telas
-GET     /cadastro                                                       controllers.UsuarioController.telaCadastro()
 GET     /admin/adicionais/usuario/novo/                                 controllers.UsuarioController.telaNovo()
-GET     /usuario/cadastrado                                             controllers.UsuarioController.telaCadastrado()
-GET     /usuario/reset                                                  controllers.UsuarioController.telaReset()
 GET     /admin/adicionais/usuario/editar/:id                            controllers.UsuarioController.telaEditar(id:Long)
 GET		/admin/adicionais/usuario/detalhe/:id				            controllers.UsuarioController.telaDetalhe(id:Long)
 GET     /admin/adicionais/usuario/lista/todos                           controllers.UsuarioController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
@@ -90,19 +87,13 @@ GET     /logout                                                         controll
 POST    /login                                                          controllers.LoginController.autenticar()
 
 # Usuario Servicos
-POST    /usuario                                                        controllers.UsuarioController.inserir()
-GET     /current                                                        controllers.UsuarioController.autenticado()
-GET     /usuario/confirma/:email/:confirmaToken                         controllers.UsuarioController.confirma(email, confirmaToken)
 POST    /admin/adicionais/usuario/editar/:id                            controllers.UsuarioController.editar(id:Long)
 GET     /admin/adicionais/usuario/:id                                   controllers.UsuarioController.buscaPorId(id:Long)
 GET     /admin/adicionais/usuarios/filtro/:filtro                       controllers.UsuarioController.filtra(filtro:String)
 POST	/admin/adicionais/usuario/:id/remover		                    controllers.UsuarioController.remover(id:Long)
-GET	    /admin/adicionais/usuario/:id/enviarToken		                controllers.UsuarioController.enviarToken(id:Long)
-GET	    /admin/adicionais/usuario/:id/confirma		                    controllers.UsuarioController.confirmaAdmin(id:Long)
 GET	    /admin/adicionais/usuario/:id/bloqueia		                    controllers.UsuarioController.bloquear(id:Long)
 GET	    /admin/adicionais/usuario/:id/desbloqueia		                controllers.UsuarioController.desbloquear(id:Long)
 POST    /admin/adicionais/usuario                                       controllers.UsuarioController.inserirAdmin()
-GET	    /admin/adicionais/usuario/exportar/		                        controllers.UsuarioController.exportar()
 
 # Contato
 POST    /contato                                                        controllers.ContatoController.inserir()
@@ -112,7 +103,6 @@ GET     /admin/artigo/novo/                                             controll
 GET     /admin/artigo/editar/:id                                        controllers.ArtigoController.telaEditar(id:Long)
 GET		/admin/artigo/detalhe/:id				                        controllers.ArtigoController.telaDetalhe(id:Long)
 GET     /admin/artigo/lista/todos                                       controllers.ArtigoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "", autor ?= null)
-
 
 # Artigo Servicos
 GET     /artigos                                                        controllers.ArtigoController.buscaTodos()
@@ -224,14 +214,6 @@ GET	    /admin/album/foto/remover/:pasta/:foto                          controll
 GET	    /admin/album/foto/:pasta/:foto                                  controllers.FotoController.foto(pasta:String, foto:String)
 GET		/admin/album/foto/editar/:pasta/:foto				            controllers.FotoController.telaEditar(pasta:String, foto:String)
 POST    /admin/album/foto/editar/:pasta/:foto                           controllers.FotoController.editar(pasta:String, foto:String)
-
-# Senha
-POST    /reset/senha                                                    controllers.SenhaController.runPassword()
-POST    /usuario/reset/senha                                            controllers.SenhaController.resetSenha()
-
-# Reseta a senha
-GET     /reset/:token                                                   controllers.SenhaController.reset(token:String)
-POST    /reset/:token                                                   controllers.SenhaController.runReset(token:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                                                   controllers.Assets.versioned(path="/public", file: Asset)

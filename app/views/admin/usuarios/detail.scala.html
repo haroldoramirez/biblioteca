@@ -3,35 +3,21 @@
 @import helper._
 @import templates.bootstrap._
 
-@views.html.admin.main(Messages("app.title") + " | Detalhe do Usuário") {
-<div class="col-md-12">
-    <div class="page-header header-biogas">
-        <div class="btn-group btn-breadcrumb pull-right">
-            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="@routes.UsuarioController.telaLista()" class="btn btn-default">Usuários</a>
-            <a disabled class="btn btn-default">Detalhe</a>
-        </div>
-        <h1 class="font-style"><i class="fa fa-user" aria-hidden="true"></i> Detalhe do Usuário</h1>
-    </div>
-</div>
+@views.html.admin.main(Messages("app.title")) {
+@views.html.admin.header("Usuários", "fa fa-users")
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Detalhe do Usuário
+                <div class="panel-heading">Informações
                     <div class="btn-group pull-right">
-                        <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs" type="button"><span class="fa fa-info-circle"></span></a>
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Opções <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="@routes.UsuarioController.telaLista()">Voltar</a></li>
-                            <li role="separator" class="divider"></li>
                             <li><a href="@routes.UsuarioController.telaEditar(usuario.getId)">Editar</a></li>
                             <li role="separator" class="divider"></li>
-                            @if(!usuario.isValidado) {
-                            <li><a href="@routes.UsuarioController.enviarToken(usuario.getId)">Enviar email com o Token</a></li>
-                            <li><a href="@routes.UsuarioController.confirmaAdmin(usuario.getId)">Confirmar Conta</a></li>
-                            }
                             @if(usuario.isAtivo) {
                             <li><a href="@routes.UsuarioController.bloquear(usuario.getId)">Bloquear</a></li>
                             } else {

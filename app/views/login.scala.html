@@ -49,11 +49,8 @@
                                 @templates.bootstrap.email(usuarioForm("email"), Messages("login.username"))
                                 @*password*@
                                 @templates.bootstrap.senha(usuarioForm("senha"), Messages("login.password"))
-                                <a class="pull-right" href="@routes.UsuarioController.telaReset()">@Messages("login.page.forgot.password")</a>
                                 <button data-loading-text="Loading..." id="btnAutenticar" type="submit" class="btn">@Messages("login")</button>
                             }
-                            <br>
-                            <p class="text-center">@Messages("login.page.account.ask") <a href="@routes.UsuarioController.telaCadastro()">@Messages("login.page.signup.title")</a>.</p>
                         </div>
                     </div>
                 </div>
