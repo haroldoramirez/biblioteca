@@ -1,0 +1,88 @@
+Ambiente de Produção Script
+
+Exemplo na hora de criar uma coluna na base de dados:
+alter table contato add column complemento varchar(25)
+
+
+scripts a enviar via chamado FPTI
+-----------Chamado 1
+alter table home add column url varchar(600);
+
+---------------------Chamado 2
+alter table publicacao alter column resumo type varchar(500);
+alter table publicacao alter column autor type varchar(500);
+alter table artigo alter column resumo type varchar(500);
+
+-------------Chamado 3
+
+create table trabalho (
+id                        bigserial not null,
+titulo                    varchar(150) not null,
+resumo                    varchar(500) not null,
+nome_arquivo              varchar(300) not null,
+data_cadastro             timestamp not null,
+data_alteracao            timestamp,
+numero_acesso             integer not null,
+idioma_id                 bigint,
+autores                   varchar(500) not null,
+constraint pk_trabalho primary key (id));
+
+alter table trabalho add constraint fk_trabalho_idioma_7 foreign key (idioma_id) references idioma (id);
+create index ix_trabalho_idioma_7 on trabalho (idioma_id);
+
+------------Chamado 6
+alter table artigo add column palavra_chave varchar(200);
+alter table publicacao add column palavra_chave varchar(200);
+alter table trabalho add column palavra_chave varchar(200);
+
+------------Chamado 7
+ALTER TABLE trabalho ADD COLUMN url character varying(500) NOT NULL DEFAULT 'https://cibiogas.org';
+ALTER TABLE trabalho ALTER COLUMN nome_arquivo DROP NOT NULL;
+ALTER TABLE trabalho ALTER COLUMN url DROP NOT NULL;
+
+ALTER TABLE artigo ADD COLUMN url character varying(500) NOT NULL DEFAULT 'https://cibiogas.org';
+ALTER TABLE artigo ALTER COLUMN nome_arquivo DROP NOT NULL;
+ALTER TABLE artigo ALTER COLUMN url DROP NOT NULL;
+
+ALTER TABLE publicacao ADD COLUMN nome_arquivo character varying(300) NOT NULL DEFAULT 'arquivo.pdf';
+ALTER TABLE publicacao ALTER COLUMN nome_arquivo DROP NOT NULL;
+ALTER TABLE publicacao ALTER COLUMN url DROP NOT NULL;
+
+------------Chamado 8
+create table nota_tecnica (
+  id                            bigserial not null,
+  titulo                        varchar(250) not null,
+  resumo                        varchar(500) not null,
+  url                           varchar(400),
+  idioma_id                     bigint,
+  autor                         varchar(500) not null,
+  ano                           varchar(15) not null,
+  data_cadastro                 date not null,
+  data_alteracao                date,
+  nome_capa                     varchar(250) not null,
+  numero_acesso                 integer,
+  palavra_chave                 varchar(200) not null,
+  nome_arquivo                  varchar(300) not null,
+  constraint pk_nota_tecnica primary key (id)
+);
+
+alter table nota_tecnica add constraint fk_nota_tecnica_idioma_id foreign key (idioma_id) references idioma (id) on delete restrict on update restrict;
+create index ix_nota_tecnica_idioma_id on nota_tecnica (idioma_id);
+
+alter table nota_tecnica alter column titulo type varchar(350);
+alter table nota_tecnica alter column resumo type varchar(600);
+alter table nota_tecnica alter column nome_arquivo type varchar(400);
+alter table nota_tecnica alter column nome_capa type varchar(400);
+
+alter table publicacao alter column titulo type varchar(350);
+alter table publicacao alter column resumo type varchar(600);
+alter table publicacao alter column nome_arquivo type varchar(400);
+alter table publicacao alter column nome_capa type varchar(400);
+
+alter table trabalho alter column titulo type varchar(350);
+alter table trabalho alter column resumo type varchar(600);
+alter table trabalho alter column nome_arquivo type varchar(400);
+
+alter table artigo alter column titulo type varchar(350);
+alter table artigo alter column resumo type varchar(600);
+alter table artigo alter column nome_arquivo type varchar(400);

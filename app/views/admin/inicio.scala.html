@@ -1,0 +1,284 @@
+@(publicacaoPage: com.avaje.ebean.PagedList[Publicacao],
+        usuarioPage: com.avaje.ebean.PagedList[Usuario],
+        noticiaPage: com.avaje.ebean.PagedList[Noticia],
+        avaliacaoPage: com.avaje.ebean.PagedList[Avaliacao],
+        videoPage: com.avaje.ebean.PagedList[Video],
+        usuariosLast: List[Usuario],
+        artigosLast: List[Artigo],
+        logsLast: List[Log],
+        marcoPage: com.avaje.ebean.PagedList[Marco],
+        trabalhosLast: List[Trabalho],
+        notasTecnicasLast: List[NotaTecnica])
+
+@usuario() = @{
+    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@views.html.admin.main(Messages("app.title") + " | Dashboard") {
+
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a disabled class="btn btn-default">Início</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-home" aria-hidden="true"></i> Dashboard</h1>
+        </div>
+    </div>
+
+    @*Painel Amarelo*@
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-newspaper-o fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">@noticiaPage.getTotalRowCount</div>
+                        <div>Notícias Registradas</div>
+                    </div>
+                </div>
+            </div>
+            <a href="@routes.NoticiaController.telaLista()">
+                <div class="panel-footer">
+                    <span class="pull-left">Mais Detalhes</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+    @*Painel Vermelho*@
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-video-camera fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">@videoPage.getTotalRowCount</div>
+                        <div>Vídeos Registrados</div>
+                    </div>
+                </div>
+            </div>
+            <a href="@routes.VideoController.telaLista()">
+                <div class="panel-footer">
+                    <span class="pull-left">Mais Detalhes</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    @*Painel Azul*@
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-file-text fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">@publicacaoPage.getTotalRowCount</div>
+                        <div>Publicações Registradas</div>
+                    </div>
+                </div>
+            </div>
+            <a href="@routes.PublicacaoController.telaLista()">
+                <div class="panel-footer">
+                    <span class="pull-left">Mais Detalhes</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    @*Painel Azul*@
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-leanpub fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">@avaliacaoPage.getTotalRowCount</div>
+                        <div>Avaliações Registradas</div>
+                    </div>
+                </div>
+            </div>
+            <a href="@routes.AvaliacaoController.telaLista()">
+                <div class="panel-footer">
+                    <span class="pull-left">Mais Detalhes</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="glyphicon glyphicon-education"></i> Últimos Trabalhos Acadêmicos Cadastrados</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                @for(trabalho <- trabalhosLast) {
+                    <li class="list-group-item">
+                        <span class="badge">Acessos: @trabalho.getNumeroAcesso</span>
+                        <span>@trabalho.getTitulo</span>
+                    </li>
+                }
+                </ul>
+                <div class="text-right">
+                    <a href="@routes.TrabalhoController.telaLista()">Visualizar todos os Trabalhos <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(usuario.isAdmin) {
+        @*Painel Verde*@
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@usuarioPage.getTotalRowCount</div>
+                            <div>Usuários Registrados</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="@routes.UsuarioController.telaLista()">
+                    <div class="panel-footer">
+                        <span class="pull-left">Mais Detalhes</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+
+    @*Painel Amarelo*@
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumb-tack fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">@marcoPage.getTotalRowCount</div>
+                        <div>Marcos Regulatórios Registrados</div>
+                    </div>
+                </div>
+            </div>
+            <a href="@routes.MarcoController.telaLista()">
+                <div class="panel-footer">
+                    <span class="pull-left">Mais Detalhes</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-file-text-o"></i> Últimos Artigos Cadastrados</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                @for(artigo <- artigosLast) {
+                    <li class="list-group-item">
+                        <span class="badge">Acessos: @artigo.getNumeroAcesso</span>
+                        <span>@artigo.getTitulo</span>
+                    </li>
+                }
+                </ul>
+                <div class="text-right">
+                    <a href="@routes.ArtigoController.telaLista()">Visualizar todos os Artigos <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(usuario.isAdmin) {
+        <div class="col-md-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-users"></i> Últimos Usuários Cadastrados</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                    @for(usuario <- usuariosLast) {
+                        <li class="list-group-item">
+                            <span class="pull-right text-muted small"><em> @usuario.getDataCadastro.format("dd MMMM yyyy")</em></span>
+                            <a href="@routes.UsuarioController.telaDetalhe(usuario.getId)"><span>@usuario.getNome</span></a>
+                        </li>
+                    }
+                    </ul>
+                    <div class="text-right">
+                        <a href="@routes.UsuarioController.telaLista()">
+                            Visualizar todos os Usuários <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-9">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-book"></i> Últimas Notas Técnicas Cadastradas</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                @for(notaTecnica <- notasTecnicasLast) {
+                    <li class="list-group-item">
+                        <span class="badge">Acessos: @notaTecnica.getNumeroAcesso</span>
+                        <a href="@routes.NotaTecnicaController.telaDetalhe(notaTecnica.getId)"><span>@notaTecnica.getTitulo</span></a>
+                    </li>
+                }
+                </ul>
+                <div class="text-right">
+                    <a href="@routes.NotaTecnicaController.telaLista()">Visualizar todas as Notas Técnicas <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-file"></i> Logs Registrados</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                @for(log <- logsLast) {
+                    <li class="list-group-item">
+                        <span class="pull-right text-muted small"><em> @log.getDataCadastro.getTime.format("dd MMMM yyyy - HH:mm:ss")</em></span>
+                        <span>@log.getMensagem</span>
+                    </li>
+                }
+                </ul>
+                <div class="text-right">
+                    <a href="@routes.LogController.telaLista()">Visualizar todos os Logs <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

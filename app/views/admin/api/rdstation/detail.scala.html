@@ -1,0 +1,100 @@
+@(oportunidadeRD: OportunidadeRD)
+
+@usuario() = @{
+Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+@import templates.bootstrap._
+
+<!--Inicio da Main-->
+@views.html.admin.main(Messages("app.title") + " | Detalhe") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@controllers.routes.ApiRDStationController.telaLista()" class="btn btn-default">Projetos</a>
+            <a disabled class="btn btn-default">Detalhe</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-cloud" aria-hidden="true"></i> Detalhe da Oportunidade RDStation</h1>
+    </div>
+</div>
+<!--Inicio Container-->
+<div class="container">
+    <!--Inicio row-->
+    <div class="row">
+        <!--Inicio col-md-12 col-sm-6 col-xs-12-->
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@controllers.routes.ApiRDStationController.telaLista()">Voltar</a></li>
+                            @if(usuario.isAdmin) {
+                                <li role="separator" class="divider"></li>
+                                <li><a data-toggle="modal" data-target=".bs-example-modal-sm" href="">Excluir</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive panel">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><i class="fa fa-asterisk" aria-hidden="true"></i> ID</td>
+                                    <td>@oportunidadeRD.getCodigo</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-cube" aria-hidden="true"></i> Nome</td>
+                                    <td>@oportunidadeRD.getNome</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-sitemap" aria-hidden="true"></i> ID do Campo Custom</td>
+                                    <td>@oportunidadeRD.getIdCampoCustom</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-user" aria-hidden="true"></i> Código Gerado</td>
+                                    <td>@oportunidadeRD.getValorCampoCustom</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-clock-o" aria-hidden="true"></i> Data/Hora de Cadastro</td>
+                                    <td>@oportunidadeRD.getDataCadastro.getTime.format("dd MMMM yyyy - HH:mm:ss")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fim col-md-12 col-sm-6 col-xs-12-->
+    </div>
+    <!--Fim row-->
+</div>
+<!--Fim container-->
+
+}
+<!--Final da Main-->
+
+@*Modal de confirmacao*@
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Deseja remover o projeto <b>"@oportunidadeRD.getNome"</b>?</p>
+            </div>
+            <div class="modal-footer">
+                @form(controllers.routes.ApiRDStationController.remover(oportunidadeRD.getId)) {
+                    <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

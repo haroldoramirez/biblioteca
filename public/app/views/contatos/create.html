@@ -1,0 +1,37 @@
+<div class="mdl-grid">
+    <div class="contato-max-width contato-page">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+            <div style="background-image:url(assets/images/cib/contact.webp)" class="mdl-card__title">
+                <h1 class="mdl-card__title-text">{{Messages('contact.title')}}</h1>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <form ng-submit="save()">
+                    <div class="mdl-card__supporting-text">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input maxlength="80" class="mdl-textfield__input" type="text" id="nome" ng-model="contato.nome" ng-required="true">
+                            <label class="mdl-textfield__label" for="nome">{{Messages('contact.field.name')}} *</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input maxlength="80" class="mdl-textfield__input" type="email" id="email" ng-model="contato.email" ng-required="true">
+                            <label class="mdl-textfield__label" for="email">{{Messages('contact.field.email')}} *</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input maxlength="50" class="mdl-textfield__input" type="text" id="assunto" ng-model="contato.assunto" ng-required="true">
+                            <label class="mdl-textfield__label" for="assunto">{{Messages('contact.field.subject')}} *</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <textarea maxlength="400" class="mdl-textfield__input" type="text" rows= "11" id="mensagem" ng-model="contato.mensagem" ng-required="true"></textarea>
+                            <label class="mdl-textfield__label" for="mensagem">{{Messages('contact.field.message')}} *</label>
+                        </div>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <div class="mdl-layout-spacer"></div>
+                        <button click-once id="save" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                                ng-disabled="!contato.nome || !contato.email || !contato.assunto || !contato.mensagem">{{Messages('contact.button')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

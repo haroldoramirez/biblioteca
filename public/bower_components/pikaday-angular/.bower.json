@@ -1,0 +1,33 @@
+{
+  "name": "pikaday-angular",
+  "version": "2.0.0",
+  "authors": [
+    "nverba <distantstate@gmail.com>"
+  ],
+  "description": "an AngularJS directive wraper that aims to make using Pikaday with Angular as simple as possible.",
+  "main": "pikaday-angular.js",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "ng",
+    "pikaday",
+    "date",
+    "picker",
+    "datepicker"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/nverba/pikaday-angular",
+  "dependencies": {
+    "angular": "^1.3.15",
+    "pikaday": "^1.3.2"
+  },
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.0",
+    "commit": "746e8d22091d2612bbdc4b10b06bf03b43698b93"
+  },
+  "_source": "https://github.com/nverba/pikaday-angular.git",
+  "_target": "2.0.0",
+  "_originalSource": "pikaday-angular"
+}

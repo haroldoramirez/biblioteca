@@ -1,0 +1,5 @@
+--User create developer
+CREATE USER  sa_biblioteca WITH ENCRYPTED PASSWORD 'sa_biblioteca';
+CREATE DATABASE biblioteca;
+ALTER DATABASE biblioteca OWNER TO sa_biblioteca;
+GRANT ALL PRIVILEGES ON DATABASE biblioteca to sa_biblioteca;

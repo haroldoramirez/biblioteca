@@ -1,0 +1,106 @@
+@views.html.documentacao.main("Biblioteca - Dicionário de Dados - Foto") {
+    <div class="container">
+            <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@routes.DocumentacaoController.inicio()">Início</a>
+            </li>
+            <li class="breadcrumb-item">Dicionário de Dados</li>
+            <li class="breadcrumb-item active">Foto</li>
+        </ol>
+        <div class="row">
+            <div class="col-12">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1>Table Data dictionary report - foto</h1><b>Generated: </b>Qui 07 Dez 2017 13:35:18 -02<br /><b>Server: </b>KDE Database (localhost:5432)<br /><b>Database: </b>bibliotecadb<br /><b>Schema: </b>public<br />
+                    </div>
+                </div>
+                <div style="overflow:auto;" class="container">
+                    <h2>Columns</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Data type</th>
+                            <th>Not Null?</th>
+                            <th>Primary key?</th>
+                            <th>Default</th>
+                            <th>Comment</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>bigint</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>nextval('foto_id_seq'::regclass)</td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>album_id</td>
+                            <td>bigint</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>nome</td>
+                            <td>character varying(150)</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>descricao</td>
+                            <td>character varying(400)</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>nome_arquivo</td>
+                            <td>character varying(250)</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>data_alteracao</td>
+                            <td>timestamp without time zone</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                    </table>
+                    <hr>
+                </div>
+                <div  style="overflow:auto;" class="container">
+                    <h2>Constraints</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Definition</th>
+                            <th>Comment</th>
+                        </tr>
+                        <tr>
+                            <td>pk_foto</td>
+                            <td>Primary key</td>
+                            <td>(id)</td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>fk_foto_album_2</td>
+                            <td>Foreign key</td>
+                            <td>(album_id)       REFERENCES public.album (id) MATCH SIMPLE       ON UPDATE NO ACTION ON DELETE NO ACTION</td>
+                            <td> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

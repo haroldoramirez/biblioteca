@@ -1,0 +1,78 @@
+# This is the main configuration file for the application.
+# ~~~~~
+application.name=biblioteca
+
+akka.log-level = "WARN"
+
+# The public facing name of the site. Used when sending reset emails.
+#server.hostname="localhost:9000"
+#server.hostname="https://sheltered-wave-98757.herokuapp.com/"
+server.hostname="biblioteca.cibiogas.org"
+
+# application.context=/biblioteca.t.cibiogas.org/
+# play.http.context=
+
+# The application languages
+# ~~~~~
+play.i18n.langs = ["en", "pt", "es"]
+
+# Router
+# ~~~~~
+# Define the Router object to use for this application.
+# This router will be looked up first when the application is starting up,
+# so make sure this is the entry point.
+# Furthermore, it's assumed your route naoApagar is named properly.
+# So for an application router like `my.application.Router`,
+# you may need to define a router naoApagar `conf/my.application.routes`.
+# Default to Routes in the root package (and conf/routes)
+# play.http.router = my.application.Routes
+
+# Evolutions
+# ~~~~~
+# You can disable evolutions if needed
+play.evolutions.enabled=true
+
+# You can disable evolutions for a specific datasource if necessary
+play.evolutions.db.default.enabled=true
+
+# para producao
+play.evolutions.db.default.autoApply=true
+
+# apenas para testes cuidado!
+play.evolutions.db.default.autoApplyDowns=true
+
+# Setting a custom root URL
+#play.http.context="/architectplay-1.0-SNAPSHOT/"
+
+# Root logger:
+#logger.root=ERROR
+
+# Logger used by the framework:
+#logger.play=INFO
+
+# Logger provided to your application:
+#logger.application=DEBUG
+
+# Logger for a third party library
+#logger.org.springframework=INFO
+
+ebean.default = ["models.*"]
+
+# other configs para aceitar arquivos com tamanhos maiores
+play.http.parser.maxDiskBuffer=100MB
+parsers.anyContent.maxLength=100MB
+
+# Assets configuration
+# ~~~~~ Adicionar uma hora de cache para essas dependencias
+"assets.cache./public/bower_components/bootstrap/dist/css/bootstrap.min.css"="max-age=3600"
+"assets.cache./public/bower_components/bootstrap/dist/js/bootstrap.min.js"="max-age=3600"
+"assets.cache./public/bower_components/material-design-lite/material.min.css"="max-age=3600"
+"assets.cache./public/bower_components/material-design-lite/material.min.js"="max-age=3600"
+
+# other files
+include "mail.conf"
+include "database.conf"
+include "file.conf"
+include "server.conf"
+include "secure.conf"
+#include "twitter.conf"

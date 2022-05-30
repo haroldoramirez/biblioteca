@@ -1,0 +1,9 @@
+@(tweets: List[twitter4j.Status])
+
+@for(t <- tweets) {
+    @Html(com.fizzed.play.twitter.TweetRenderer.renderHtml(t))
+}
+
+@if(tweets.isEmpty) {
+    Your twitter feed either contains no tweets OR you did not edit conf/application.conf with your Twitter API keys.
+}

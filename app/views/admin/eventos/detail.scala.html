@@ -1,0 +1,130 @@
+@(evento: Evento)
+
+@usuario() = @{
+    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe do Evento") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.EventoController.telaLista()" class="btn btn-default">Eventos</a>
+                <a disabled class="btn btn-default">Detalhe</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-calendar" aria-hidden="true"></i> Detalhe do Evento</h1>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.EventoController.telaLista()">Voltar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@routes.EventoController.telaEditar(evento.getId)">Editar</a></li>
+                            @if(usuario.isAdmin) {
+                            <li role="separator" class="divider"></li>
+                            <li><a data-toggle="modal" href="#modalRemover">Excluir</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs pull-right" type="button"><span class="fa fa-info-circle"></span></a>
+
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Nome</label>
+                        <p class="display-block margin-left-027em">@evento.getNome</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data de Início</label>
+                        <p class="display-block margin-left-027em">@evento.getDataInicio.format("dd MMMM yyyy")</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data de Término</label>
+                        <p class="display-block margin-left-027em">@evento.getDataFim.format("dd MMMM yyyy")</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Site</label>
+                        <p><a target="_blank" href="@evento.getSite" class="display-block margin-left-027em">@evento.getSite</a></p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Local</label>
+                        <p class="display-block margin-left-027em">@evento.getLocalidade</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Instituição</label>
+                        <p class="display-block margin-left-027em">@evento.getInstituicao</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Cadastro</label>
+                        <p type="date" class="display-block margin-left-027em">@evento.getDataCadastro.format("dd MMMM yyyy")</p>
+                    </div>
+                    @if(evento.getDataAlteracao != null){
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Alteração</label>
+                        <p class="display-block margin-left-027em">@evento.getDataAlteracao.format("dd MMMM yyyy")</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+<div id="modalRemover" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Deseja remover e Evento <b>"@evento.getNome"</b>?</p>
+            </div>
+            <div class="modal-footer">
+                @form(routes.EventoController.remover(evento.getId)) {
+                    <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalInfo" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelInfo">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Informações: </h4>
+                <p>É possível atualizar ou excluir o evento "<b>@evento.getNome</b>" em "<b>Opções</b>"</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

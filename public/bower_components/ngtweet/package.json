@@ -1,0 +1,36 @@
+{
+  "name": "ngtweet",
+  "version": "0.6.2",
+  "homepage": "https://github.com/arusahni/ngtweet/",
+  "repository": "arusahni/ngtweet",
+  "bugs": "https://github.com/arusahni/ngtweet/issues",
+  "description": "An AngularJS module that provides an interface into Twitter's embedded widget library.",
+  "main": "./dist/ngtweet.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp serve",
+    "build": "gulp build",
+    "version": "gulp syncVersions && git add bower.json"
+  },
+  "keywords": [
+    "angularjs",
+    "angular",
+    "twitter",
+    "tweet",
+    "widget",
+    "embed"
+  ],
+  "author": "Aru Sahni <arusahni@gmail.com> (http://arusahni.net/)",
+  "license": "MIT",
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-config-sync": "^1.0.2",
+    "gulp-ng-annotate": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-serve": "^1.0.0",
+    "gulp-uglify": "^1.2.0",
+    "node-libs-browser": "^0.5.2"
+  }
+}

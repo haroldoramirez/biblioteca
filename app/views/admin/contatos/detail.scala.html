@@ -1,0 +1,81 @@
+@(contato: Contato)
+
+@import helper._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe do Contato") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.ContatoController.telaLista()" class="btn btn-default">Contatos</a>
+                <a disabled class="btn btn-default">Detalhe</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-address-book-o" aria-hidden="true"></i> Detalhe do Contato</h1>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.ContatoController.telaLista()">Voltar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a data-toggle="modal" data-target=".bs-example-modal-sm" href="">Excluir</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Nome</label>
+                        <p class="display-block margin-left-027em">@contato.getNome</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Email</label>
+                        <p class="display-block margin-left-027em">@contato.getEmail</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Assunto</label>
+                        <p class="display-block margin-left-027em">@contato.getAssunto</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Mensagem</label>
+                        <p class="display-block margin-left-027em">@contato.getMensagem</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Criação</label>
+                        <p type="date" class="display-block margin-left-027em">@contato.getDataCadastro.format("dd MMMM yyyy")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@Messages("app.title")</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Deseja remover o contato <b>"@contato.getNome"</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    @form(routes.ContatoController.remover(contato.getId)) {
+                        <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                    }
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+}

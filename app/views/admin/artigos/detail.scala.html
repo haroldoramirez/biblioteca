@@ -1,0 +1,177 @@
+@(artigoForm: play.data.Form[validators.ArtigoFormData], artigo: Artigo, temArquivo: Boolean)
+
+@usuario() = @{
+Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe do Artigo") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.ArtigoController.telaLista()" class="btn btn-default">Artigos</a>
+            <a disabled class="btn btn-default">Detalhe</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-file-text-o" aria-hidden="true"></i> Detalhe do Artigo Científico</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.ArtigoController.telaLista()">Voltar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@routes.ArtigoController.telaEditar(artigo.getId)">Editar</a></li>
+                            @if(temArquivo) {
+                                <li role="separator" class="divider"></li>
+                                <li><a data-toggle="modal" href="#modalPdf">Atualizar PDF</a></li>
+                            }
+                            @if(usuario.isAdmin) {
+                            <li role="separator" class="divider"></li>
+                            <li><a data-toggle="modal" href="#modalRemover">Excluir</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs pull-right" type="button"><span class="fa fa-info-circle"></span></a>
+
+                    @if(artigoForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p class="alert alert-danger text-center">@artigoForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Título</label>
+                        <p class="display-block margin-left-027em">@artigo.getTitulo</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Resumo</label>
+                        <p class="display-block margin-left-027em">@artigo.getResumo</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Idioma</label>
+                        <p class="display-block margin-left-027em">@artigo.getIdioma.getNome</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Autor/Autores</label>
+                        <p class="display-block margin-left-027em">@artigo.getAutores</p>
+                    </div>
+                    @if(artigo.getPalavraChave != null) {
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Palavras Chave</label>
+                        <p class="display-block margin-left-027em">@artigo.getPalavraChave</p>
+                    </div>
+                    }
+                    @if(artigo.getNomeArquivo != null && artigo.getNomeArquivo != "arquivo.pdf" && artigo.getNomeArquivo != "") {
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Arquivo</label>
+                        <p class="display-block margin-left-027em">@artigo.getNomeArquivo -> <a target="_blank" href="@routes.ArtigoController.pdfAdmin(artigo.getNomeArquivo)">Visualizar</a></p>
+                    </div>
+                    }
+                    @if(artigo.getUrl != null && artigo.getUrl != "") {
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">URL</label>
+                        <p class="display-block margin-left-027em">@artigo.getUrl -> <a target="_blank" href="@artigo.getUrl">Visualizar</a></p>
+                    </div>
+                    }
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Número de Acessos</label>
+                        <p class="display-block margin-left-027em">@artigo.getNumeroAcesso</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Cadastro</label>
+                        <p type="date" class="display-block margin-left-027em">@artigo.getDataCadastro.format("dd MMMM yyyy")</p>
+                    </div>
+                    @if(artigo.getDataAlteracao != null){
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Alteração</label>
+                        <p class="display-block margin-left-027em">@artigo.getDataAlteracao.format("dd MMMM yyyy")</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<div id="modalRemover" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Deseja remover o Artigo Científico <b>"@artigo.getTitulo"</b>?</p>
+            </div>
+            <div class="modal-footer">
+                @form(routes.ArtigoController.remover(artigo.getId)) {
+                    <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalPdf" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelPDF">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            @form(routes.ArtigoController.editarPdf(artigo.getId), 'enctype -> "multipart/form-data") {
+                <div class="modal-body">
+                    @arquivopdf(artigoForm("arquivo"), label = "Arquivo")
+                </div>
+                <br >
+                <div class="modal-footer">
+                    <input id="btnJpg" type="submit" value="Atualizar" class="btn btn-primary">
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalInfo" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelInfo">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Informações: </h4>
+                <p>Caso o artigo científico tenha um PDF salvo, é possível atualizar o arquivo selecionando "<b>Opções</b>"</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

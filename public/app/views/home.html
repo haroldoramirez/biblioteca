@@ -1,0 +1,184 @@
+<div class="mdl-grid margem-desktop">
+    <!--Cartao Introducao Slide-->
+    <div ng-hide="imagens.length == 0" ng-init="inicioCarousel()" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone carousel-home">
+        <section>
+            <div class="esconde-celular-home">
+                    <div ng-carousel ng-carousel-name="carousel-home" class="carousel-biogas" ng-carousel-timer="5000" ng-carousel-watch="imagens">
+                    <slidecontainer>
+                            <slide ng-repeat="imagem in imagens">
+                                <a target="_blank" ng-href="{{imagem.url}}">
+                                    <div style="background-image:url(home/jpg/{{imagem.nomeArquivo}})" class="mdl-card__title"></div>
+                                <div style="position:absolute; bottom:1px; left:45px;">
+                                    <h3 class="texto-slide animacao">{{imagem.descricao}}</h3>
+                                </div>
+                                </a>
+                            </slide>
+                    </slidecontainer>
+                    <div class="carousel-arrow carousel-arrow-left">
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-color--deep-orange-cibiogas-text cib-nav mdl-color--white" ng-click="anterior()">
+                            <i class="material-icons">&#xE314;</i>
+                        </button>
+                    </div>
+                    <div class="carousel-arrow carousel-arrow-right">
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-color--deep-orange-cibiogas-text cib-nav mdl-color--white" ng-click="proximo()">
+                            <i class="material-icons">&#xE315;</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="mdl-card__supporting-text">
+            <h1 class="mdl-typography--headline">{{Messages('app.welcome.message')}}</h1>
+            <p class="paragrafos-home">{{Messages('app.home.message.1')}}</p>
+            <p class="paragrafos-home">{{Messages('card.home.welcome.text.1')}}<a target="_blank" href="cadastro"> {{Messages('card.home.welcome.link.1')}}</a>!</p>
+            <p class="paragrafos-home">{{Messages('card.home.welcome.text.2')}}<a ui-sref="compartilhar"> {{Messages('card.home.welcome.link.2')}}</a></p>
+            <p class="paragrafos-home">{{Messages('app.home.message.4')}}</p>
+        </div>
+    </div>
+
+    <!--Cartao Membro-->
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-membro-home">
+        <div style="background-image:url(assets/images/cib/cadastro1.webp)" class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{Messages('card.home.newuser.title')}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <p>{{Messages('card.home.registration.text')}}</p>
+            <p>{{Messages('card.home.registration.text.1')}}</p>
+            <p><a target="_blank" href="cadastro">{{Messages('card.home.newuserlink.title')}}</a>!</p>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <a ui-sref="membro" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                {{Messages('card.button.title')}}
+            </a>
+        </div>
+    </div>
+
+    <!--Cartao Compartilhe seu artigo-->
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-compartilhar-home">
+        <div style="background-image:url(assets/images/cib/share1.webp)" class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{Messages('card.home.share.title')}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <p>{{Messages('card.home.share.text')}}</p>
+            <p>{{Messages('card.home.share.text.1')}}</p>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <a ui-sref="compartilhar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                {{Messages('card.button.title')}}
+            </a>
+        </div>
+    </div>
+
+    <!--Cartao Ultimas Notas Tecnicas-->
+    <div ng-init="inicioNotastecnicas()" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-publicacao-home">
+        <div style="background-image:url(assets/images/cib/notas-tecnicas.webp)" class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{Messages('card.home.technical.notes.title')}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div ng-repeat="notaTecnica in notasTecnicas">
+                <div class="separador-publicacoes"></div>
+                <p class="wf-card-publicacao-home-line"><a ui-sref="notastecnicas/detalhe({id:notaTecnica.id})">{{notaTecnica.titulo}}</a></p>
+                <p class="wf-card-publicacao-home-line">
+                    {{notaTecnica.resumo}}
+                </p>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <a ui-sref="notastecnicas" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                {{Messages('card.button.title')}}
+            </a>
+        </div>
+    </div>
+
+    <!--Cartao Ultimas Publicações-->
+    <div ng-init="inicioPublicacoes()" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-publicacao-home">
+        <div style="background-image:url(assets/images/cib/publications.webp)" class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{Messages('card.home.publications.title')}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div ng-repeat="publicacao in publicacoes">
+                <div class="separador-publicacoes"></div>
+                <p class="wf-card-publicacao-home-line"><a ui-sref="publicacoes/detalhe({id:publicacao.id})">{{publicacao.titulo}}</a></p>
+                <p class="wf-card-publicacao-home-line">
+                    {{publicacao.resumo}}
+                </p>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <a ui-sref="publicacoes" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                {{Messages('card.button.title')}}
+            </a>
+        </div>
+    </div>
+
+    <!--Cartao Notícias-->
+    <div ng-init="inicioNoticias()" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-noticia-home">
+        <div style="background-image:url(assets/images/cib/newspaper.webp)" class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{Messages('card.home.news.title')}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div ng-repeat="noticia in noticias">
+                <div class="separador"></div>
+                <p class="wf-card-noticia-home-line"><strong>{{noticia.titulo}}</strong></p>
+                <p class="wf-card-noticia-home-line">
+                    {{noticia.resumo}}
+                </p>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <a ui-sref="noticias" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                {{Messages('card.button.title')}}
+            </a>
+        </div>
+    </div>
+
+    <!--Cartao Evento-->
+    <div ng-init="inicioEventos()" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-evento-home">
+        <div style="background-image:url(assets/images/cib/events1.webp)" class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{Messages('event.page.title')}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div ng-repeat="evento in eventos">
+                <div class="separador-eventos"></div>
+                <div class="eventos-home">
+                    <div class="data-home">
+                        <div class="dia-home">
+                            <div class="numero-home">
+                                {{dia(evento.dataInicio)}}
+                            </div>
+                            <div class="mes-home">
+                                {{mes(evento.dataInicio)}}
+                            </div>
+                            <div class="ano-home">
+                                {{ano(evento.dataInicio)}}
+                            </div>
+                        </div>
+                    </div>
+                    <a target="_blank" ng-href="{{evento.site}}">
+                        <p class="wf-card-evento-home-line">{{evento.nome}}</p>
+                    </a>
+                    <p class="wf-card-evento-home-line"><b>{{Messages('card.event.local.title')}}</b> : {{evento.localidade}}</p>
+                    <p class="wf-card-evento-home-line"><b>{{Messages('card.event.institution.title')}}</b> : {{evento.instituicao}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <a ui-sref="eventos/futuros" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                {{Messages('card.button.title')}}
+            </a>
+        </div>
+    </div>
+
+    <!--Cartao twitter-->
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone twitter-card">
+        <twitter-timeline>
+            <a class="twitter-timeline" href="https://twitter.com/HaroldoRamirez/lists/biogas" data-widget-id="673710543212052480"> Tweets from https://twitter.com/HaroldoRamirez/lists/biogas</a>
+        </twitter-timeline>
+    </div>
+</div>

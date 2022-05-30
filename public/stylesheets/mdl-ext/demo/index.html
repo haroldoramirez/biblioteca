@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>Material Design Lite Extensions</title>
+
+<!-- Fallback to homescreen for Chrome <39 on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Material Design Lite Extensions">
+<link rel="icon" sizes="192x192" href="./assets/android-desktop.png">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Material Design Lite Extensions">
+<link rel="apple-touch-icon" href="./assets/ios-desktop.png">
+
+<link rel="shortcut icon" href="./assets/favicon.png">
+
+<!-- styles -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="styles/dialog-polyfill.css">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<link rel="stylesheet" href="../lib/mdl-ext-eqjs.min.css">
+<link rel="stylesheet" href="./styles/demo.css">
+
+  <title>Material Design Lite Extensions</title>
+</head>
+
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdlext-layout__sticky-header mdlext-js-sticky-header">
+  <div class="mdl-layout__header-row">
+
+  <!-- Title -->
+  <span id="header-title" class="mdl-layout-title">Title goes here</span>
+
+  <!-- Add spacer, to align navigation to the right -->
+  <div class="mdl-layout-spacer"></div>
+
+  <label id="go-home" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+    <a href="index.html">
+      <i class="material-icons">home</i>
+    </a>
+  </label>
+
+  <button id="header-menu" class="mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">more_vert</i>
+  </button>
+  <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="header-menu">
+    <li class="mdl-menu__item">Some Action</li>
+    <li class="mdl-menu__item">Another Action</li>
+    <li disabled="" class="mdl-menu__item">Disabled Action</li>
+    <li class="mdl-menu__item">Yet Another Action</li>
+  </ul>
+</div>
+
+</header>
+
+  <style>
+  /* Ugly CSS! Only for demo. */
+
+  #demo-drawer-accordion {
+    height: 100%;
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tab {
+    height: 64px;
+    min-height: 64px;
+    min-width: 64px;
+    padding-left: 16px;
+  }
+
+  .is-small-screen #demo-drawer-accordion .mdlext-accordion__tab {
+    height: 56px;
+    min-height: 56px;
+    min-width: 56px;
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tabpanel,
+  #demo-drawer-accordion .mdlext-accordion__tabpanel nav {
+    padding: 0;
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tabpanel .mdl-navigation__link {
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tabpanel .mdl-navigation__link:hover {
+    background-color: #212121;
+  }
+
+</style>
+
+
+<aside class="mdl-layout__drawer">
+
+  <ul id="demo-drawer-accordion" class="mdlext-accordion mdlext-js-accordion mdlext-accordion--vertical mdlext-js-ripple-effect mdlext-js-animation-effect mdlext-dark-color-theme" aria-multiselectable="false">
+
+    <li class="mdlext-accordion__panel">
+      <header class="mdlext-accordion__tab" aria-expanded="true">
+        <span class="mdlext-accordion__tab__caption">MDL Extensions</span>
+        <i class="mdlext-aria-toggle-material-icons"></i>
+      </header>
+      <section class="mdlext-accordion__tabpanel">
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="accordion.html">Accordion</a>
+          <a class="mdl-navigation__link" href="bordered-fields.html">Bordered Fields</a>
+          <a class="mdl-navigation__link" href="collapsible.html">Collapsible</a>
+          <a class="mdl-navigation__link" href="color-themes.html">Color Themes</a>
+          <a class="mdl-navigation__link" href="formatfield.html">Formatted Fields</a>
+          <a class="mdl-navigation__link" href="grid.html">Grid</a>
+          <a class="mdl-navigation__link" href="carousel.html">Image Carousel</a>
+          <a class="mdl-navigation__link" href="lightboard.html">Lightboard</a>
+          <a class="mdl-navigation__link" href="lightbox.html">Lightbox</a>
+          <a class="mdl-navigation__link" href="menu-button.html">Menu Button</a>
+          <a class="mdl-navigation__link" href="selectfield.html">Selectfield</a>
+        </nav>
+      </section>
+    </li>
+    <li class="mdlext-accordion__panel">
+      <header class="mdlext-accordion__tab">
+        <span class="mdlext-accordion__tab__caption">Sticky headers</span>
+        <i class="mdlext-aria-toggle-material-icons"></i>
+      </header>
+      <section class="mdlext-accordion__tabpanel">
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="sticky-header.html">Sticky Header I</a>
+          <a class="mdl-navigation__link" href="sticky-header-ii.html">Sticky Header II</a>
+          <a class="mdl-navigation__link" href="sticky-header-iii.html">Sticky Header III</a>
+          <a class="mdl-navigation__link" href="sticky-header-iv.html">Sticky Header IV</a>
+          <a class="mdl-navigation__link" href="sticky-header-v.html">Sticky Header V</a>
+          <a class="mdl-navigation__link" href="sticky-header-vi.html">Sticky Header VI</a>
+        </nav>
+      </section>
+    </li>
+  </ul>
+</aside>
+
+  <main id="mount" class="mdl-layout__content">
+    <h5 class="mdlext-demo-header">mdl-ext</h5>
+<p>Material Design Lite Ext (MDLEXT).
+  Components built with the
+  <a href="https://github.com/google/material-design-lite">Google Material Design Lite</a>
+  framework.
+</p>
+
+<h3>Components provided</h3>
+
+<h4>Accordion</h4>
+<p>A WAI-ARIA friendly accordion component with vertcial or horizontal layout.</p>
+
+<h4>Bordered Fields</h4>
+<p>The Material Design Lite Ext (MDLEXT) bordered fieldscomponent demonstrates
+  how you can create your own theme of MDL text fields.
+</p>
+
+<h4>Collapsible</h4>
+<p>A collapsible is a component to mark expandable and collapsible regions.</p>
+
+<h4>Color Themes</h4>
+<p>MDL provides only one color theme. Many designs require more than one theme, e.g. a dark theme and a light theme.</p>
+
+<h4>Grid</h4>
+<p>A responsive grid based on element queries in favour of media queries.</p>
+
+<h4>Image Carousel</h4>
+<p>A responsive, WAI-ARIA friendly, image carousel.</p>
+
+<h4>Lightboard</h4>
+<p>A lightboard is a translucent surface illuminated from behind, used for
+  situations where a shape laid upon the surface needs to be seen with high contrast.
+  In the "old days" of photography photograpers used a lightboard to get a quick
+  view of, sorting and organizing their slides.
+</p>
+
+<h4>Lightbox</h4>
+<p>A lightbox displays an image filling the screen, and dimming out the rest of
+  the web page. It acts as a modal dialog using the <code>&lt;dialog&gt;</code>
+  element as a container for the lightbox.
+</p>
+
+<h4>Menu Button</h4>
+<p>A WAI-ARIA friendly menu button component/widget with roles, attributes and behavior in accordance with the
+  specification given in WAI-ARIA Authoring Practices, section 2.20.
+</p>
+
+<h4>Selectfield</h4>
+<p>The Material Design Lite Ext (MDLEXT) select field component is an enhanced version
+  of the standard [HTML <code>&lt;select&gt;</code> element.
+</p>
+
+<h4>Sticky Header</h4>
+<p>A sticky header makes site navigation easily accessible anywhere on the page and saves content space at the same.</p>
+
+  </main>
+</div>
+<script src="scripts/dialog-polyfill.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,es6"></script>
+<script src="scripts/eq.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://code.getmdl.io/1.2.1/material.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../lib/mdl-ext.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+  (function() {
+    'use strict';
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('#header-title');
+      if(title) {
+        title.innerHTML = 'Material Design Lite Extensions';
+      }
+    });
+  }());
+</script>
+</body>
+</html>

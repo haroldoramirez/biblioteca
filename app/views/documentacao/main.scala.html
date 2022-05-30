@@ -1,0 +1,188 @@
+@(title: String)(content: Html)
+
+@usuario() = @{
+Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@title</title>
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("sb-admin-gh/vendor/bootstrap/css/bootstrap.min.css")">
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("sb-admin-gh/vendor/font-awesome/css/font-awesome.min.css")">
+    <!-- Page level plugin CSS-->
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("sb-admin-gh/vendor/datatables/dataTables.bootstrap4.css")">
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("sb-admin-gh/css/sb-admin.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/imprime.css")">
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="@routes.DocumentacaoController.inicio()">Documentação Biblioteca</a>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li @if(request.path.equals("/documentacao/inicio")){ class="nav-item active" } else { class="nav-item" } data-toggle="tooltip" data-placement="right" title="Início">
+            <a class="nav-link" href="@routes.DocumentacaoController.inicio()">
+                <i class="fa fa-fw fa-cube"></i>
+                <span class="nav-link-text">Início</span>
+            </a>
+            </li>
+            <li @if(request.path.equals("/documentacao/manual")){ class="nav-item active" } else { class="nav-item" } class="nav-item" data-toggle="tooltip" data-placement="right" title="Manual">
+            <a class="nav-link" href="@routes.DocumentacaoController.manual()">
+                <i class="fa fa-fw fa fa fa-files-o"></i>
+                <span class="nav-link-text">Manual</span>
+            </a>
+            </li>
+            <li @if(request.path.equals("/documentacao/sobre")){ class="nav-item active" } else { class="nav-item" } class="nav-item" data-toggle="tooltip" data-placement="right" title="Sobre">
+            <a class="nav-link" href="@routes.DocumentacaoController.sobre()">
+                <i class="fa fa-fw fa fa-chevron-right"></i>
+                <span class="nav-link-text">Sobre</span>
+            </a>
+            </li>
+            <li @if(request.path.equals("/documentacao/api")){ class="nav-item active" } else { class="nav-item" } class="nav-item" data-toggle="tooltip" data-placement="right" title="API">
+            <a class="nav-link" href="@routes.DocumentacaoController.api()">
+                <i class="fa fa-fw fa fa-chevron-right"></i>
+                <span class="nav-link-text">API</span>
+            </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dicionário de Dados">
+                <a @if(request.path.contains("/documentacao/dicionario")){ class="nav-link nav-link-collapse" } class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa fa-table"></i>
+                <span class="nav-link-text">Dicionário de Dados</span>
+                </a>
+                <ul @if(request.path.contains("/documentacao/dicionario")){ class="sidenav-second-level collapse show" } class="sidenav-second-level collapse" id="collapseComponents">
+            <li @if(request.path.equals("/documentacao/dicionario/pais")){ class="active"}>
+            <a href="@routes.DocumentacaoController.pais()">País</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/categoria")){ class="active"}>
+            <a href="@routes.DocumentacaoController.categoria()">Categoria</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/idioma")){ class="active"}>
+            <a href="@routes.DocumentacaoController.idioma()">Idioma</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/album")){ class="active"}>
+            <a href="@routes.DocumentacaoController.album()">Álbum</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/foto")){ class="active"}>
+            <a href="@routes.DocumentacaoController.foto()">Foto</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/artigo")){ class="active"}>
+            <a href="@routes.DocumentacaoController.artigo()">Artigo</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/avaliacao")){ class="active"}>
+            <a href="@routes.DocumentacaoController.avaliacao()">Avaliação</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/contato")){ class="active"}>
+            <a href="@routes.DocumentacaoController.contato()">Contato</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/curso")){ class="active"}>
+            <a href="@routes.DocumentacaoController.curso()">Curso</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/evento")){ class="active"}>
+            <a href="@routes.DocumentacaoController.evento()">Evento</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/home")){ class="active"}>
+            <a href="@routes.DocumentacaoController.home()">Home</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/log")){ class="active"}>
+            <a href="@routes.DocumentacaoController.log()">Log</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/marco")){ class="active"}>
+            <a href="@routes.DocumentacaoController.marco()">Marco</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/noticia")){ class="active"}>
+            <a href="@routes.DocumentacaoController.noticia()">Notícia</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/publicacao")){ class="active"}>
+            <a href="@routes.DocumentacaoController.publicacao()">Publicação</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/notatecnica")){ class="active"}>
+            <a href="@routes.DocumentacaoController.notaTecnica()">Nota Tecnica</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/site")){ class="active"}>
+            <a href="@routes.DocumentacaoController.site()">Site</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/token")){ class="active"}>
+            <a href="@routes.DocumentacaoController.token()">Token</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/trabalho")){ class="active"}>
+            <a href="@routes.DocumentacaoController.trabalho()">Trabalho</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/usuario")){ class="active"}>
+            <a href="@routes.DocumentacaoController.usuario()">Usuário</a>
+            </li>
+            <li @if(request.path.equals("/documentacao/dicionario/video")){ class="active"}>
+            <a href="@routes.DocumentacaoController.video()">Vídeo</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+            <li class="nav-item">
+                <a class="nav-link text-center" id="sidenavToggler">
+                    <i class="fa fa-fw fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-in"></i>voltar</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="content-wrapper">
+    @*Conteudo*@
+    @content
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>&copy; <script>document.write(new Date().getFullYear())</script> - @Messages("app.title")</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Biblioteca</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Deseja voltar para o painel do administrador?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Não</button>
+                    <a class="btn btn-success" href="@routes.AdminController.painel()">Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="@routes.Assets.versioned("bower_components/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.versioned("sb-admin-gh/vendor/bootstrap/js/bootstrap.bundle.min.js")" type="text/javascript"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="@routes.Assets.versioned("sb-admin-gh/vendor/jquery-easing/jquery.easing.min.js")" type="text/javascript"></script>
+            <script src="@routes.Assets.versioned("sb-admin-gh/vendor/datatables/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("sb-admin-gh/vendor/datatables/dataTables.bootstrap4.js")" type="text/javascript"></script>
+                <!-- Custom scripts for all pages-->
+            <script src="@routes.Assets.versioned("sb-admin-gh/js/sb-admin.min.js")" type="text/javascript"></script>
+    <!-- Custom scripts for this page-->
+    <script src="@routes.Assets.versioned("sb-admin-gh/js/sb-admin-datatables.min.js")" type="text/javascript"></script>
+        </div>
+</body>
+</html>

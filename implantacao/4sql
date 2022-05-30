@@ -1,0 +1,1 @@
+ALTER SEQUENCE oportunidade_rd_id_seq RESTART WITH 266;

@@ -1,0 +1,283 @@
+@(usuario : Usuario)
+@lang() = @{Http.Context.current().lang().code()}
+@agente() = @{request().getHeader(Http.HeaderNames.USER_AGENT)}
+<!DOCTYPE html>
+<html ng-app="biblioteca">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        @*Add to homescreen for Chrome on Android*@
+    <meta name="mobile-web-app-capable" content="yes">
+        @*Add to homescreen for Microsoft*@
+    <meta name="msapplication-TileColor" content="#3372DF">
+        @*Add to homescreen for Safari on iOS*@
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="@Messages("app.title")">
+    <meta name="apple-mobile-web-app-title" content="@Messages("app.title")">
+    <title>@Messages("app.title")</title>
+    <meta property="og:title" content="{{ngMeta.title}}"/>
+    <meta property="og:description" content="{{ngMeta.description}}"/>
+    <meta property="og:type" content="{{ngMeta['og:type']}}" />
+    <meta property="og:locale" content="{{ngMeta['og:locale']}}" />
+    <meta name="author" content="{{ngMeta['author']}}" />
+        @*Carregar a Pagina*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/cloak.css")">
+        @*Icones da aplicacao*@
+    <link rel="icon" sizes="192x192" href="@routes.Assets.versioned("images/cibiogasicon.png")">
+    <link rel="apple-touch-icon-precomposed" href="@routes.Assets.versioned("images/cibiogasicon.png")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/cibiogasicon.png")">
+        @*Material Design Lite*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/material-design-lite/material.min.css")">
+        @*Angular Loading Bar*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/angular-loading-bar/build/loading-bar.min.css")">
+        @*Angular Toastr*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/angular-toastr/dist/angular-toastr.min.css")">
+        @*Angular Motion*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/angular-motion/dist/angular-motion.min.css")">
+        @*Angular Ng Dialog*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/ng-dialog/css/ngDialog.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/ng-dialog/css/ngDialog-theme-default.min.css")">
+        @*Lightbox2 Para as Imagens*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/lightbox2/dist/css/lightbox.min.css")">
+        @*Lity para carregar os videos do youtube*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/lity/dist/lity.css")">
+        @*Angular Carousel*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/angular-carousel/angular-carousel.min.css")">
+        @*Dependencias do Material Design Icons e Fonts*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/material/fonts.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/material/icons.css")">
+        @*Estilos do CIBIogas*@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/templatemdl.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/efeitos.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/cartao.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/cartao-home.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/evento.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/carousel.css")">
+</head>
+<body twitter-widget-initialize ng-cloak>
+<div class="cib-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <header class="cib-header mdl-layout__header mdl-color--deep-orange-cibiogas mdl-color-text--white">
+        <div class="mdl-layout__header-row">
+            <div ncy-breadcrumb></div>
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right separadortop">
+                <a ui-sref="busca" ng-class="{activetop:$state.includes('busca')}" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                    <i class="material-icons">&#xE8B6;</i>
+                </a>
+                <div class="mdl-textfield__expandable-holder"></div>
+            </div>
+                @*Menu superior*@
+            <nav class="top-navigation mdl-navigation">
+                <a href="@routes.Application.mudaIdioma?lang=pt" class="mdl-navigation__link @if(lang.equals("pt")) {active-bandeira}">
+                    <img alt="portugues.png" src="@routes.Assets.versioned("images/bandeiras/br.png")">
+                </a>
+                <a href="@routes.Application.mudaIdioma?lang=en" class="mdl-navigation__link @if(lang.equals("en")) {active-bandeira}">
+                    <img alt="ingles.png" src="@routes.Assets.versioned("images/bandeiras/us.png")">
+                </a>
+                <a href="@routes.Application.mudaIdioma?lang=es" class="mdl-navigation__link @if(lang.equals("es")) {active-bandeira}">
+                    <img alt="espanhol.png" src="@routes.Assets.versioned("images/bandeiras/es.png")">
+                </a>
+                @if(usuario == null) {
+                    <a href="@routes.LoginController.telaLogin" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white esconde-celular">@Messages("menu.16")</a>
+
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon esconde-celular-botao-vertical" id="entrar">
+                        <i class="material-icons">&#xE853;</i>
+                    </button>
+                    <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right esconde-celular-botao-vertical" for="entrar">
+                        <a href="@routes.LoginController.telaLogin" class="mdl-menu__item mdl-color--deep-orange-cibiogas-text">@Messages("menu.16")</a>
+                    </ul>
+
+                }
+                @if(usuario != null) {
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+                        <i class="material-icons">&#xE5D4;</i>
+                    </button>
+                    <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+                        @if(usuario != null) {
+                            <a class="mdl-menu__item mdl-menu__item--full-bleed-divider mdl-color--deep-orange-cibiogas-text">@usuario.getEmail</a>
+                            <a ui-sref="usuarios" ng-class="{active:$state.includes('usuarios')}" class="mdl-menu__item mdl-menu__item--full-bleed-divider">@Messages("menu.14")</a>
+                        }
+                        @if(usuario != null) {
+                            <a href="@routes.LoginController.logout" class="mdl-menu__item">@Messages("menu.15")</a>
+                        }
+                    </ul>
+                }
+            </nav>
+        </div>
+    </header>
+        @*menu gaveta*@
+    <div class="mdl-layout__drawer" id="drawer">
+        <header class="cib-drawer-header">
+            <a ui-sref="home"><img alt="cibiogas.logo" src="@routes.Assets.versioned("images/CIBiogas_logo.png")"></a>
+        </header>
+        <nav class="cib-navigation mdl-navigation mdl-color--white">
+            <a ui-sref="home" ng-class="{active:$state.current.activetab == 'home'}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE88A;</i> @Messages("menu.1")</a>
+            <a ui-sref="cursos" ng-class="{active:$state.includes('cursos')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE80C;</i> @Messages("menu.2")</a>
+            <a ui-sref="eventos/futuros" ng-class="{active:$state.current.activetab == 'eventos'}" class="mdl-navigation__link" ><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE878;</i> @Messages("menu.biogas.9")</a>
+            <a ui-sref="noticias" ng-class="{active:$state.current.activetab == 'noticias'}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE80B;</i>@Messages("menu.biogas.10")</a>
+            <a ui-sref="albuns" ng-class="{active:$state.current.activetab == 'albuns'}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE412;</i>@Messages("menu.7")</a>
+            <a ui-sref="trabalhos" ng-class="{active:$state.includes('trabalhos')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE24D;</i>@Messages("menu.17")</a>
+            <a ui-sref="notastecnicas" ng-class="{active:$state.current.activetab == 'notastecnicas'}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">description</i>@Messages("menu.19")</a>
+            <a ui-sref="compartilhar" ng-class="{active:$state.includes('compartilhar')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">cloud_upload</i>@Messages("menu.18")</a>
+            <div class="separador"></div>
+            <a ui-sref="publicacoes" ng-class="{active:$state.current.activetab == 'publicacoes'}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE894;</i>@Messages("menu.biogas.11")</a>
+            <a ui-sref="artigos" ng-class="{active:$state.includes('artigos')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE865;</i>@Messages("menu.4")</a>
+            <a ui-sref="videos" ng-class="{active:$state.includes('videos')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE04A;</i>@Messages("menu.6")</a>
+            <div class="separador"></div>
+            <a ui-sref="marcos" ng-class="{active:$state.includes('marcos')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE84F;</i>@Messages("menu.biogas.6")</a>
+            @*<a ui-sref="registros" ng-class="{active:$state.includes('registros')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE55B;</i>@Messages("menu.biogas.8")</a>*@
+            <a ui-sref="sites" ng-class="{active:$state.includes('sites')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE069;</i>@Messages("menu.biogas.12")</a>
+            <a ui-sref="biogas" ng-class="{active:$state.includes('biogas')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE88E;</i>@Messages("menu.biogas.13")</a>
+            @if(usuario != null){
+                @if(usuario.isAdmin || usuario.isGerente){
+                    <div class="separador"></div>
+                    <span class="mdl-navigation__link">@Messages("menu.12")</span>
+                    <a class="mdl-navigation__link" href="@routes.AdminController.painel()"><i class="mdl-color-text--blue-grey-500 material-icons" role="presentation">&#xE431;</i>@Messages("menu.13")</a>
+                }
+            }
+            <div class="mdl-layout-spacer"></div>
+            <div class="separador"></div>
+            <a ui-sref="contato" ng-class="{active:$state.includes('contato')}" class="mdl-navigation__link"><i class="mdl-color--deep-orange-cibiogas-text material-icons" role="presentation">&#xE8FD;</i>@Messages("menu.biogas.14")</a>
+        </nav>
+    </div>
+        @*precisa pra carregar a content corretamente*@
+    <main class="mdl-layout__content mdl-color--grey-100">
+        <section>
+            @if(agente().contains("Trident/7.0") || agente().contains("Edge/13")) {
+                <div class="margem-deskop">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                            <div class="mdl-card__title">
+                                <h3>@Messages("app.incompatible.browser.detected.title")</h3>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <p>@Messages("app.title") @Messages("app.incompatible.browser.message.title") <a target="_blank" href="https://www.mozilla.org/pt-BR/firefox/new/">Firefox</a>, <a target="_blank" href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @*Load pages*@
+            <div ui-view autoscroll="true"></div>
+
+            @*Footers*@
+            <footer class="mdl-mini-footer mdl-color--grey-200">
+                <div class="mdl-mini-footer__left-section">
+                    <div class="mdl-logo">
+                        <a target="_blank" class="mdl-color-text--grey-500" href="https://cibiogas.org">&copy; <script>document.write(new Date().getFullYear())</script> - @Messages("app.title.cibiogas")</a>
+                    </div>
+                </div>
+
+                <div class="mdl-mini-footer__right-section">
+                    <a id="youtube" target="_blank" href="https://www.youtube.com/channel/UCEuoR_lr7wqdQYcPSoPZnng/feed" class = "mdl-mini-footer__social">
+                        <img src="@routes.Assets.versioned("images/social/youtube-cib.png")">
+                    </a>
+                    <div class="mdl-tooltip" for="youtube">Youtube</div>
+                    <a id="linkedin" target="_blank" href="https://www.linkedin.com/company/cibiog%C3%A1s-er" class = "mdl-mini-footer__social">
+                        <img src="@routes.Assets.versioned("images/social/linkedin-cib.png")">
+                    </a>
+                    <div class="mdl-tooltip" for="linkedin">Linkedin</div>
+                    <a id="facebook" target="_blank" href="https://www.facebook.com/cibiogas" class = "mdl-mini-footer__social">
+                        <img src="@routes.Assets.versioned("images/social/facebook-cib.png")">
+                    </a>
+                    <div class="mdl-tooltip" for="facebook">Facebook</div>
+                </div>
+            </footer>
+            <footer style="padding: 5px;" class="cib-footer mdl-mini-footer mdl-color--grey-300">
+                <ul>
+                    <img style="height: 100px" src="@routes.Assets.versioned("images/embrapa-logo.png")">
+                </ul>
+                <ul>
+                    <img style="height: 77px" src="@routes.Assets.versioned("images/pti-logo.png")">
+                </ul>
+                <ul>
+                    <img style="height: 70px" src="@routes.Assets.versioned("images/itaipu-logo.png")">
+                </ul>
+            </footer>
+        </section>
+    </main>
+</div>
+    @*Pollyfil*@
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    @*Recebe as mensagens atraves do idioma do navegador*@
+<script src="@routes.Application.jsMessages()" type="text/javascript"></script>
+    @*Drawer Material Desing Lite*@
+<script src="@routes.Assets.versioned("javascripts/drawer.js")" type="text/javascript"></script>
+    @*Analytics*@
+<script src="@routes.Assets.versioned("javascripts/analytics.js")" type="text/javascript"></script>
+    @*Jquery para o lightbox*@
+<script src="@routes.Assets.versioned("bower_components/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+    @*lodash*@
+<script src="@routes.Assets.versioned("bower_components/lodash/dist/lodash.min.js")" type="text/javascript"></script>
+    @*Angular*@
+<script src="@routes.Assets.versioned("bower_components/angular/angular.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("bower_components/angular-ui-router/release/angular-ui-router.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("bower_components/angular-resource/angular-resource.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("bower_components/angular-cookies/angular-cookies.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("bower_components/angular-animate/angular-animate.min.js")" type="text/javascript"></script>
+    @*Material Design*@
+<script src="@routes.Assets.versioned("bower_components/material-design-lite/material.min.js")" type="text/javascript"></script>
+    @*Angular Loading Bar*@
+<script src="@routes.Assets.versioned("bower_components/angular-loading-bar/build/loading-bar.min.js")" type="text/javascript"></script>
+    @*Angular Toastr*@
+<script src="@routes.Assets.versioned("bower_components/angular-toastr/dist/angular-toastr.tpls.min.js")" type="text/javascript"></script>
+    @*NG Dialog*@
+<script src="@routes.Assets.versioned("bower_components/ng-dialog/js/ngDialog.min.js")" type="text/javascript"></script>
+    @*Moment.js*@
+<script src="@routes.Assets.versioned("bower_components/moment/min/moment.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("bower_components/moment/locale/pt-br.js")" type="text/javascript"></script>
+    @*Lightbox2 Para as Imagens*@
+<script src="@routes.Assets.versioned("bower_components/lightbox2/dist/js/lightbox.min.js")" type="text/javascript"></script>
+    @*Lity para carregar os videos do youtube*@
+<script src="@routes.Assets.versioned("bower_components/lity/dist/lity.js")" type="text/javascript"></script>
+    @*Youtube Iframe API external src*@
+<script src="@routes.Assets.versioned("javascripts/youtube.js")" type="text/javascript"></script>
+    @*NG Tweet*@
+<script src="@routes.Assets.versioned("bower_components/ngtweet/dist/ngtweet.min.js")" type="text/javascript"></script>
+    @*Angular Youtube Embed*@
+<script src="@routes.Assets.versioned("bower_components/angular-youtube-mb/dist/angular-youtube-embed.min.js")" type="text/javascript"></script>
+    @*Hammer for angular carousel*@
+<script src="@routes.Assets.versioned("bower_components/hammerjs/hammer.min.js")" type="text/javascript"></script>
+    @*Angular carousel*@
+<script src="@routes.Assets.versioned("bower_components/angular-carousel/angular-carousel.min.js")" type="text/javascript"></script>
+    @*Angular Social Share*@
+<script src="@routes.Assets.versioned("bower_components/angular-socialshare/dist/angular-socialshare.min.js")" type="text/javascript"></script>
+    @*File Upload*@
+<script src="@routes.Assets.versioned("bower_components/ng-file-upload/ng-file-upload.min.js")" type="text/javascript"></script>
+    @*Angular Google Analytics*@
+<script src="@routes.Assets.versioned("bower_components/angular-google-analytics/dist/angular-google-analytics.min.js")" type="text/javascript"></script>
+    @*Angular Breadcrumbs*@
+<script src="@routes.Assets.versioned("bower_components/angular-breadcrumb/dist/angular-breadcrumb.js")" type="text/javascript"></script>
+    @*Angular ng-infinite-scroll*@
+<script src="@routes.Assets.versioned("bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js")" type="text/javascript"></script>
+    @*Angular ngMeta SEO*@
+<script src="@routes.Assets.versioned("bower_components/ngMeta/dist/ngMeta.js")" type="text/javascript"></script>
+    @*Aplicacao Angular*@
+<script src="@routes.Assets.versioned("app/app.js")" type="text/javascript"></script>
+    @*Configuracao do endereco da aplicacao e as rotas implementadas*@
+<script src="@routes.Assets.versioned("app/services/address.service.js")" type="text/javascript"></script>
+    @*Directives*@
+<script src="@routes.Assets.versioned("app/directives/sticky.js")" type="text/javascript"></script>
+    @*Controllers*@
+<script src="@routes.Assets.versioned("app/controllers/home.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/usuario.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/livro.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/curso.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/artigo.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/trabalho.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/video.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/busca.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/album.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/site.controller.js")" type="text/javascript"></script>
+    @*Controllers biogas*@
+<script src="@routes.Assets.versioned("app/controllers/marcos.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/registros.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/evento.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/noticia.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/publicacao.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/notatecnica.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/avaliacao.controller.js")" type="text/javascript"></script>
+<script src="@routes.Assets.versioned("app/controllers/contato.controller.js")" type="text/javascript"></script>
+</body>
+</html>

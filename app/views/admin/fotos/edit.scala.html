@@ -1,0 +1,70 @@
+@(fotoForm: play.data.Form[validators.FotoFormData], foto: Foto, nomePasta: String, nomeFoto: String, album: Album)
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Editar Foto") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.ArtigoController.telaLista()" class="btn btn-default">Fotos</a>
+                <a disabled class="btn btn-default">Editar</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-picture-o" aria-hidden="true"></i> Editar Foto do Album @album.getTitulo</h1>
+        </div>
+    </div>
+<div class="container">
+@form(routes.FotoController.editar(nomePasta, nomeFoto), 'class -> "form-horizontal", 'id -> "fotoForm") {
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações</div>
+                <div class="panel-body">
+
+                    @if(fotoForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="alert alert-danger text-center">@fotoForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    <a class="thumbnail">
+                        <img class="img-responsive" src="@routes.FotoController.foto(album.getNomePasta,foto.getNomeArquivo)" alt="@foto.getDescricao">
+                    </a>
+
+                    @*titulo*@
+                    @texto(fotoForm("nome"),
+                    label = "Nome:",
+                    placeholder = "Insira o nome")
+
+                    @*resumo*@
+                    @textoarea(fotoForm("descricao"),
+                    label = "Descrição:",
+                    placeholder = "Insira a descrição",
+                    caracteres = "400")
+
+
+                    @*botoes*@
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="btnSalvar" type="submit" class="btn btn-success pull-right">Editar</button>
+                            <a href="@routes.AlbumController.telaLista()" class="btn btn-default" type="button">Cancelar</a>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        var form = document.getElementById("fotoForm");
+        form.elements[0].focus();
+    };
+</script>

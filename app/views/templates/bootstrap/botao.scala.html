@@ -1,0 +1,10 @@
+@(field: Field, nome: String = "")
+
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn-block btn btn-xs btn-default">
+        <input id="@field.id"
+               type="checkbox"
+               name="@field.name"
+               @if(field.value.getOrElse("").equals("on")) {checked}>@nome
+    </label>
+</div>

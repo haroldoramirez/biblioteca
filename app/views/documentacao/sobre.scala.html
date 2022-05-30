@@ -1,0 +1,199 @@
+@views.html.documentacao.main("Biblioteca - Documentação") {
+    <div class="container-fluid">
+            <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@routes.DocumentacaoController.inicio()">Início</a>
+            </li>
+            <li class="breadcrumb-item active">Sobre</li>
+        </ol>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column">
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link" href="#item-1">1 Introdução</a>
+                        <a class="nav-link active" href="#item-2">2 Componentes</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ml-3 my-1" href="#item-2-1">2.1 Jackson JSON</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-2">2.2 Apache Commons</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-3">2.3 Playframework</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-4">2.4 Hibernate</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-5">2.5 Java Persistence API</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-6">2.6 Servlets</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-7">2.7 Junit</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-8">2.8 Logback</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-9">2.9 Angular JS</a>
+                            <a class="nav-link ml-3 my-1" href="#item-2-10">2.10 Bower</a>
+                        </nav>
+                        <a class="nav-link active" href="#item-3">3 Arquitetura de Desenvolvimento</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ml-3 my-1" href="#item-3-1">3.1 Aplicação Web</a>
+                            <a class="nav-link ml-3 my-1" href="#item-3-1-1">3.1.1 Camada de Apresentação</a>
+                            <a class="nav-link ml-3 my-1" href="#item-3-1-2">3.1.2 Camada de Controle</a>
+                            <a class="nav-link ml-3 my-1" href="#item-3-1-3">3.3.3 Camada de Modelo</a>
+                        </nav>
+                    </nav>
+                </nav>
+            </div>
+            <div class="col-10">
+                <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="scrollspy-example-2">
+                    <h4 id="item-1">1 Introdução</h4>
+                    <p>A Biblioteca Digital é um sistema web que permite o armazenamento e a organização de informações para pesquisa na área do Biogás.
+                        Este documento tem por objetivo descrever as tecnologias envolvidas no desenvolvimento do sistema em questão, bem como explanar sobre a arquitetura
+                        definida para a construção do mesmo.</p>
+                    <h4 id="item-2">2 Componentes</h4>
+                    <p>O sistema desenvolvido utiliza diversos componentes externos tais como bibliotecas, frameworks e APIs amplamente difundidas, as quais visam a reutilização de código e a agilidade no desenvolvimento de sistemas. Esses componentes possuem responsabilidades distintas no sistema e serão abordados de forma detalhada neste capítulo.
+                        Mais informações e documentação externa de cada componente estão localizados no capítulo de Referências Externas.</p>
+                    <h5 id="item-2-1">2.1 Jackson JSON</h5>
+                    <p>Jackson é uma biblioteca escrita em Java para processamento de JavaScript Object Notation (JSON). Ele segue as mesmas premissas de
+                        grandes bibliotecas Java utilizadas para mapeamento de XML, porém traz as funcionalidades para o mapeamento JSON.
+                        Existem três métodos alternativos para processamento de JSON, um método lê e escreve conteúdo ao JSON através de eventos discretos,
+                        o segundo provê uma árvore de nós JSON em memória e o terceiro faz a conversão de JSON e classes Java ou vice-versa a partir de
+                        convenções e anotações. No projeto ele é aplicado na troca de mensagens entra as camadas que compõe o sistema, sendo elas o front-end e back-end.</p>
+                    <h5 id="item-2-2">2.2 Apache Commons</h5>
+                    <p>O Apache Commons consiste em um conjunto de bibliotecas open-source de código Java com o intuito de prover reusabilidade.
+                        São componentes modularizados e focados em propósitos específicos, como arquivos, operações matemáticas,
+                        log e coleções, os quais podem ser importados e reutilizados separadamente.</p>
+                    <p>Tais bibliotecas, apresentam implementações otimizadas e simplificadas para problemas triviais encontrados durante o desenvolvimento
+                        de sistemas para a plataforma Java.</p>
+                    <p>O principal conceito apresentado por essas bibliotecas é o baixo acoplamento, uma vez que as mesmas possuem o mínimo de dependência com outras
+                        bibliotecas, assim o reuso pode ser feito de maneira modular e distinta. Outro ponto importante dessas bibliotecas é a preocupação com a
+                        manutenção das interfaces, visando a redução de problemas com futuras mudanças. Algumas bibliotecas Apache Commons
+                        são utilizadas na Biblioteca do Biogás, para realizar
+                        algumas operações de manipulações de arquivos e por ser mais compatível com os servidores Apache Tomcat.</p>
+                    <h5 id="item-2-3">2.3 Playframework</h5>
+                    <p>No ano de 2007 os projetistas estavam pensando em criar uma jeito de desenvolver aplicações web de maneira menos complicada,
+                        o Play framework era um projeto interno da Zenexity situado da cidade de Paris, foi influenciado pela maneira de fazer projetos
+                        Web sempre focando na produtividade do desenvolvedor, no ano de 2009 foi decidido compartilhar essas ideias com a comunidade como
+                        projeto de código aberto, o projeto ganhou força depois do feedback positivo na comunidade e após 2 anos o Play framework teve duas
+                        versões e uma comunidade ativa de 4000 pessoas com constante crescimento e muitas aplicações rodando em todo o globo. Atualmente é mantido pela Typesafe. </p>
+                    <p>O Play framework reinterpreta o desenvolvimento Web no Java, com foco na produtividade do desenvolvedor em arquiteturas RESTful,
+                        interface HTTP simplificada, aproveitando todo o poder da máquina virtual do Java, não segue os padrões de especificações do JAVAEE
+                        isso o fez levar para um caminho onde se oferece várias tecnologias para diferentes partes da sua aplicação tudo de forma integrada,
+                        conhecido também como framework Full Stack tornando o assim um dos mais produtivos do mercado.</p>
+                    <p>O Play framework segue os princípios do padrão MVC, que possibilita o baixo acoplamento entre a camada de apresentação, dados e lógica de negócio,
+                        junto com várias outras soluções integradas, como suporte a várias bases de dados como mysql, postgresql, MongoDB, noSQL e suporte a
+                        Internacionalização(i18n), capacidade de programar nas linguagens Java e Scala e a possibilidade de realizar deploy em ambientes de
+                        produção nos servidores Apache Tomcat. Também está de forma integrada um compilador responsável por compilar templates na linguagem Scala,
+                        apresentando erros de sintaxe em tempo de compilação agilizando o processo de desenvolvimento de software. Foi escolhido o framework Play
+                        por agilizar a parte de desenvolvimento, por apresentar ferramentas integradas como i18n, autenticação e todo o backend foi desenvolvido
+                        no playframework com a linguagem java.</p>
+                    <h5 id="item-2-4">2.4 Hibernate</h5>
+                    <p>O Hibernate é uma solução para mapeamento Objeto/Relacional (ORM) para ambientes Java. Os dados de um modelo de representação em objetos para um modelo de representação relacional (e vice-versa).
+                        Além desta funcionalidade, o Hibernate também fornece uma API robusta de abstração de SQL, utilizada para consulta e obtenção de dados.</p>
+                    <p>O framework também fornece uma implementação da especificação JPA, permitindo a utilização de suas anotações,
+                        do EntityManager e demais componentes especificados na JPA. O Playframework suporte implementações na especificação JPA.</p>
+                    <h5 id="item-2-5">2.5 Java Persistence API</h5>
+                    <p>A Java Persistence API (JPA) provê uma solução para mapeamento objeto/relacional padronizada pela especificação JSR317, que
+                        é utilizada para gerenciar dados de bancos de dados relacionais em aplicações Java. A JPA abrange um mecanismo de consultas,
+                        chamado Java Persistence Query Language (JPQL), um mecanismo para criação de critérios chamado Java Persistence Criteria API
+                        que também é utilizado em consultas, e os meta-dados (anotações) utilizados para o mapeamento dos objetos para os dados relacionais.</p>
+                    <h5 id="item-2-6">2.6 Servlets</h5>
+                    <p>Um servlet é um padrão de classe Java para a implementação de respostas à requisições web.
+                        Servlets são capazes de se comunicar com qualquer protocolo cliente-servidor, no entanto,
+                        o mais comumente utilizado é o HTTP. Essas classes possibilitam a adição de comportamento dinâmico
+                        à aplicações em um servidor web na plataforma Java. Esse conteúdo pode apresentar diversos formatos,
+                        entretanto o HTML é o mais comumente utilizado, mas podem ser outros utilizados, como o XML.</p>
+                    <p>Com o uso de Servlets, é possível manter o estado de variáveis de sessão diante de várias transações em servidores,
+                        utilizando cookies HTTP ou URL rewriting. Para implantar e executar servlets é necessário um container web, tal como Tomcat ou JBoss,
+                        o qual corresponde a um componente essencial de um servidor web, com a responsabilidade de gerenciar o ciclo de vida dos servlets,
+                        o mapeamento das URLs para servlets.</p>
+                    <p>Servlets são frequentemente usados para:</p>
+                    <ul>
+                        <li>Processar ou armazenar dados que foram submetidos de um formulário HTML;</li>
+                        <li>Prover conteúdo dinâmico, como os resultados de uma consulta a um banco de dados;</li>
+                        <li>Gerenciar o estado de informações que não existe no protocolo stateless HTTP, como preencher
+                            os artigos em um carrinho de compras de um cliente de uma loja online.</li>
+                    </ul>
+                    <p>A API de Servlets (do pacote javax.servlet) define o comportamento de objetos para representação de requisições, que serão recebidas do cliente,
+                        e as respostas às mesmas, bem como para parâmetros de configurações e execução.</p>
+                    <h5 id="item-2-7">2.7 Junit</h5>
+                    <p>O JUnit é um framework voltado para testes unitários de classes Java. Com ele pode-se testar cada pedaço que compõe a aplicação, sem a necessidade de lógicas complexas de teste e com a possibilidade de
+                        facilitar o processo de teste. Com o JUnit pode-se ter uma maior praticidade para criação de testes, assim como para localização de erros e ações de correção.</p>
+                    <h5 id="item-2-8">2.8 Logback</h5>
+                    <p>Logback é uma solução para logging em aplicações. Criada pelo fundador do famoso Log4j, o Logback em sua implementação com base na SLF4J,
+                        uma API que fornece um conjunto de interfaces genéricas para diversas soluções de logging. Apesar de não ser uma especificação da plataforma
+                        Java, o SLF4J acabou se tornando muito utilizado, pois permite unificar as diversas soluções de logging em um ponto único.</p>
+                    <h5 id="item-2-9">2.9 Logback</h5>
+                    <p>O AngularJS é um framework JavaScript open-source, mantido pelo Google, o qual auxilia no desenvolvimento de aplicações
+                        single-page, aquelas em que o foco é aumentar a fluidez da navegação do usuário pelo sistema, de modo que requisições de novos conteúdos ao
+                        servidor e transições entre páginas do sistema não exigam o reload completo da página, apenas o conteúdo relevante é substituído, assim como
+                        em aplicações desktop.</p>
+                    <p>Seu objetivo é adicionar a característica de aplicações Model–View– Controller (MVC) ao desenvolvimento web, adaptando e estendendo as marcações
+                        do HTML tradicional e assim, baseado em programação declarativa, possibilitando um comportamento dinâmico. Para isso,
+                        a biblioteca analisa as tags e atributos adicionais presentes no HTML e, seguindo as diretrizes definidas para estes atributos personalizados,
+                        liga-se as partes de entrada e ou saída na página à um modelo representado por variáveis JavaScript. Os valores presentes nessas
+                        variáveis podem ser configurados manualmente ou obtidos mediante recursos estáticos ou dinâmicos, sempre representados pelo formato JSON.
+                        O comportamento dinâmico das aplicações deve-se ao recurso de two-way data- binding provido pelo framework, permitindo a sincronização
+                        automática de modelos em JavaScript com as visões em HTML, as quais são interpretadas e exibidas pelo navegador web.</p>
+                    <p>Diante disso, a filosofia do AngularJS é diferenciada em relação à outros frameworks com o mesmo propósito, uma vez que não
+                        é baseado em manipulação de DOM e é totalmente pensado e desenvolvido orientado à realização de testes.</p>
+                    <p>Objetivos de design:</p>
+                    <ul>
+                        <li>Desacopla a manipulação de DOM da lógica de negócio. Isso facilita a criação os testes da aplicação;</li>
+                        <li>Considera os testes da aplicação como de mesma importância que o próprio desenvolvimento da mesma, uma vez que a
+                            estrutura da aplicação influencia diretamente a capacidade de teste do código;</li>
+                        <li>Gerenciar o estado de informações que não existe no protocolo stateless HTTP, como preencher os artigos em um carrinho de compras de um cliente de uma loja online;</li>
+                        <li>Desacopla o lado do cliente do lado servidor. Assim o desenvolvimento da aplicação provedora de conteúdo (servidor) e aplicação de apresentação de conteúdo pode
+                            ser realizado de forma paralela, aumentando o reuso em ambas as partes.</li>
+                    </ul>
+                    <p>Como mencionado, o AngularJS segue os princípios do padrão MVC e possibilita o baixo acoplamento entra apresentação, dados e lógica de
+                        negócio. Por meio da injeção de dependências, o framework traz aspectos presentes em aplicações servidoras,
+                        como controladores orientados à visão, para o lado do cliente. Assim, boa parte da lógica que antes era empregada no servidor, passa a
+                        ser executada no lado do cliente, tornando o sistema web ainda mais flexível.</p>
+                    <h5 id="item-2-10">2.10 Bower</h5>
+                    <p>Por muito tempo, bibliotecas e frameworks front-end passavam por um mecanismo manual de gerenciamento o qual correspondia a acessar o site/página
+                        da dependência desejada, realizar o download e então importá-la em sua aplicação. No entanto, updates, quick-fixes e novos
+                        recursos ficavam dependentes de uma nova consulta manual ao site da dependência, além disso, as bibliotecas deviam acompanhar fisicamente o
+                        projeto web, sobrecarregando o armazenamento do mesmo.</p>
+                    <p>A maioria das linguagens de programação já possuem ferramentas para automatizar e facilitar o gerenciamento de dependências.
+                        Por exemplo: Java – (Maven e Gradle), Ruby – (Rubygems), Python – (pip), entre outras. No desenvolvimento front-end, uma ferramenta
+                        que vem ganhando bastante espaço nessa área é o Bower. Como o bower possui foco no gerenciamento de componentes de front-end, pode ser
+                        adicionado em qualquer projeto, independente do back-end ser desenvolvido em Java, Ruby, Python, Node, PHP, etc.</p>
+                    <h4 id="item-3">3 Arquitetura de Desenvolvimento</h4>
+                    <p>A arquitetura definida para o desenvolvimento do sistema web de configuração consiste em diversos padrões, módulos e bibliotecas,
+                        os quais foram definidos baseando-se em práticas de desenvolvimento de software que visam a reutilização e flexibilidade, com o
+                        intuito de agilizar o desenvolvimento do projeto, bem como facilitar evoluções e manutenções futuras. A definição e adoção de tais
+                        elementos tecnológicos, foi fundamentada na utilização de tecnologias amplamente difundidas e consolidadas.</p>
+                    <h5 id="item-3-1">3.1 Aplicação Web</h5>
+                    <p>A aplicação web segue o modelo arquitetural MVC (Model-View-Controller), o qual consiste na divisão das responsabilidades do sistema em três camadas.
+                        A camada de Modelo (Model) possui regras de negócio, a Apresentação (View) possui a lógica de apresentação gráfica, e o Controlador (Controller)
+                        atua como um intermediador de comunicação entre as camadas de visualização e modelo e onde possui a lógica de negócio.</p>
+                    <p>A Figura a seguir, representa como a aplicação web foi construída.</p>
+                    <img src="@routes.Assets.versioned("images/sobre/playweb.jpg")" class="img-fluid" alt="Play Framework Web">
+                    <p>O Play Framework é totalmente estático e orientado a pedido/respostas, todas as solicitações seguem o mesmo caminho,
+                        Playframework (2014) explica que quando o pedido é recebido pelo framework o componente de rotas realiza uma busca para a rota mais
+                        específica compatível com o pedido HTTP recebido, quando a rota for encontrada, o método de ação que se localiza na controller é invocado e a
+                        aplicação executa o código retornando uma view complexa em forma de HTTP, e se for uma ação de alterar dados brutos, um arquivo de modelo é
+                        renderizado e o resultado da ação é então retornada em forma de HTTP novamente.	</p>
+                    <p>A próxima figura demonstra o ciclo de vida das requisições no Play Framework</p>
+                    <img src="@routes.Assets.versioned("images/sobre/placiclorequest.jpg")" class="img-fluid" alt="Play Framework Request Cicle">
+                    <p>Quando o navegador realiza um pedido de requisição, essa requisição vai para o arquivo router, o Play framework realiza uma busca e
+                        verifica se a requisição se encaixa corretamente com a encontrada no arquivo de rotas, ao encontrar a requisição solicitada é invocada uma ação
+                        para a controller respectiva da requisição, se essa ação é de renderizar uma página o framework compila a página HTML e retorna para o navegador,
+                        caso a ação seja de atualizar, buscar informações e salvar a Model do Play framework se responsabiliza em se comunicar com a base de dados.</p>
+                    <h5 id="item-3-1-1">3.1.1 Camada de Apresentação</h5>
+                    <p>Essa camada é composta pelos componentes visuais que definem as telas do sistema, as quais são exibidas aos usuários por meio de um navegador de internet (Google Chrome, Mozilla Firefox, entre outros). </p>
+                    <p>As telas e seus componentes foram criados utilizando principalmente a linguagens HTML, CSS e JavaScript. Entre os arquivos referentes a parte de apresentação
+                        existem tabelas e campos para pesquisa construídos através das funcionalidades do HTML. </p>
+                    <p>Gerenciado as páginas HTML, existem arquivos de controle que são responsáveis pelo binding de atributos lógicos, que serão passados para a camada de
+                        controle, com os componentes apresentados em tela. Essa ligação é feita através do AngularJS e é crucial para o preenchimento correto e eficiente das telas com as informações corretas. São esses arquivos de controle que indicam como e quais informações serão dispostas para o usuário.</p>
+                    <h5 id="item-3-1-2">3.1.2 Camada de Controle</h5>
+                    <p>A camada de controle (Controller) é responsável por fazer a comunicação entre as outras duas camadas, apresentação e modelo. Ao gerenciar o fluxo de
+                        dados ela conseguirá intermediar os acessos e fornecer dados para a camada de apresentação.</p>
+                    <p>Os arquivos de controle foram implementados em Java e foram estendidas as funcionalidades da Controller do Playframework, são reutilizados os métodos
+                        prontos do framework. Esses métodos podem ser para apresentar uma página ou alguma outra funcionalidade específica.</p>
+                    <p>Quando a url especificada é invocada pela camada de apresentação, é realizado uma busca no arquivo router, ao encontrar o método associado a essa url o
+                        Playframework executa o método associado.</p>
+                    <h5 id="item-3-1-3">3.3.3 Camada de Modelo</h5>
+                    <p>A Camada de Entidade (Model) é composta por um conjunto de classes simples que aplicam os conceitos de mapeamento de objetos como tabela no banco de
+                        dados relacional. Esse recurso foi utilizado através de anotações como @@Entity do JPA que indica que essa classe representa uma tabela.
+                        Existem a classe Model do Playframework que deve obrigatoriamente ser estendida para persistir as informações como tabelas e através disso na
+                        Camada de Controle podemos utilizar funcionalidade de persistência na base de dados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

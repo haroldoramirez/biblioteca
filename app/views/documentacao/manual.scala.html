@@ -1,0 +1,56 @@
+@views.html.documentacao.main("Biblioteca - Manual") {
+    <div class="container-fluid">
+            <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@routes.DocumentacaoController.inicio()">Início</a>
+            </li>
+            <li class="breadcrumb-item active">Manual</li>
+        </ol>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column">
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link" href="#item-1">1 Introdução</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ml-3 my-1" href="#item-1-1">1.1 Objetivo</a>
+                        </nav>
+                        <a class="nav-link" href="#item-2">2 Componentes</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ml-3 my-1" href="#item-2-1">2.1 Jackson JSON</a>
+                        </nav>
+                    </nav>
+                </nav>
+            </div>
+            <div class="col-10">
+                <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="scrollspy-example-2">
+                    <h3 id="item-1">1 Introdução</h3>
+                    <h5 id="item-1-1">1.1 Objetivo</h5>
+                    <p>Este conjunto de páginas tem por objetivo apresentar as características e funcionalidades do Sistema
+                        Biblioteca Digital, com o intuito de possibilitar ao usuário um completo conhecimento do
+                        sistema, bem como para sanar dúvidas e dificuldades que venham a sugir durante a utilização do
+                        mesmo. Diante disso, serão apresentadas as telas do sistema, juntamente com seus respectivos
+                        aspectos e responsabilidades.
+                    </p>
+                    <h4 id="item-2">2 Biblioteca do Biogás</h4>
+                    <p>O sistema consiste em realizar o armazenamento de conteúdos sobre biogás, manter esses cadastros sempre atualizados e o sistema permite o cadastro de:</p>
+                    <ul>
+                        <li>Cadastro de Trabalhos Acadêmicos</li>
+                        <li>Cadastro de Artigos Científicos</li>
+                        <li>Cadastro de Publicações</li>
+                        <li>Cadastro de Eventos</li>
+                        <li>Cadastro de Cursos</li>
+                        <li>Cadastro de Vídeos</li>
+                        <li>Cadastro de Notícias</li>
+                        <li>Cadastro de Marcos Regulatórios</li>
+                        <li>Cadastro de Sites</li>
+                        <li>Cadastro de Albuns de Fotos</li>
+                        <li>Cadastro de Usuários</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

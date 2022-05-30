@@ -1,0 +1,35 @@
+@(livros: List[Livro])(mensagem : String)
+
+@views.html.admin.main("Administração - Livros") {
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Lista de Livros
+                <a href="@routes.LivroController.telaNovo" class="pull-right">Adicionar</a>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table border="1" class="table table-bordered table-hover">
+                        <tr>
+                            <th>Título</th>
+                            <th>Subtítulo</th>
+                            <th>Edição</th>
+                            <th>ISBN</th>
+                            <th>Autor</th>
+                            <th>Editora</th>
+                        </tr>
+                        @for(livro <- livros) {
+                            <tr>
+                                <td><a href="@routes.LivroController.telaDetalhe(livro.getId)">@livro.getTitulo</a></td>
+                                <td>@livro.getSubTitulo</td>
+                                <td>@livro.getEdicao</td>
+                                <td>@livro.getIsbn</td>
+                                <td>@livro.getAutores</td>
+                                <td>@livro.getEditora</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

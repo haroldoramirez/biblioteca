@@ -1,0 +1,40 @@
+Exemplo
+
+[Unit]
+Description=service1
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStartPre=/bin/rm -f /usr/local/play/service1/RUNNING_PID
+ExecStart=/usr/local/play/service1/bin/service1 -J-Xmx5120m -J-Xms3072m -J-server -Dlogger.file=/usr/local/play/service1/conf/application-live.xml -Dconfig.file=/usr/local/play/service1/conf/application-live.conf
+User=play
+Group=play
+TimeoutStopSec=10
+LimitNOFILE=10240
+
+[Install]
+WantedBy=multi-user.target
+
+Biblioteca Producao
+
+[Unit]
+Description=biblioteca
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStartPre=/bin/rm -f /usr/local/play/service1/RUNNING_PID
+ExecStart=/usr/local/play/service1/bin/service1 -J-Xmx5120m -J-Xms3072m -J-server -Dlogger.file=/usr/local/play/service1/conf/application-live.xml -Dconfig.file=/usr/local/play/service1/conf/application-live.conf
+User=play
+Group=play
+TimeoutStopSec=10
+LimitNOFILE=10240
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+

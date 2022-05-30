@@ -1,0 +1,216 @@
+@(publicacaoForm: play.data.Form[validators.PublicacaoFormData], publicacao: Publicacao, temArquivo: Boolean)
+
+@usuario() = @{
+    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe da Publicação") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.PublicacaoController.telaLista()" class="btn btn-default">Publicações</a>
+                <a disabled class="btn btn-default">Detalhe</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-file-text" aria-hidden="true"></i> Detalhe da Publicação</h1>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.PublicacaoController.telaLista()">Voltar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@routes.PublicacaoController.telaEditar(publicacao.getId)">Editar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Arquivos</li>
+                            <li><a data-toggle="modal" href="#modalImagem">Atualizar Imagem</a></li>
+                            @if(temArquivo) {
+                                <li><a data-toggle="modal" href="#modalPdf">Atualizar PDF</a></li>
+                            }
+                            @if(usuario.isAdmin) {
+                                <li role="separator" class="divider"></li>
+                                <li><a data-toggle="modal" href="#modalRemover">Excluir</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs pull-right" type="button"><span class="fa fa-info-circle"></span></a>
+
+                    @if(publicacaoForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p class="alert alert-danger text-center">@publicacaoForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Título</label>
+                        <p class="display-block margin-left-027em">@publicacao.getTitulo</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Resumo</label>
+                        <p class="display-block margin-left-027em">@publicacao.getResumo</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Idioma</label>
+                        <p class="display-block margin-left-027em">@publicacao.getIdioma.getNome</p>
+                    </div>
+                    @if(publicacao.getPalavraChave != null) {
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Palavras Chave</label>
+                            <p class="display-block margin-left-027em">@publicacao.getPalavraChave</p>
+                        </div>
+                    }
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Autor/Autores</label>
+                        <p class="display-block margin-left-027em">@publicacao.getAutor</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Ano</label>
+                        <p class="display-block margin-left-027em">@publicacao.getAno</p>
+                    </div>
+                    @if(publicacao.getNomeArquivo != null && publicacao.getNomeArquivo != "arquivo.pdf" && publicacao.getNomeArquivo != "") {
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Arquivo Salvo</label>
+                            <p class="display-block margin-left-027em">@publicacao.getNomeArquivo -> <a target="_blank" href="@routes.PublicacaoController.pdfAdmin(publicacao.getNomeArquivo)">Visualizar</a></p>
+                        </div>
+                    }
+                    @if(publicacao.getUrl != null && publicacao.getUrl != "") {
+                        <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">URL</label>
+                            <p class="display-block margin-left-027em">@publicacao.getUrl -> <a target="_blank" href="@publicacao.getUrl">Visualizar</a></p>
+                        </div>
+                    }
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Número de Acessos</label>
+                        <p class="display-block margin-left-027em">@publicacao.getNumeroAcesso</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Imagem da Capa</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a data-title="@publicacao.getNomeCapa" data-lightbox="example-set" class="thumbnail" href="@routes.PublicacaoController.jpg(publicacao.getNomeCapa)">
+                                <img class="img-responsive" src="@routes.PublicacaoController.jpg(publicacao.getNomeCapa)" alt="@publicacao.getNomeCapa">
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Cadastro</label>
+                        <p type="date" class="display-block margin-left-027em">@publicacao.getDataCadastro.format("dd MMMM yyyy")</p>
+                    </div>
+                    @if(publicacao.getDataAlteracao != null){
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Data/Hora de Alteração</label>
+                            <p class="display-block margin-left-027em">@publicacao.getDataAlteracao.format("dd MMMM yyyy")</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+<div id="modalRemover" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Deseja remover a Publicação <b>"@publicacao.getTitulo"</b>?</p>
+            </div>
+            <div class="modal-footer">
+                @form(routes.PublicacaoController.remover(publicacao.getId)) {
+                <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalImagem" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelJPG">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            @form(routes.PublicacaoController.editarImg(publicacao.getId), 'enctype -> "multipart/form-data") {
+                <div class="modal-body">
+                    @arquivojpg(publicacaoForm("arquivo"), label = "Arquivo")
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <input id="btnImg" type="submit" value="Atualizar" class="btn btn-primary">
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalPdf" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelJPG">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            @form(routes.PublicacaoController.editarPdf(publicacao.getId), 'enctype -> "multipart/form-data") {
+            <div class="modal-body">
+                @arquivopdf(publicacaoForm("arquivo"), label = "Arquivo")
+            </div>
+            <br>
+            <div class="modal-footer">
+                <input id="btnPdf" type="submit" value="Atualizar" class="btn btn-primary">
+            </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalInfo" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelInfo">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Messages("app.title")</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Informações: </h4>
+                <p>É possível atualizar o arquivo PDF e a Imagem da Publicação através do botão "<b>Opções</b>"</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

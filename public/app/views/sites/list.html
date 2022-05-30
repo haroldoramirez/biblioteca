@@ -1,0 +1,54 @@
+<div ng-init="init()">
+    <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-card mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone wf-card-banner">
+            <a style="background-image:url(assets/images/cib/sites.webp)" class="mdl-card__title">
+                <h1 class="mdl-card__title-text">{{Messages('site.page.title')}}</h1>
+            </a>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="p-40 p-r-20 p-20--small">
+                <div class="mdl-color-text--grey-700 sticky" ml-sticky offset="60" body-class="mdl-layout__content">
+                    <h4><i class="material-icons f-left m-r-5"></i> {{Messages('page.list.videos.panel.title')}}</h4>
+                    <p>{{Messages('page.list.panel.text')}}.</p>
+                    <div class="m-t-30">
+                        <ul class="list-bordered">
+                            <li>
+                                <a ng-click="reloadSites()" class="mdl-color--deep-orange-cibiogas-text">
+                                    <i class="material-icons m-r-5 f11">grid_on</i>{{Messages('page.list.button.show.title')}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <form>
+                        <div class="mdl-textfield mdl-js-textfield cib-filtros">
+                            <input ng-model="filtro" ng-model-options="{debounce: 500}" class="mdl-textfield__input cib-filtros-input" id="filtro">
+                            <label class="mdl-textfield__label cib-filtros-label" for="filtro"><i class="material-icons">&#xE8B6;</i></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div ng-show="sites.length == 0" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+                <div class="mdl-card__title">
+                    <!-- MDL Spinner Component with Single Color -->
+                    <div ng-show="loadingSites" class="mdl-spinner mdl-spinner--single-color spinner-loading-cib mdl-js-spinner is-active"></div>
+                </div>
+            </div>
+            <div class="mdl-grid">
+                <div ng-repeat="site in sites | filter : meuFiltro" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone site">
+                    <div class="mdl-card__supporting-text">
+                        <p class="publicacao-line"><b>{{Messages('site.title')}}:</b> {{site.titulo}}</p>
+                        <p class="publicacao-line"><b>{{Messages('site.country.title')}}: </b>{{site.pais.nome}}</p>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <div class="mdl-layout-spacer"></div>
+                        <a ng-click="abrirUrl(site.url)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                            {{Messages('card.button.title')}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

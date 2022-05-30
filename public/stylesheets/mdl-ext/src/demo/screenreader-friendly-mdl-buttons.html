@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessible, screen reader friendly, MDL buttons</title>
+  <!-- styles -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+</head>
+<body>
+
+<style>
+  pre {
+    font-size: 12px;
+    margin: 0;
+  }
+  .code-cell {
+    overflow-x: auto;
+  }
+  .add-shopping-chart::after {
+    content: 'add_shopping_cart';
+  }
+
+  /**
+   * Hide text while making it readable for screen readers
+   * 1. Needed in WebKit-based browsers because of an implementation bug;
+   *    See: https://code.google.com/p/chromium/issues/detail?id=457146
+   */
+  .hide-text {
+    overflow: hidden;
+    padding: 0; /* 1 */
+    text-indent: 101%;
+    white-space: nowrap;
+  }
+
+  /**
+   * Hide element while making it readable for screen readers
+   * Shamelessly borrowed from HTML5Boilerplate:
+   * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+   */
+  .visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+</style>
+
+<main style="margin: 0 16px">
+  <h1>Accessible, screen reader friendly, MDL buttons</h1>
+  <p>To try out the screen reader friendly MDL buttons you must have a screen reader
+  plugin installed, e.g. Chrome Vox.</p>
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+      <h4>A plain MDL button is accessible</h4>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+
+      <button class="mdl-button mdl-js-button mdl-button--raised">
+        Add item
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--raised">
+  Add item
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      <strong>OK.</strong> Screen readers reads the text in the button tag.
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h4>The MDL FAB button is not accessible</h4>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+        <i class="material-icons">add_shopping_cart</i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--fab
+        mdl-button--colored">
+  &lt;i class="material-icons">add_shopping_cart&lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      <strong>NOT OK.</strong> Screen readers reads the text in the &lt;i&gt; tag.
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h4>Make the MDL FAB button accessible</h4>
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      1. Hide text content in &lt;i&gt; tag from screen readers using <code>aria-hidden="true"</code>.
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+        <i class="material-icons" aria-hidden="true">add_shopping_cart</i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--fab
+        mdl-button--colored">
+  &lt;i class="material-icons" aria-hidden="true">
+    add_shopping_cart
+  &lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      The text in the &lt;i&gt; tag is hidden from screen readers. Screen readers read "button".
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      ... or use a CSS class for the Material Icon name.
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+        <i class="material-icons add-shopping-chart"></i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>.add-shopping-chart::after {
+  content: 'add_shopping_cart';
+}
+
+&lt;button class="mdl-button mdl-js-button mdl-button--fab
+        mdl-button--colored">
+  &lt;i class="material-icons add-shopping-chart">&lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      The text in the &lt;i&gt; tag is hidden from screen readers. Screen readers read "button".
+    </div>
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      2. Use the <code>aria-label</code> attribute for the button text.
+    </div>
+
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
+              aria-label="Add item to cart">
+        <i class="material-icons add-shopping-chart"></i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--fab
+        mdl-button--colored aria-label="Add item to cart">
+  &lt;i class="material-icons add-shopping-chart">&lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the <code>aria-label</code> text.
+    </div>
+
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      ... or add text content to FAB button - but hide the content from visual representation.
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+        <span class="visually-hidden">Add item to cart</span>
+        <i class="material-icons add-shopping-chart"></i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+&lt;button class="mdl-button mdl-js-button mdl-button--fab
+        mdl-button--colored">
+  &lt;span class="visually-hidden">Add item to cart&lt;/span>
+  &lt;i class="material-icons add-shopping-chart">&lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the <code>&lt;span&gt;</code> text content.
+    </div>
+
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h4>Make the MDL icon button accessible</h4>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--icon" aria-label="Listen to radio">
+        <i class="material-icons" aria-hidden="true">radio</i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--icon"
+        aria-label="Listen to radio">
+  &lt;i class="material-icons" aria-hidden="true">radio&lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the aria-label text.
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--icon">
+        <span class="visually-hidden">Listen to radio</span>
+        <i class="material-icons" aria-hidden="true">radio</i>
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--icon">
+  &lt;span class="visually-hidden">Listen to radio&lt;span>
+  &lt;i class="material-icons" aria-hidden="true">radio&lt;/i>
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the <code>&lt;span&gt;</code> text content.
+    </div>
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h4>Accessible MDL button decorated with icon</h4>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--raised">
+        <i class="material-icons" aria-hidden="true">radio</i>
+        Listen to radio
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--raised">
+  &lt;i class="material-icons" aria-hidden="true">radio&lt;/i>
+  Listen to radio
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the text in the button tag.
+    </div>
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h4>Accessible MDL button decorated with &lt;img&gt;</h4>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <button class="mdl-button mdl-js-button mdl-button--raised">
+        <img style="height:70%" role="presentation" aria-hidden="true"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABRElEQVR4Ae3WP0tCYRiG8auhTKFamtpaRBKl/EOLc9+hpaGWhhpbm1tEsSmClpoThT5AW9TgUFtb2NJQkoZHgp6cpPfwTnkTRed3j3KeC0Tk8K8tsE+LadCbYI1z3jGMDcTm2eMeG+0KoRJnBBij0eGQSQRm2eEWc3bNFgkEchzTc053OWIFgQSb3GDOWmwzg8ASNV6c02+csIrAFOtcYs7u2GUOgUUOeHJO9zmlhESaCz6wMdejScp//hUTreNLNDHhGhDWkwa6hI0+Gpf/ThTQBvzPRQFBQLcoIAj0KZMjNlyeCoE68ECarzK0lYE+acKyDHSBMj5VXSCHT0EXiOET/0OBPD5FXaCCT00XCMgQtqz8mRptsqHzj+q/ioAqBeLDFakxwL6xn3/xakoDdQhL0ZGdfyYJvkSDruDLqZPkF4l8AjqU3OmKdiBBAAAAAElFTkSuQmCC">
+        Listen to radio
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;button class="mdl-button mdl-js-button mdl-button--raised">
+  &lt;img  src="..." style="height: 70%"
+        aria-hidden="true" role="presentation">
+  Listen to radio
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the text in the button tag.
+    </div>
+
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h5><code>aria-describedby</code> attribute</h5>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <p id="www-radio-description">Click to browse internet radio stations.</p>
+      <button id="www-radio-btn" class="mdl-button mdl-js-button mdl-button--raised"
+              aria-describedby="www-radio-description">
+        <i class="material-icons" aria-hidden="true">radio</i>
+        Listen to radio
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;p id="www-radio-description">
+  Click to browse internet radio stations.
+&lt;/p>
+&lt;button id="www-radio-button"
+        class="mdl-button mdl-js-button mdl-button--raised"
+        aria-describedby="www-radio-description">
+  &lt;i class="material-icons" aria-hidden="true">radio&lt;/i>
+  Listen to radio
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the text in the button tag, then the text in the p tag.
+    </div>
+
+
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h5><code>visually-hidden</code> + <code>aria-describedby</code> + <code>title</code> attribute</h5>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <p id="www-radio-description2" class="visually-hidden">Click to browse internet radio stations.</p>
+      <button id="www-radio-btn2" class="mdl-button mdl-js-button mdl-button--raised"
+              aria-describedby="www-radio-description2"
+              title="Click to browse internet radio stations.">
+        <i class="material-icons" aria-hidden="true">radio</i>
+        Listen to radio
+      </button>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col code-cell">
+      <pre>&lt;p id="www-radio-description" class="visually-hidden">
+  Click to browse internet radio stations.
+&lt;/p>
+&lt;button id="www-radio-button"
+        class="mdl-button mdl-js-button mdl-button--raised"
+        aria-describedby="www-radio-description"
+        title="Click to browse internet radio stations.">
+  &lt;i class="material-icons" aria-hidden="true">radio&lt;/i>
+  Listen to radio
+&lt;/button></pre>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      Screen readers reads the text in the button tag, then the text in the
+      visually hidden p tag.
+      Shows the <code>title</code> attribute value as a “tooltip” on mouseover.
+    </div>
+
+  </div>
+
+
+  <!--
+  http://stackoverflow.com/questions/17338842/when-using-wai-aria-how-important-is-alt-tag
+  <figure role="group">
+    <a><img src="...." alt="Photo 1: view a larger version the Mona Lisa" /></a>
+    <caption>Photo 1: Sumit posing in front of
+      the <em>Mona Lisa</em> by da Vinci </caption>
+  </figure>
+  -->
+
+</main>
+
+<script src="https://code.getmdl.io/1.2.1/material.min.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

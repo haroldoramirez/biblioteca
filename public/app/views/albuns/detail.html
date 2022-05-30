@@ -1,0 +1,52 @@
+<div ng-init="init()">
+    <div class="mdl-grid">
+        <div ng-show="loadingAlbum == true" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="mdl-card__title">
+                <!-- MDL Spinner Component with Single Color -->
+                <div ng-show="loadingAlbum" class="mdl-spinner mdl-spinner--single-color spinner-loading-cib mdl-js-spinner is-active"></div>
+            </div>
+        </div>
+        <div ng-hide="loadingAlbum == true" class="mdl-card mdl-shadow--3dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone album-detalhe">
+            <a style="background-image:url(album/{{album.nomePasta}}/{{album.nomeCapa}})" class="mdl-card__title">
+                <h1 class="mdl-card__title-text">{{album.titulo}}</h1>
+            </a>
+            <div class="mdl-color-text--grey-700 mdl-card__supporting-text fotos-albuns">
+                <p>{{album.descricao}}</p>
+                <p><b>{{Messages('card.detail.publication.date')}}: </b>{{album.dataCadastro | date:'dd/MM/yyyy'}}</p>
+                <div class="mdl-grid grid-fotos">
+                    <div ng-repeat="foto in album.fotos | filter : meuFiltro" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone foto">
+                        <a class="mdl-card__title"
+                           ng-href="album/{{album.nomePasta}}/{{foto.nomeArquivo}}"
+                           data-lightbox="example-set"
+                           data-title="{{foto.descricao}}"
+                           style="background-image:url(album/{{album.nomePasta}}/{{foto.nomeArquivo}})">
+                        </a>
+                        <div class="mdl-card__supporting-text">{{foto.descricao}}</div>
+                    </div>
+                </div>
+                <div class="mdl-card__menu">
+                    <button
+                            class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
+                            socialshare
+                            socialshare-provider="facebook"
+                            socialshare-text="biblioteca digital"
+                            socialshare-hashtags="biblioteca, cibiogas"
+                            socialshare-url="https://biblioteca.cibiogas.org/">
+                        <i class="material-icons">shared</i>
+                    </button>
+                </div>
+                <div class="mdl-card__menu-left">
+                    <a ui-sref="albuns" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a ui-sref="albuns" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    {{Messages('card.button.back.title')}}
+                </a>
+                <div class="mdl-layout-spacer"></div>
+            </div>
+        </div>
+    </div>
+</div>

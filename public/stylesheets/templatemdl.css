@@ -1,0 +1,384 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+html, body {
+  font-family: 'Roboto', 'Helvetica', 'sans-serif';
+}
+
+.spinner-loading-cib {
+    color: #689f38
+}
+
+.no-padding {
+    padding: 0;
+}
+
+a {
+    color: #3f51b5;
+    text-decoration: none;
+    transition: all .2s;
+    cursor: pointer;
+}
+
+img.card-image {
+    width: 100%;
+    max-width: 601px;
+    height: 40vw;
+    max-height: 215px;
+    position: relative;
+    object-fit: cover;
+}
+
+img.card-image-detail {
+    width: 100%;
+    max-width: 868px;
+    height: 40vw;
+    max-height: 317px;
+    object-fit: cover;
+}
+
+.animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+    transition: all linear 0.5s;
+    display: block !important;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active, .animate-show.ng-hide-remove {
+    opacity: 0;
+}
+
+.animate-show.ng-hide-add, .animate-show.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+
+#loading-bar .bar {
+    background: #d56515;
+}
+
+#loading-bar .peg {
+    box-shadow: 0 0 20px #000000, 0 0 10px #000000;
+}
+
+#loading-bar-spinner .spinner-icon {
+    border-top-color:  #2c3e50;
+    border-left-color: #2c3e50;
+}
+
+/* iOS Safari specific workaround */
+.cib-drawer .mdl-menu__container {
+  z-index: -1;
+}
+.cib-drawer .cib-navigation {
+  z-index: -2;
+}
+/* END iOS Safari specific workaround */
+.cib-drawer .mdl-menu .mdl-menu__item {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* muda a cor do botão do menu esquerdo quando ele esta minimizado */
+.cib-layout .mdl-layout__header .mdl-layout__drawer-button {
+    color: rgb(255, 255, 255);
+}
+
+/*Modificado o height, propriedade do header do menu esquerdo*/
+.cib-drawer-header {
+    box-sizing: border-box;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 10px;
+    text-align: center;
+    background-color: white;
+}
+
+.cib-navigation {
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+/* cor da fonte do menu esquerdo e cor de fundo do menu esquerdo distancia de todos os links do menu*/
+.cib-layout .cib-navigation .mdl-navigation__link {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.56);
+    font-weight: 500;
+    font-size: 13px;
+    padding: 8px 28px;
+    line-height: 20px;
+}
+
+/*Muda as cores dos seletores do menu esquerdo*/
+.cib-layout .cib-navigation .mdl-navigation__link:hover {
+    background-color: #E0E0E0;
+    color: #000000;
+    -webkit-transition: background 0.2s, color 0.2s;
+    -moz-transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* tamanho dos ícones do menu esquerdo e distância*/
+.cib-navigation .mdl-navigation__link .material-icons {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.active {
+   background-color: #EEEEEE;
+}
+
+.active-bandeira {
+    background-color: #86B914;
+}
+
+.cib-content {
+  max-width: 1080px;
+}
+
+.subtitulo {
+    background-color: #546e7a;
+    color: #fff;
+}
+
+.subtitulo .conteudo-pagina {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 0;
+}
+
+/* cor da fonte do menu esquerdo e cor de fundo do menu esquerdo distancia de todos os links do menu*/
+.cib-layout .top-navigation .mdl-navigation__link {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+/*Muda as cores dos seletores do menu superior*/
+.cib-layout .top-navigation .mdl-navigation__link:hover {
+    background-color: #a0ce4e;
+    -webkit-transition: background 0.2s, color 0.2s;
+    -moz-transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s;
+}
+
+.activetop {
+    background-color: #a0ce4e;
+    color: #fff;
+}
+
+.separadortop {
+    margin-right: 8px;
+}
+
+.site-logo {
+    display: block;
+    margin: 0 auto;
+}
+
+.site-a {
+    color : rgba(0,0,0,.54);
+    text-decoration:none;
+    font-weight: bold;
+}
+
+.site-a-foto {
+    text-decoration:none;
+    color: #dcdcdc;
+}
+
+.separador {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+}
+
+.separador-publicacoes {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+}
+
+.mdl-color--deep-orange-cibiogas {
+    background-color: rgb(104,159,56) !important;
+}
+
+.mdl-color--deep-orange-cibiogas-text {
+    color: rgb(104,159,56) !important;
+}
+
+.termo-max-width {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.termo-ribbon {
+    width: 100%;
+    height: 3vh;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.termo-main {
+    margin-top: -35vh;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.termo-header .mdl-layout__header-row {
+    padding-left: 40px;
+}
+
+.termo-container {
+    max-width: 1600px;
+    width: calc(100% - 16px);
+    margin: 0 auto;
+}
+
+.termo-content {
+    border-radius: 2px;
+    padding: 80px 56px;
+    margin-bottom: 80px;
+    text-align: justify;
+}
+
+.termo-layout.is-small-screen .termo-content {
+    padding: 40px 28px;
+}
+
+.termo-content h3 {
+    margin-top: 48px;
+}
+
+.termo-footer {
+    padding-left: 40px;
+}
+
+.termo-footer .mdl-mini-footer--link-list a {
+    font-size: 13px;
+}
+
+.cib-filtros {
+    width: 100%;
+}
+
+.cib-filtros-input {
+    font-size: 21px;
+}
+
+.cib-filtros-label {
+    font-size: 21px;
+    top: 27px;
+}
+
+.cib-titulo {
+    font-size: 16px;
+}
+
+.mdl-textfield__label:after {
+    background-color: rgb(104,159,56) !important;
+}
+
+.cib-footer.mdl-mini-footer,.cib-footer.mdl-mini-footer ul {
+    -webkit-justify-content:center;
+    -ms-flex-pack:center;
+    justify-content:center;
+}
+
+.cib-footer.mdl-mini-footer ul {
+    padding:0;
+    display:-webkit-flex;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-flex-direction:row;
+    -ms-flex-direction:row;
+    flex-direction:row;
+    -webkit-align-items:center;
+    -ms-flex-align:center;
+    align-items:center;
+}
+
+.p-40{padding:40px}
+
+.p-r-20{padding-right:20px}
+
+.p-20--small{padding:20px}
+
+.f-left{float:left}
+
+.m-r-5{margin-right:5px}
+
+.m-t-30{margin-top:30px}
+
+.list-bordered{list-style:none;margin:0;padding:0}
+
+.list-bordered li{border-bottom:1px rgba(0,0,0,.1) solid;transition:all .1s}.list-bordered li a{display:block;padding:5px}.list-bordered li a:hover{padding-left:10px}
+
+.m-r-5{margin-right:5px}
+
+.f11{font-size:11px}
+
+@media screen and (max-width: 600px) {
+    .esconde-celular {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    .mostra-celular {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .esconde-celular-home {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .esconde-celular-botao-vertical {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 601px) {
+    .mostra-celular-botao-vertical {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    .margem-desktop {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}

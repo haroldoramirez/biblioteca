@@ -1,0 +1,216 @@
+@(notaTecnicaForm: play.data.Form[validators.NotaTecnicaFormData], notaTecnica: NotaTecnica, temArquivo: Boolean)
+
+@usuario() = @{
+  Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe da Nota Técnica") {
+  <div class="col-md-12">
+    <div class="page-header header-biogas">
+      <div class="btn-group btn-breadcrumb pull-right">
+        <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+        <a href="@routes.NotaTecnicaController.telaLista()" class="btn btn-default">Notas Técnicas</a>
+        <a disabled class="btn btn-default">Detalhe</a>
+      </div>
+      <h1 class="font-style"><i class="fa fa-book" aria-hidden="true"></i> Detalhe da Nota Técnica</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Informações
+            <div class="btn-group pull-right">
+              <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Opções <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="@routes.NotaTecnicaController.telaLista()">Voltar</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="@routes.NotaTecnicaController.telaEditar(notaTecnica.getId)">Editar</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Arquivos</li>
+                <li><a data-toggle="modal" href="#modalImagem">Atualizar Imagem</a></li>
+                @if(temArquivo) {
+                    <li><a data-toggle="modal" href="#modalPdf">Atualizar PDF</a></li>
+                }
+                @if(usuario.isAdmin) {
+                  <li role="separator" class="divider"></li>
+                  <li><a data-toggle="modal" href="#modalRemover">Excluir</a></li>
+                }
+              </ul>
+            </div>
+          </div>
+          <div class="panel-body">
+
+            <a data-toggle="modal" href="#modalInfo" class="btn btn-default btn-xs pull-right" type="button"><span class="fa fa-info-circle"></span></a>
+
+            @if(notaTecnicaForm.hasGlobalErrors) {
+              <div class="form-group">
+                <div class="col-md-12">
+                  <p class="alert alert-danger text-center">@notaTecnicaForm.globalError.message</p>
+                </div>
+              </div>
+            }
+
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Título</label>
+              <p class="display-block margin-left-027em">@notaTecnica.getTitulo</p>
+            </div>
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Resumo</label>
+              <p class="display-block margin-left-027em">@notaTecnica.getResumo</p>
+            </div>
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Idioma</label>
+              <p class="display-block margin-left-027em">@notaTecnica.getIdioma.getNome</p>
+            </div>
+            @if(notaTecnica.getPalavraChave != null) {
+              <hr>
+              <div class="item-form width-600 margin-bottom-15">
+                <label class="display-block strong">Palavras Chave</label>
+                <p class="display-block margin-left-027em">@notaTecnica.getPalavraChave</p>
+              </div>
+            }
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Autor/Autores</label>
+              <p class="display-block margin-left-027em">@notaTecnica.getAutor</p>
+            </div>
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Ano</label>
+              <p class="display-block margin-left-027em">@notaTecnica.getAno</p>
+            </div>
+            @if(notaTecnica.getNomeArquivo != null && notaTecnica.getNomeArquivo != "arquivo.pdf" && notaTecnica.getNomeArquivo != "") {
+              <hr>
+              <div class="item-form width-600 margin-bottom-15">
+                <label class="display-block strong">Arquivo Salvo</label>
+                <p class="display-block margin-left-027em">@notaTecnica.getNomeArquivo -> <a target="_blank" href="@routes.NotaTecnicaController.pdfAdmin(notaTecnica.getNomeArquivo)">Visualizar</a></p>
+              </div>
+            }
+            @if(notaTecnica.getUrl != null && notaTecnica.getUrl != "") {
+              <hr>
+              <div class="item-form width-600 margin-bottom-15">
+                <label class="display-block strong">URL</label>
+                <p class="display-block margin-left-027em">@notaTecnica.getUrl -> <a target="_blank" href="@notaTecnica.getUrl">Visualizar</a></p>
+              </div>
+            }
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Número de Acessos</label>
+              <p class="display-block margin-left-027em">@notaTecnica.getNumeroAcesso</p>
+            </div>
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Imagem da Capa</label>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a data-title="@notaTecnica.getNomeCapa" data-lightbox="example-set" class="thumbnail" href="@routes.NotaTecnicaController.jpg(notaTecnica.getNomeCapa)">
+                  <img class="img-responsive" src="@routes.NotaTecnicaController.jpg(notaTecnica.getNomeCapa)" alt="@notaTecnica.getNomeCapa">
+                </a>
+              </div>
+            </div>
+            <hr>
+            <div class="item-form width-600 margin-bottom-15">
+              <label class="display-block strong">Data/Hora de Cadastro</label>
+              <p type="date" class="display-block margin-left-027em">@notaTecnica.getDataCadastro.format("dd MMMM yyyy")</p>
+            </div>
+            @if(notaTecnica.getDataAlteracao != null){
+              <hr>
+              <div class="item-form width-600 margin-bottom-15">
+                <label class="display-block strong">Data/Hora de Alteração</label>
+                <p class="display-block margin-left-027em">@notaTecnica.getDataAlteracao.format("dd MMMM yyyy")</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+}
+
+<div id="modalRemover" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">@Messages("app.title")</h4>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">Deseja remover a Nota Técnica <b>"@notaTecnica.getTitulo"</b>?</p>
+      </div>
+      <div class="modal-footer">
+        @form(routes.NotaTecnicaController.remover(notaTecnica.getId)) {
+          <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+        }
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalImagem" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelJPG">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">@Messages("app.title")</h4>
+      </div>
+      @form(routes.NotaTecnicaController.editarImg(notaTecnica.getId), 'enctype -> "multipart/form-data") {
+        <div class="modal-body">
+          @arquivojpg(notaTecnicaForm("arquivo"), label = "Arquivo")
+        </div>
+        <br>
+        <div class="modal-footer">
+          <input id="btnImg" type="submit" value="Atualizar" class="btn btn-primary">
+        </div>
+      }
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalPdf" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelJPG">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">@Messages("app.title")</h4>
+      </div>
+      @form(routes.NotaTecnicaController.editarPdf(notaTecnica.getId), 'enctype -> "multipart/form-data") {
+        <div class="modal-body">
+          @arquivopdf(notaTecnicaForm("arquivo"), label = "Arquivo")
+        </div>
+        <br>
+        <div class="modal-footer">
+          <input id="btnPdf" type="submit" value="Atualizar" class="btn btn-primary">
+        </div>
+      }
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalInfo" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabelInfo">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">@Messages("app.title")</h4>
+      </div>
+      <div class="modal-body">
+        <h4>Informações: </h4>
+        <p>É possível atualizar o arquivo PDF e a Imagem da Nota Técnica através do botão "<b>Opções</b>"</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

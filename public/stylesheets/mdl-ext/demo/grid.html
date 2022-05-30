@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>Material Design Lite Extensions</title>
+
+<!-- Fallback to homescreen for Chrome <39 on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Material Design Lite Extensions">
+<link rel="icon" sizes="192x192" href="./assets/android-desktop.png">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Material Design Lite Extensions">
+<link rel="apple-touch-icon" href="./assets/ios-desktop.png">
+
+<link rel="shortcut icon" href="./assets/favicon.png">
+
+<!-- styles -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="styles/dialog-polyfill.css">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<link rel="stylesheet" href="../lib/mdl-ext-eqjs.min.css">
+<link rel="stylesheet" href="./styles/demo.css">
+
+  <title>Material Design Lite Extensions - Grid</title>
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdlext-layout__sticky-header mdlext-js-sticky-header">
+  <div class="mdl-layout__header-row">
+
+  <!-- Title -->
+  <span id="header-title" class="mdl-layout-title">Title goes here</span>
+
+  <!-- Add spacer, to align navigation to the right -->
+  <div class="mdl-layout-spacer"></div>
+
+  <label id="go-home" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+    <a href="index.html">
+      <i class="material-icons">home</i>
+    </a>
+  </label>
+
+  <button id="header-menu" class="mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">more_vert</i>
+  </button>
+  <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="header-menu">
+    <li class="mdl-menu__item">Some Action</li>
+    <li class="mdl-menu__item">Another Action</li>
+    <li disabled="" class="mdl-menu__item">Disabled Action</li>
+    <li class="mdl-menu__item">Yet Another Action</li>
+  </ul>
+</div>
+
+</header>
+
+  <style>
+  /* Ugly CSS! Only for demo. */
+
+  #demo-drawer-accordion {
+    height: 100%;
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tab {
+    height: 64px;
+    min-height: 64px;
+    min-width: 64px;
+    padding-left: 16px;
+  }
+
+  .is-small-screen #demo-drawer-accordion .mdlext-accordion__tab {
+    height: 56px;
+    min-height: 56px;
+    min-width: 56px;
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tabpanel,
+  #demo-drawer-accordion .mdlext-accordion__tabpanel nav {
+    padding: 0;
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tabpanel .mdl-navigation__link {
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  #demo-drawer-accordion .mdlext-accordion__tabpanel .mdl-navigation__link:hover {
+    background-color: #212121;
+  }
+
+</style>
+
+
+<aside class="mdl-layout__drawer">
+
+  <ul id="demo-drawer-accordion" class="mdlext-accordion mdlext-js-accordion mdlext-accordion--vertical mdlext-js-ripple-effect mdlext-js-animation-effect mdlext-dark-color-theme" aria-multiselectable="false">
+
+    <li class="mdlext-accordion__panel">
+      <header class="mdlext-accordion__tab" aria-expanded="true">
+        <span class="mdlext-accordion__tab__caption">MDL Extensions</span>
+        <i class="mdlext-aria-toggle-material-icons"></i>
+      </header>
+      <section class="mdlext-accordion__tabpanel">
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="accordion.html">Accordion</a>
+          <a class="mdl-navigation__link" href="bordered-fields.html">Bordered Fields</a>
+          <a class="mdl-navigation__link" href="collapsible.html">Collapsible</a>
+          <a class="mdl-navigation__link" href="color-themes.html">Color Themes</a>
+          <a class="mdl-navigation__link" href="formatfield.html">Formatted Fields</a>
+          <a class="mdl-navigation__link" href="grid.html">Grid</a>
+          <a class="mdl-navigation__link" href="carousel.html">Image Carousel</a>
+          <a class="mdl-navigation__link" href="lightboard.html">Lightboard</a>
+          <a class="mdl-navigation__link" href="lightbox.html">Lightbox</a>
+          <a class="mdl-navigation__link" href="menu-button.html">Menu Button</a>
+          <a class="mdl-navigation__link" href="selectfield.html">Selectfield</a>
+        </nav>
+      </section>
+    </li>
+    <li class="mdlext-accordion__panel">
+      <header class="mdlext-accordion__tab">
+        <span class="mdlext-accordion__tab__caption">Sticky headers</span>
+        <i class="mdlext-aria-toggle-material-icons"></i>
+      </header>
+      <section class="mdlext-accordion__tabpanel">
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="sticky-header.html">Sticky Header I</a>
+          <a class="mdl-navigation__link" href="sticky-header-ii.html">Sticky Header II</a>
+          <a class="mdl-navigation__link" href="sticky-header-iii.html">Sticky Header III</a>
+          <a class="mdl-navigation__link" href="sticky-header-iv.html">Sticky Header IV</a>
+          <a class="mdl-navigation__link" href="sticky-header-v.html">Sticky Header V</a>
+          <a class="mdl-navigation__link" href="sticky-header-vi.html">Sticky Header VI</a>
+        </nav>
+      </section>
+    </li>
+  </ul>
+</aside>
+
+  <main id="mount" class="mdl-layout__content">
+    <p>Element queries vs Media Queries. Drag the slider to see the effect</p>
+
+<style>
+
+  .demo-grid {
+    margin-bottom: 16px;
+  }
+  .demo-grid .mdl-grid,
+  .demo-grid .mdlext-grid {
+    /*padding: 0;*/
+  }
+  .demo-grid .mdl-cell,
+  .demo-grid .mdlext-cell {
+    background: rgb(63,81,181);
+    text-align: center;
+    color: white;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+  }
+  .demo-grid .mdl-cell:nth-child(odd),
+  .demo-grid .mdlext-cell:nth-child(odd) {
+    background: rgb(33,150,243);
+  }
+  .demo-grid-c .mdl-cell,
+  .demo-grid-c .mdlext-cell {
+    background: rgb(255,213,79);
+    color: #000;
+    border: 0;
+  }
+  .demo-grid-c .mdl-cell:nth-child(odd),
+  .demo-grid-c .mdlext-cell:nth-child(odd) {
+    background: rgb(165,214,167);
+    color: #000;
+  }
+</style>
+
+
+<p id="grid-container-width" style="text-align: center;">
+  <strong>100</strong>%
+  <input class="mdl-slider mdl-js-slider" type="range" min="50" max="100" value="100" step="10" tabindex="0">
+</p>
+
+<div style="border: 1px solid #dddddd;">
+  <div id="grid-container" style="margin: 0 auto;">
+
+    <h5>mdlext-grid, using element queries</h5>
+    <div class="demo-grid">
+      <div class="mdlext-grid mdlext-grid--no-spacing">
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+        <div class="mdlext-cell mdlext-cell--1-col">1</div>
+      </div>
+    </div>
+
+    <div class="demo-grid demo-grid-c">
+      <div class="mdlext-grid mdlext-grid--no-spacing">
+        <div class="mdlext-cell mdlext-cell--4-col mdlext-cell--2-col-tablet mdlext-cell--1-col-phone">4 (2 tablet, 1 phone)</div>
+        <div class="mdlext-cell mdlext-cell--6-col mdlext-cell--4-col-tablet mdlext-cell--3-col-phone">6 (4 tablet, 3 phone)</div>
+        <div class="mdlext-cell mdlext-cell--2-col mdlext-cell--2-col-tablet mdlext-cell--hide-phone">2 (2 tablet, hide phone)</div>
+      </div>
+    </div>
+
+
+    <h5>mdl-grid, using media queries</h5>
+    <div class="demo-grid">
+      <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+        <div class="mdl-cell mdl-cell--1-col">1</div>
+      </div>
+    </div>
+
+    <div class="demo-grid demo-grid-c">
+      <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--1-col-phone">4 (2 tablet, 1 phone)</div>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--3-col-phone">6 (4 tablet, 3 phone)</div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--hide-phone">2 (2 tablet, hide phone)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  'use strict';
+  window.addEventListener('load', function() {
+    (function() {
+      'use strict';
+      var widthLabel = document.querySelector('#grid-container-width strong');
+      var slider = document.querySelector('#grid-container-width input');
+
+      slider.addEventListener('input', function(e) {
+        setWidth(this.value);
+      }.bind(slider));
+
+      function setWidth(value) {
+        widthLabel.innerText = value;
+        document.querySelector('#grid-container').style.width = value + '%';
+        eqjs.refreshNodes();
+        eqjs.query(undefined, true);
+      }
+    }());
+  });
+</script>
+
+  </main>
+</div>
+<script src="scripts/dialog-polyfill.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,es6"></script>
+<script src="scripts/eq.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://code.getmdl.io/1.2.1/material.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../lib/mdl-ext.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+  (function() {
+    'use strict';
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('#header-title');
+      if(title) {
+        title.innerHTML = 'Grid';
+      }
+    });
+  }());
+</script>
+
+</body>
+</html>

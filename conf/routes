@@ -1,0 +1,353 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Application
+GET     /                                                               controllers.Application.index()
+GET     /idioma                                                         controllers.Application.mudaIdioma()
+GET     /messages.js                                                    controllers.Application.jsMessages()
+GET     /robots.txt                                                     controllers.Assets.at(path="/public", file="robots.txt")
+GET     /humans.txt                                                     controllers.Assets.at(path="/public", file="humans.txt")
+
+# Adicionais Home
+GET     /home/jpg/:titulo                                               controllers.HomeController.foto(titulo:String)
+GET     /admin/adicionais/home/novo/                                    controllers.HomeController.telaNovo()
+GET     /admin/adicionais/home/editar/:nomeArquivo                      controllers.HomeController.telaEditar(nomeArquivo:String)
+GET     /admin/adicionais/home/lista/todos                              controllers.HomeController.telaLista(p:Int ?= 0, s ?= "dataCadastro", o ?= "desc", f ?= "")
+
+# Adicionais Home Servicos
+POST    /admin/adicionais/home                                          controllers.HomeController.inserir()
+GET	    /admin/adicionais/home/:nomeArquivo/remover                     controllers.HomeController.remover(nomeArquivo:String)
+POST    /admin/adicionais/home/editar/:nomeArquivo                      controllers.HomeController.editar(nomeArquivo:String)
+GET     /imagens                                                        controllers.HomeController.buscaTodos()
+POST    /admin/home/editarImg/:id                                       controllers.HomeController.editarImg(id:Long)
+
+# Adicionais Categorias
+GET     /admin/adicionais/categoria/novo/                               controllers.CategoriaController.telaNovo()
+GET		/admin/adicionais/categoria/detalhe/:id				            controllers.CategoriaController.telaDetalhe(id:Long)
+GET     /admin/adicionais/categoria/editar/:id                          controllers.CategoriaController.telaEditar(id:Long)
+GET     /admin/adicionais/categoria/lista/todos                         controllers.CategoriaController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+
+# Adicionais Idiomas
+GET     /admin/adicionais/idioma/novo/                                  controllers.IdiomaController.telaNovo()
+GET		/admin/adicionais/idioma/detalhe/:id				            controllers.IdiomaController.telaDetalhe(id:Long)
+GET     /admin/adicionais/idioma/editar/:id                             controllers.IdiomaController.telaEditar(id:Long)
+GET     /admin/adicionais/idioma/lista/todos                            controllers.IdiomaController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+
+# Adicionais Idiomas Servicos
+POST    /admin/adicionais/video                                         controllers.IdiomaController.inserir()
+POST	/admin/adicionais/video/:id/remover                             controllers.IdiomaController.remover(id:Long)
+POST    /admin/adicionais/video/editar/:id                              controllers.IdiomaController.editar(id:Long)
+
+# Adicionais Paises
+GET     /admin/adicionais/pais/novo/                                    controllers.PaisController.telaNovo()
+GET		/admin/adicionais/pais/detalhe/:id				                controllers.PaisController.telaDetalhe(id:Long)
+GET     /admin/adicionais/pais/editar/:id                               controllers.PaisController.telaEditar(id:Long)
+GET     /admin/adicionais/pais/lista/todos                              controllers.PaisController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+
+# Adicionais Idiomas Servicos
+POST    /admin/adicionais/pais                                          controllers.PaisController.inserir()
+POST	/admin/adicionais/pais/:id/remover                              controllers.PaisController.remover(id:Long)
+POST    /admin/adicionais/pais/editar/:id                               controllers.PaisController.editar(id:Long)
+
+# Adicionais Logs
+GET     /admin/adicionais/log/:id/remover                               controllers.LogController.remover(id:Long)
+GET		/admin/adicionais/log/detalhe/:id				                controllers.LogController.telaDetalhe(id:Long)
+GET     /admin/adicionais/log/lista/todos                               controllers.LogController.telaLista(p:Int ?= 0, s ?= "dataCadastro", o ?= "desc", f ?= "")
+
+# Adicionais Contatos
+POST    /admin/adicionais/contato/:id/remover                           controllers.ContatoController.remover(id:Long)
+GET     /admin/adicionais/contato/lista/todos                           controllers.ContatoController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+GET		/admin/adicionais/contato/detalhe/:id				            controllers.ContatoController.telaDetalhe(id:Long)
+
+# Adicionais Avaliacao
+POST    /admin/adicionais/avaliacao/:id/remover                         controllers.AvaliacaoController.remover(id:Long)
+GET     /admin/adicionais/avaliacao/lista/todos                         controllers.AvaliacaoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "")
+GET		/admin/adicionais/avaliacao/detalhe/:id				            controllers.AvaliacaoController.telaDetalhe(id:Long)
+GET	    /admin/avaliacao/:id/aprovar		                            controllers.AvaliacaoController.aprovar(id:Long)
+GET	    /admin/avaliacao/:id/reprovar		                            controllers.AvaliacaoController.reprovar(id:Long)
+POST    /avaliacao                                                      controllers.AvaliacaoController.inserir()
+GET     /admin/adicionais/avaliacao/pdf/:titulo                         controllers.AvaliacaoController.pdfAdmin(titulo:String)
+
+# Adicionais Documentacao
+GET     /documentacao/inicio                                            controllers.DocumentacaoController.inicio()
+GET     /documentacao/sobre                                             controllers.DocumentacaoController.sobre()
+GET     /documentacao/api                                               controllers.DocumentacaoController.api()
+GET     /documentacao/manual                                            controllers.DocumentacaoController.manual()
+GET     /documentacao/dicionario/pais                                   controllers.DocumentacaoController.pais()
+GET     /documentacao/dicionario/categoria                              controllers.DocumentacaoController.categoria()
+GET     /documentacao/dicionario/idioma                                 controllers.DocumentacaoController.idioma()
+GET     /documentacao/dicionario/album                                  controllers.DocumentacaoController.album()
+GET     /documentacao/dicionario/foto                                   controllers.DocumentacaoController.foto()
+GET     /documentacao/dicionario/artigo                                 controllers.DocumentacaoController.artigo()
+GET     /documentacao/dicionario/avaliacao                              controllers.DocumentacaoController.avaliacao()
+GET     /documentacao/dicionario/contato                                controllers.DocumentacaoController.contato()
+GET     /documentacao/dicionario/curso                                  controllers.DocumentacaoController.curso()
+GET     /documentacao/dicionario/evento                                 controllers.DocumentacaoController.evento()
+GET     /documentacao/dicionario/home                                   controllers.DocumentacaoController.home()
+GET     /documentacao/dicionario/log                                    controllers.DocumentacaoController.log()
+GET     /documentacao/dicionario/marco                                  controllers.DocumentacaoController.marco()
+GET     /documentacao/dicionario/noticia                                controllers.DocumentacaoController.noticia()
+GET     /documentacao/dicionario/publicacao                             controllers.DocumentacaoController.publicacao()
+GET     /documentacao/dicionario/notatecnica                            controllers.DocumentacaoController.notaTecnica()
+GET     /documentacao/dicionario/site                                   controllers.DocumentacaoController.site()
+GET     /documentacao/dicionario/token                                  controllers.DocumentacaoController.token()
+GET     /documentacao/dicionario/trabalho                               controllers.DocumentacaoController.trabalho()
+GET     /documentacao/dicionario/usuario                                controllers.DocumentacaoController.usuario()
+GET     /documentacao/dicionario/video                                  controllers.DocumentacaoController.video()
+
+# Adicionais Usuario telas
+GET     /cadastro                                                       controllers.UsuarioController.telaCadastro()
+GET     /admin/adicionais/usuario/novo/                                 controllers.UsuarioController.telaNovo()
+GET     /usuario/cadastrado                                             controllers.UsuarioController.telaCadastrado()
+GET     /usuario/reset                                                  controllers.UsuarioController.telaReset()
+GET     /admin/adicionais/usuario/editar/:id                            controllers.UsuarioController.telaEditar(id:Long)
+GET		/admin/adicionais/usuario/detalhe/:id				            controllers.UsuarioController.telaDetalhe(id:Long)
+GET     /admin/adicionais/usuario/lista/todos                           controllers.UsuarioController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+
+# Admin
+GET     /admin/painel                                                   controllers.AdminController.painel(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", autor ?= null)
+
+# Login Telas
+GET     /login                                                          controllers.LoginController.telaLogin()
+
+# Login Servicos
+GET     /logout                                                         controllers.LoginController.logout()
+POST    /login                                                          controllers.LoginController.autenticar()
+
+# Usuario Servicos
+POST    /usuario                                                        controllers.UsuarioController.inserir()
+GET     /current                                                        controllers.UsuarioController.autenticado()
+GET     /usuario/confirma/:email/:confirmaToken                         controllers.UsuarioController.confirma(email, confirmaToken)
+POST    /admin/adicionais/usuario/editar/:id                            controllers.UsuarioController.editar(id:Long)
+GET     /admin/adicionais/usuario/:id                                   controllers.UsuarioController.buscaPorId(id:Long)
+GET     /admin/adicionais/usuarios/filtro/:filtro                       controllers.UsuarioController.filtra(filtro:String)
+POST	/admin/adicionais/usuario/:id/remover		                    controllers.UsuarioController.remover(id:Long)
+GET	    /admin/adicionais/usuario/:id/enviarToken		                controllers.UsuarioController.enviarToken(id:Long)
+GET	    /admin/adicionais/usuario/:id/confirma		                    controllers.UsuarioController.confirmaAdmin(id:Long)
+GET	    /admin/adicionais/usuario/:id/bloqueia		                    controllers.UsuarioController.bloquear(id:Long)
+GET	    /admin/adicionais/usuario/:id/desbloqueia		                controllers.UsuarioController.desbloquear(id:Long)
+POST    /admin/adicionais/usuario                                       controllers.UsuarioController.inserirAdmin()
+GET	    /admin/adicionais/usuario/exportar/		                        controllers.UsuarioController.exportar()
+
+# Contato
+POST    /contato                                                        controllers.ContatoController.inserir()
+
+# Artigo Telas
+GET     /admin/artigo/novo/                                             controllers.ArtigoController.telaNovo(id: Long ?= 0)
+GET     /admin/artigo/editar/:id                                        controllers.ArtigoController.telaEditar(id:Long)
+GET		/admin/artigo/detalhe/:id				                        controllers.ArtigoController.telaDetalhe(id:Long)
+GET     /admin/artigo/lista/todos                                       controllers.ArtigoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "", autor ?= null)
+
+
+# Artigo Servicos
+GET     /artigos                                                        controllers.ArtigoController.buscaTodos()
+GET     /artigo/pdf/:titulo                                             controllers.ArtigoController.pdf(titulo:String)
+GET     /artigo/link/:titulo                                            controllers.ArtigoController.acessoLink(titulo:String)
+GET     /artigos/filtro/:filtro                                         controllers.ArtigoController.filtra(filtro:String)
+GET     /admin/artigo/pdf/:titulo                                       controllers.ArtigoController.pdfAdmin(titulo:String)
+POST    /admin/artigo                                                   controllers.ArtigoController.inserir(id: Long ?= 0)
+POST	/admin/artigo/:id/remover		                                controllers.ArtigoController.remover(id:Long)
+POST    /admin/artigo/editar/:id                                        controllers.ArtigoController.editar(id:Long)
+POST    /admin/artigo/editarPdf/:id                                     controllers.ArtigoController.editarPdf(id:Long)
+
+# Trabalho Telas
+GET     /admin/trabalho/novo/                                           controllers.TrabalhoController.telaNovo(id: Long ?= 0)
+GET     /admin/trabalho/editar/:id                                      controllers.TrabalhoController.telaEditar(id:Long)
+GET		/admin/trabalho/detalhe/:id				                        controllers.TrabalhoController.telaDetalhe(id:Long)
+GET     /admin/trabalho/lista/todos                                     controllers.TrabalhoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "", autor ?= null)
+
+# Trabalho Servicos
+GET     /trabalhos                                                      controllers.TrabalhoController.buscaTodos()
+GET     /trabalho/pdf/:titulo                                           controllers.TrabalhoController.pdf(titulo:String)
+GET     /trabalho/link/:titulo                                          controllers.TrabalhoController.acessoLink(titulo:String)
+GET     /trabalhos/filtro/:filtro                                       controllers.TrabalhoController.filtra(filtro:String)
+GET     /admin/trabalho/pdf/:titulo                                     controllers.TrabalhoController.pdfAdmin(titulo:String)
+POST    /admin/trabalho                                                 controllers.TrabalhoController.inserir(id: Long ?= 0)
+POST	/admin/trabalho/:id/remover		                                controllers.TrabalhoController.remover(id:Long)
+POST    /admin/trabalho/editar/:id                                      controllers.TrabalhoController.editar(id:Long)
+POST    /admin/trabalho/editarPdf/:id                                   controllers.TrabalhoController.editarPdf(id:Long)
+
+# Livro Telas
+GET     /admin/livro/novo/                                              controllers.LivroController.telaNovo()
+GET		/admin/livro/detalhe/:id				                        controllers.LivroController.telaDetalhe(id:Long)
+GET     /admin/livro/editar/:id                                         controllers.LivroController.telaEditar(id:Long)
+GET     /admin/livro/lista/todos                                        controllers.LivroController.telaLista()
+
+# Livro Servicos
+GET     /livros                                                         controllers.LivroController.buscaTodos()
+GET     /livro/pdf/:titulo                                              controllers.LivroController.pdf(titulo:String)
+POST    /admin/livro                                                    controllers.LivroController.inserir()
+POST	/admin/livro/:id/remover		                                controllers.LivroController.remover(id:Long)
+POST    /admin/livro/editar/:id                                         controllers.LivroController.editar(id:Long)
+
+# Evento Telas
+GET     /admin/evento/novo/                                             controllers.EventoController.telaNovo()
+GET		/admin/evento/detalhe/:id				                        controllers.EventoController.telaDetalhe(id:Long)
+GET     /admin/evento/editar/:id                                        controllers.EventoController.telaEditar(id:Long)
+GET     /admin/evento/lista/todos                                       controllers.EventoController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+
+# Evento Servicos
+GET     /eventos                                                        controllers.EventoController.buscaTodos()
+GET     /eventos/futuros                                                controllers.EventoController.buscaTodosEventosFuturos()
+GET     /eventos/ultimos                                                controllers.EventoController.ultimosCadastrados()
+POST    /admin/evento                                                   controllers.EventoController.inserir()
+POST	/admin/evento/:id/remover		                                controllers.EventoController.remover(id:Long)
+POST    /admin/evento/editar/:id                                        controllers.EventoController.editar(id:Long)
+
+# Curso Telas
+GET     /admin/curso/novo/                                              controllers.CursoController.telaNovo()
+GET		/admin/curso/detalhe/:id				                        controllers.CursoController.telaDetalhe(id:Long)
+GET     /admin/curso/editar/:id                                         controllers.CursoController.telaEditar(id:Long)
+GET     /admin/curso/lista/todos                                        controllers.CursoController.telaLista(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+
+# Curso Servicos
+GET     /cursos                                                         controllers.CursoController.buscaTodos()
+GET     /curso/jpg/:titulo                                              controllers.CursoController.jpg(titulo:String)
+POST    /admin/curso                                                    controllers.CursoController.inserir()
+POST	/admin/curso/:id/remover                                        controllers.CursoController.remover(id:Long)
+POST    /admin/curso/editar/:id                                         controllers.CursoController.editar(id:Long)
+POST    /admin/curso/editarImg/:id                                      controllers.CursoController.editarImg(id:Long)
+
+# Video Telas
+GET     /admin/video/novo/                                              controllers.VideoController.telaNovo()
+GET		/admin/video/detalhe/:id				                        controllers.VideoController.telaDetalhe(id:Long)
+GET     /admin/video/editar/:id                                         controllers.VideoController.telaEditar(id:Long)
+GET     /admin/video/lista/todos                                        controllers.VideoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "")
+
+# Video Servicos
+GET     /videos                                                         controllers.VideoController.buscaTodos()
+GET     /video/jpg/:titulo                                              controllers.VideoController.jpg(titulo:String)
+POST    /admin/video                                                    controllers.VideoController.inserir()
+POST	/admin/video/:id/remover                                        controllers.VideoController.remover(id:Long)
+POST    /admin/video/editar/:id                                         controllers.VideoController.editar(id:Long)
+POST    /admin/video/editarImg/:id                                      controllers.VideoController.editarImg(id:Long)
+
+# Publicacoes Telas
+GET     /admin/publicacao/novo/                                         controllers.PublicacaoController.telaNovo(id: Long ?= 0)
+GET		/admin/publicacao/detalhe/:id				                    controllers.PublicacaoController.telaDetalhe(id:Long)
+GET     /admin/publicacao/editar/:id                                    controllers.PublicacaoController.telaEditar(id:Long)
+GET     /admin/publicacao/lista/todos                                   controllers.PublicacaoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "", autor ?= null)
+
+# Publicacoes Servicos
+GET     /publicacoes                                                    controllers.PublicacaoController.buscaTodos()
+GET     /publicacoes/ultimas                                            controllers.PublicacaoController.ultimasCadastradas()
+GET     /publicacao/detalhe/:id                                         controllers.PublicacaoController.detalhe(id: Long)
+GET     /publicacao/jpg/:titulo                                         controllers.PublicacaoController.jpg(titulo:String)
+GET     /publicacao/pdf/:titulo                                         controllers.PublicacaoController.pdf(titulo:String)
+GET     /publicacao/link/:titulo                                        controllers.PublicacaoController.acessoLink(titulo:String)
+
+# Publicacoes Admin
+POST    /admin/publicacao                                               controllers.PublicacaoController.inserir(id: Long ?= 0)
+POST	/admin/publicacao/:id/remover                                   controllers.PublicacaoController.remover(id:Long)
+POST    /admin/publicacao/editar/:id                                    controllers.PublicacaoController.editar(id:Long)
+POST    /admin/publicacao/editarImg/:id                                 controllers.PublicacaoController.editarImg(id:Long)
+POST    /admin/publicacao/editarPdf/:id                                 controllers.PublicacaoController.editarPdf(id:Long)
+GET     /admin/publicacao/pdf/:titulo                                   controllers.PublicacaoController.pdfAdmin(titulo:String)
+
+# Nota Tecnica Servicos
+GET     /notastecnicas                                                   controllers.NotaTecnicaController.buscaTodos()
+GET     /notastecnicas/ultimas                                           controllers.NotaTecnicaController.ultimasCadastradas()
+GET     /notatecnica/detalhe/:id                                         controllers.NotaTecnicaController.detalhe(id: Long)
+GET     /notatecnica/jpg/:titulo                                         controllers.NotaTecnicaController.jpg(titulo:String)
+GET     /notatecnica/pdf/:titulo                                         controllers.NotaTecnicaController.pdf(titulo:String)
+GET     /notatecnica/link/:titulo                                        controllers.NotaTecnicaController.acessoLink(titulo:String)
+
+# Notas Tecnicas Admin Telas
+GET     /admin/notatecnica/novo/                                         controllers.NotaTecnicaController.telaNovo(id: Long ?= 0)
+GET		/admin/notatecnica/detalhe/:id				                     controllers.NotaTecnicaController.telaDetalhe(id:Long)
+GET     /admin/notatecnica/editar/:id                                    controllers.NotaTecnicaController.telaEditar(id:Long)
+GET     /admin/notatecnica/lista/todos                                   controllers.NotaTecnicaController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "", autor ?= null)
+
+# Notas Tecnicas Admin
+POST    /admin/notatecnica                                               controllers.NotaTecnicaController.inserir(id: Long ?= 0)
+POST	/admin/notatecnica/:id/remover                                   controllers.NotaTecnicaController.remover(id:Long)
+POST    /admin/notatecnica/editar/:id                                    controllers.NotaTecnicaController.editar(id:Long)
+POST    /admin/notatecnica/editarImg/:id                                 controllers.NotaTecnicaController.editarImg(id:Long)
+POST    /admin/notatecnica/editarPdf/:id                                 controllers.NotaTecnicaController.editarPdf(id:Long)
+GET     /admin/notatecnica/pdf/:titulo                                   controllers.NotaTecnicaController.pdfAdmin(titulo:String)
+
+# Noticias Telas
+GET     /admin/noticia/novo/                                            controllers.NoticiaController.telaNovo()
+GET		/admin/noticia/detalhe/:id				                        controllers.NoticiaController.telaDetalhe(id:Long)
+GET     /admin/noticia/editar/:id                                       controllers.NoticiaController.telaEditar(id:Long)
+GET     /admin/noticia/lista/todos                                      controllers.NoticiaController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "")
+
+# Noticia Servicos
+GET     /noticias                                                       controllers.NoticiaController.buscaTodos()
+GET     /noticias/ultimas                                               controllers.NoticiaController.ultimasCadastradas()
+GET     /noticia/detalhe/:id                                            controllers.NoticiaController.detalhe(id: Long)
+GET     /noticia/jpg/:titulo                                            controllers.NoticiaController.jpg(titulo:String)
+POST    /admin/noticia                                                  controllers.NoticiaController.inserir()
+POST	/admin/noticia/:id/remover                                      controllers.NoticiaController.remover(id:Long)
+POST    /admin/noticia/editar/:id                                       controllers.NoticiaController.editar(id:Long)
+POST    /admin/noticia/editarImg/:id                                    controllers.NoticiaController.editarImg(id:Long)
+
+# Marcos Telas
+GET     /admin/marco/novo/                                              controllers.MarcoController.telaNovo(id: Long ?= 0)
+GET		/admin/marco/detalhe/:id				                        controllers.MarcoController.telaDetalhe(id:Long)
+GET     /admin/marco/editar/:id                                         controllers.MarcoController.telaEditar(id:Long)
+GET     /admin/marco/lista/todos                                        controllers.MarcoController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "")
+
+# Marco Servicos
+GET     /marcos                                                         controllers.MarcoController.buscaTodos()
+GET     /marco/jpg/:titulo                                              controllers.MarcoController.jpg(titulo:String)
+POST    /admin/marco                                                    controllers.MarcoController.inserir(id: Long ?= 0)
+POST	/admin/marco/:id/remover                                        controllers.MarcoController.remover(id:Long)
+POST    /admin/marco/editar/:id                                         controllers.MarcoController.editar(id:Long)
+POST    /admin/marco/editarImg/:id                                      controllers.MarcoController.editarImg(id:Long)
+
+# Categoria Servicos
+POST    /admin/categoria                                                controllers.CategoriaController.inserir()
+POST	/admin/categoria/:id/remover                                    controllers.CategoriaController.remover(id:Long)
+POST    /admin/categoria/editar/:id                                     controllers.CategoriaController.editar(id:Long)
+
+# Site Telas
+GET     /admin/site/novo/                                               controllers.SiteController.telaNovo(id: Long ?= 0)
+GET		/admin/site/detalhe/:id				                            controllers.SiteController.telaDetalhe(id:Long)
+GET     /admin/site/editar/:id                                          controllers.SiteController.telaEditar(id:Long)
+GET     /admin/site/lista/todos                                         controllers.SiteController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "")
+
+# Site Servicos
+GET     /sites                                                          controllers.SiteController.buscaTodos()
+POST    /admin/site                                                     controllers.SiteController.inserir(id: Long ?= 0)
+POST	/admin/site/:id/remover                                         controllers.SiteController.remover(id:Long)
+POST    /admin/site/editar/:id                                          controllers.SiteController.editar(id:Long)
+
+# Album Telas
+GET     /admin/album/novo/                                              controllers.AlbumController.telaNovo()
+GET		/admin/album/detalhe/:id				                        controllers.AlbumController.telaDetalhe(id:Long)
+GET     /admin/album/editar/:id                                         controllers.AlbumController.telaEditar(id:Long)
+GET     /admin/album/lista/todos                                        controllers.AlbumController.telaLista(p:Int ?= 0, s ?= "titulo", o ?= "asc", f ?= "")
+
+# Album Servicos
+GET     /albuns                                                         controllers.AlbumController.buscaTodos()
+GET     /album/:pasta/:capa                                             controllers.AlbumController.capa(pasta:String, capa:String)
+GET     /album/:id                                                      controllers.AlbumController.buscaPorId(id:Long)
+POST    /admin/album                                                    controllers.AlbumController.inserir()
+POST	/admin/album/:id/remover                                        controllers.AlbumController.remover(id:Long)
+POST    /admin/album/editar/:id                                         controllers.AlbumController.editar(id:Long)
+
+#Foto
+GET	    /admin/album/foto/remover/:pasta/:foto                          controllers.FotoController.remover(pasta:String, foto:String)
+GET	    /admin/album/foto/:pasta/:foto                                  controllers.FotoController.foto(pasta:String, foto:String)
+GET		/admin/album/foto/editar/:pasta/:foto				            controllers.FotoController.telaEditar(pasta:String, foto:String)
+POST    /admin/album/foto/editar/:pasta/:foto                           controllers.FotoController.editar(pasta:String, foto:String)
+
+# Senha
+POST    /reset/senha                                                    controllers.SenhaController.runPassword()
+POST     /usuario/reset/senha                                           controllers.SenhaController.resetSenha()
+
+# Reseta a senha
+GET     /reset/:token                                                   controllers.SenhaController.reset(token:String)
+POST    /reset/:token                                                   controllers.SenhaController.runReset(token:String)
+
+# API RDStation
+GET /api/listar/oportunidades                                                       controllers.ApiRDStationController.listarOportunidadesRDStation
+
+GET     /admin/adicionais/rdstation/api/oportunidade/:id/remover                    controllers.ApiRDStationController.remover(id:Long)
+GET		/admin/adicionais/rdstation/api/oportunidade/detalhe/:id				    controllers.ApiRDStationController.telaDetalhe(id:Long)
+GET     /admin/adicionais/rdstation/api/lista/oportunidades                         controllers.ApiRDStationController.telaLista(p:Int ?= 0, s ?= "dataCadastro", o ?= "desc", f ?= "")
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                                                   controllers.Assets.versioned(path="/public", file: Asset)

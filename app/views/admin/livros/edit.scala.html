@@ -1,0 +1,78 @@
+@(id: Long, livroForm: play.data.Form[validators.LivroFormData])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main("Editar Livro") {
+<div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Editar Livro</div>
+        <div class="panel-body">
+            @form(routes.LivroController.editar(id), 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "livroForm") {
+
+            @if(livroForm.hasGlobalErrors) {
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"></label>
+                    <div class="col-sm-8">
+                        <p class="alert alert-danger text-center">@livroForm.globalError.message</p>
+                    </div>
+                </div>
+            }
+
+            <!-- Título -->
+            @texto(livroForm("titulo"),
+            label = "Título:",
+            placeholder = "Insira o Título")
+
+            <!-- Subtítulo -->
+            @texto(livroForm("subTitulo"),
+            label = "Subtítulo:",
+            placeholder = "Insira o Subtítulo")
+
+            <!-- Autores -->
+            @texto(livroForm("autores"),
+            label = "Autores:",
+            placeholder = "Insira o Autor")
+
+            <!-- Editora -->
+            @texto(livroForm("editora"),
+            label = "Editora:",
+            placeholder = "Insira a Editora")
+
+            <!-- ISBN -->
+            @texto(livroForm("isbn"),
+            label = "ISBN:",
+            placeholder = "Insira o ISBN")
+
+            <!-- Páginas -->
+            @numero(livroForm("paginas"),
+            label = "Páginas:",
+            placeholder = "Insira a quantidade de páginas")
+
+            <!-- Ano -->
+            @numero(livroForm("ano"),
+            label = "Ano:",
+            placeholder = "Insira o ano")
+
+            <!-- Edição -->
+            @numero(livroForm("edicao"),
+            label = "Edição:",
+            placeholder = "Insira a edição")
+
+            <!-- Arquivo -->
+            @arquivo(livroForm("arquivo"),
+            label = "Enviar:")
+
+            <!-- Button -->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-12">
+                    <button id="btnEditar" type="submit" class="btn btn-primary">Editar</button>
+                    <a class="btn btn-default" type="button" href="@routes.LivroController.telaLista">Cancelar</a>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+}

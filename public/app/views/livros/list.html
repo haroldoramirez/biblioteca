@@ -1,0 +1,15 @@
+<div ng-init="init()" class="mdl-grid">
+    <div ng-repeat="livro in livros" class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+        <div class="mdl-card__title">
+            <h1 class="mdl-card__title-text">{{livro.titulo}}</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+            {{livro.subTitulo}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a target="_blank" ng-href="livro/pdf/{{livro.nomeArquivo}}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                {{Messages('card.button.pdf.title')}}
+            </a>
+        </div>
+    </div>
+</div>

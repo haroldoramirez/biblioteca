@@ -1,0 +1,36 @@
+{
+  "name": "angular-carousel",
+  "description": "Touch-optimized carousel for Angular",
+  "version": "1.2.0",
+  "keywords": [
+    "carousel",
+    "angular",
+    "javascript",
+    "touch",
+    "responsive",
+    "front-end",
+    "web"
+  ],
+  "main": [
+    "angular-carousel.js",
+    "angular-carousel.css"
+  ],
+  "dependencies": {
+    "angular": ">= 1.2.3",
+    "hammerjs": ">= 2.0.4"
+  },
+  "ignore": [
+    "examples/",
+    "package.json"
+  ],
+  "homepage": "https://github.com/lifelynl/angular-carousel",
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.2.0",
+    "commit": "44aa29f634cde6dac5c3e429f02af3f1c4d4d89e"
+  },
+  "_source": "https://github.com/lifelynl/angular-carousel.git",
+  "_target": "^1.2.0",
+  "_originalSource": "lifely-angular-carousel"
+}

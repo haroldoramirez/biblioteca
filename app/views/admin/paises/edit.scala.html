@@ -1,0 +1,56 @@
+@(id: Long, paisForm: play.data.Form[validators.PaisFormData])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Editar País") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.PaisController.telaLista()" class="btn btn-default">Países</a>
+                <a disabled class="btn btn-default">Editar</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-flag" aria-hidden="true"></i> Editar País</h1>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Informações</div>
+            <div class="panel-body">
+            @form(routes.PaisController.editar(id), 'class -> "form-horizontal", 'id -> "paisForm") {
+
+                @if(paisForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="alert alert-danger text-center">@paisForm.globalError.message</p>
+                        </div>
+                    </div>
+                }
+
+                    @*nome*@
+                @texto(paisForm("nome"),
+                    label = "Nome:",
+                    placeholder = "Insira o nome")
+
+                    @*botoes*@
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-12">
+                        <button id="btnSalvar" type="submit" class="btn btn-primary">Editar</button>
+                        <a class="btn btn-default" type="button" href="@routes.PaisController.telaLista()">Cancelar</a>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        var form = document.getElementById("paisForm");
+        form.elements[0].focus();
+    };
+</script>

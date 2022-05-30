@@ -1,0 +1,78 @@
+@(formPreenchido:DynamicForm)
+@import helper._
+@import templates.bootstrap._
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/cibiogasicon.png")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/bootstrap/dist/css/bootstrap.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/font-awesome/css/font-awesome.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/material/fonts.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/form-elements.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/style.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/form-base.css")">
+        <title>@Messages("app.title") - @Messages("register.page.title")</title>
+    </head>
+<body>
+    @*top content*@
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>@Messages("app.title")</strong></h1>
+                        <div class="description">
+                            <p> @Messages("app.title.cibiogas")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h2>@Messages("reset.page.title")</h2>
+                                <p>@Messages("reset.page.description"):</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-unlock"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+                            @form(routes.SenhaController.resetSenha(), 'id -> "formPreenchido") {
+                                @if(formPreenchido.hasGlobalErrors) {
+                                    <p align="center" class="error">@formPreenchido.globalError.message</p>
+                                }
+                                @*email*@
+                                @templates.bootstrap.email(formPreenchido("email"), Messages("register.email"))
+                                <button data-loading-text="Loading..." id="btnReset" type="submit" class="btn">@Messages("login.page.button.reset")</button>
+                            }
+                            <br>
+                            <p class="text-center">@Messages("register.page.ask") <a href="@routes.LoginController.telaLogin()">@Messages("login.page.signin.title")</a>.</p>
+                        </div>
+                    </div>
+                </div>
+                @footer()
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("bower_components/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/bootstrap/dist/js/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("bower_components/jquery-backstretch/jquery.backstretch.min.js")" type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+            /*
+             Fullscreen background
+             */
+            $.backstretch("@routes.Assets.versioned("images/cib/udcib.jpg")", {transitionDuration: 240});
+            $('[data-toggle="tooltip"]').tooltip();
+
+            //$('#btnReset').on('click', function () {
+                //var $btn = $(this).button('loading');
+            //});
+        });
+    </script>
+</body>
+</html>

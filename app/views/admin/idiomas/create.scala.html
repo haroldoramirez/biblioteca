@@ -1,0 +1,56 @@
+@(idiomaForm: play.data.Form[validators.IdiomaFormData])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Cadastro de Idioma") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.IdiomaController.telaLista()" class="btn btn-default">Idiomas</a>
+                <a disabled class="btn btn-default">Cadastro</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-language" aria-hidden="true"></i> Cadastro de Idioma</h1>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Informações</div>
+            <div class="panel-body">
+            @form(routes.IdiomaController.inserir, 'class -> "form-horizontal", 'id -> "idiomaForm") {
+
+                @if(idiomaForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="alert alert-danger text-center">@idiomaForm.globalError.message</p>
+                        </div>
+                    </div>
+                }
+
+                    @*titulo*@
+                @texto(idiomaForm("nome"),
+                    label = "Nome:",
+                    placeholder = "Insira o nome")
+
+                    @*botoes*@
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-12">
+                        <button id="btnSalvar" type="submit" class="btn btn-success">Salvar</button>
+                        <a class="btn btn-default" type="button" href="@routes.IdiomaController.telaLista()">Cancelar</a>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        var form = document.getElementById("idiomaForm");
+        form.elements[0].focus();
+    };
+</script>

@@ -1,0 +1,117 @@
+.agenda{}
+
+.agenda .data {
+    float:left;
+    padding-right:10px;
+    text-align: center;
+    padding-top: 1px;
+}
+
+.agenda .data .dia {
+    width:40px;
+    height:58px;
+    float: left;
+    background: rgb(137,181,37) !important;
+    border-radius: 5%;
+}
+
+.agenda .data .dia .numero {
+    font-size:18px;
+    font-weight:bold;
+    color: #ffffff;
+    padding-top: 3px;
+    text-shadow: 1px 1px 5px #898989;
+}
+
+.agenda .data .dia .mes {
+    font-size:11px;
+    font-weight:bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 5px #898989;
+}
+
+.agenda .data .dia .ano {
+    font-size:13px;
+    color: #ffffff;
+    text-shadow: 1px 1px 5px #898989;
+}
+
+.agenda .data .semana {
+    width:137px;
+    height:58px;
+    background: #dedede;
+    font-size:14px;
+    font-weight:bold;
+    line-height:60px;
+    text-align:center;
+    text-shadow: 1px 1px 5px #c8c8c8;
+    border-radius: 5%;
+}
+
+.eventos-home{
+    height:58px;
+}
+
+.eventos-home .data-home {
+    float:left;
+    padding-right:6px;
+    text-align: center;
+}
+
+.eventos-home .data-home .dia-home {
+    width:35px;
+    height:58px;
+    float: left;
+    background: rgb(137,181,37) !important;
+    border-radius: 5%;
+}
+
+.eventos-home .data-home .dia-home .numero-home {
+    font-size:15px;
+    font-weight:bold;
+    color: #ffffff;
+    padding-top: 3px;
+    text-shadow: 1px 1px 5px #898989;
+}
+
+.eventos-home .data-home .dia-home .mes-home {
+    font-size:11px;
+    font-weight:bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 5px #898989;
+}
+
+.eventos-home .data-home .dia-home .ano-home {
+    font-size:13px;
+    color: #ffffff;
+    text-shadow: 1px 1px 5px #898989;
+}
+
+.eventos-home .data-home .semana-home {
+    width:155px;
+    height:58px;
+    background: #dedede;
+    font-size:17px;
+    font-weight:bold;
+    line-height:60px;
+    text-align:center;
+    text-shadow: 1px 1px 5px #c8c8c8;
+}
+
+.separador-eventos {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 6px 0;
+}
+
+@media screen and (max-width: 500px) {
+    .esconde-celular-semana {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .mostra-celular-semana {
+        display: none;
+    }
+}

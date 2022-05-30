@@ -1,0 +1,99 @@
+@(cursoForm: play.data.Form[validators.CursoFormData])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Cadastro de Curso") {
+
+<!--Header da Tela de Cadastro-->
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.CursoController.telaLista()" class="btn btn-default">Cursos</a>
+            <a disabled class="btn btn-default">Cadastro</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-leaf" aria-hidden="true"></i> Cadastro de Curso</h1>
+    </div>
+</div>
+<!--Tela de Cadastro-->
+<div class="container">
+    @form(routes.CursoController.inserir, 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "cursoForm") {
+    <!-- Row start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <i class="icon-calendar"></i>
+                    <h3 class="panel-title">Informações</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @if(cursoForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <p class="alert alert-danger text-center">@cursoForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    @*nome*@
+                    @texto(cursoForm("nome"),
+                    label = "Nome:",
+                    placeholder = "Insira o Nome")
+
+                    @*descricao*@
+                    @textoarea(cursoForm("descricao"),
+                    label = "Descrição:",
+                    placeholder = "Insira a descrição",
+                    caracteres = "400")
+
+                    @*data inicio*@
+                    @datetimePickerDataInicio(cursoForm("dataInicio"),
+                    label = "Início:",
+                    placeholder = "Insira a data")
+
+                    @*site*@
+                    @texto(cursoForm("site"),
+                    label = "Site:",
+                    placeholder = "Insira o Site")
+
+                    @*capa*@
+                    @arquivojpg(cursoForm("arquivo"),
+                    label = "Capa:")
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Row end -->
+
+    <hr >
+    @*botoes*@
+    <div class="form-group">
+        <div class="col-md-12">
+            <button data-loading-text="Loading..." id="btnSalvar" type="submit" class="btn btn-success pull-right" autocomplete="off">Salvar</button>
+            <a class="btn btn-default" type="button" href="@routes.CursoController.telaLista()">Cancelar</a>
+        </div>
+    </div>
+    }
+
+</div>
+
+}
+
+<!--Scripts Auxiliares-->
+<script type="text/javascript">
+    window.onload = function() {
+
+        var form = document.getElementById("cursoForm");
+        form.elements[0].focus();
+
+        $('#dataInicio').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+    };
+</script>

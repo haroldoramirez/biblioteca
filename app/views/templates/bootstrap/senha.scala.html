@@ -1,0 +1,16 @@
+@(field: Field, placeholder: String = "")
+
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <input
+    type="password"
+    autocomplete="off"
+    maxlength="60"
+    class="form-password form-control"
+    id="@field.id"
+    name="@field.name"
+    autocomplete="off"
+    value="@field.value.getOrElse("")"
+    placeholder="@placeholder"/>
+    <span data-toggle="tooltip" data-placement="top" title="Mostrar/Ocultar senha" toggle="#@field.id" class="fa fa-fw fa-eye field-password-icon toggle-password"></span>
+    <span class="help-block pull-right">@{field.error.map { error => error.message }}</span>
+</div>

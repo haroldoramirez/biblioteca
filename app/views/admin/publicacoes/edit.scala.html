@@ -1,0 +1,125 @@
+@(id: Long, publicacaoForm: play.data.Form[validators.PublicacaoFormData], idiomas:Map[String,Boolean], temUrl: Boolean)
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Editar Publicação") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.PublicacaoController.telaLista()" class="btn btn-default">Publicações</a>
+            <a disabled class="btn btn-default">Cadastro</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-file-text" aria-hidden="true"></i> Editar Publicação</h1>
+    </div>
+</div>
+<div class="container">
+    @form(routes.PublicacaoController.editar(id), 'enctype -> "multipart/form-data", 'class -> "form-horizontal", 'id -> "publicacaoForm") {
+
+    <!-- Row start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <i class="icon-calendar"></i>
+                    <h3 class="panel-title">Informações</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @if(publicacaoForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <p class="alert alert-danger text-center">@publicacaoForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    @*titulo*@
+                    @texto(publicacaoForm("titulo"),
+                    label = "Título:",
+                    placeholder = "Insira o título")
+
+                    @*resumo*@
+                    @textoarea(publicacaoForm("resumo"),
+                    label = "Resumo:",
+                    placeholder = "Insira o resumo",
+                    caracteres = "600")
+
+                    @*idioma*@
+                    @selecao(publicacaoForm("idioma"),
+                    label = "Idioma:",
+                    optionMap = idiomas,
+                    isMultiple = false)
+
+                    @*autor*@
+                    @texto(publicacaoForm("autor"),
+                    label = "Autor ou Autores:",
+                    placeholder = "Insira o autor")
+
+                    @*ano*@
+                    @datePickerAno(publicacaoForm("ano"),
+                        label = "Ano:",
+                        placeholder = "Selecione o ano")
+
+                    @*palavras chave*@
+                    @texto(publicacaoForm("palavraChave"),
+                    label = "Palavras Chave:",
+                    placeholder = "Insira a palavra chave")
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Row end -->
+
+    @if(temUrl) {
+            <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <i class="icon-calendar"></i>
+                        <h3 class="panel-title">Fonte/Origem</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        @*url*@
+                        @texto(publicacaoForm("url"),
+                            label = "URL:",
+                            placeholder = "Insira um endereço válido - http://articles.com/file")
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- Row end -->
+    }
+
+    <hr >
+    @*botoes*@
+    <div class="form-group">
+        <div class="col-md-12">
+            <button data-loading-text="Loading..." id="btnSalvar" type="submit" class="btn btn-success pull-right" autocomplete="off">Salvar</button>
+            <a class="btn btn-default" type="button" href="@routes.PublicacaoController.telaLista()">Cancelar</a>
+        </div>
+    </div>
+    }
+
+</div>
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        var form = document.getElementById("publicacaoForm");
+        form.elements[0].focus();
+
+        $('#ano').datetimepicker({
+            format: 'YYYY'
+        });
+
+        $('#btnSalvar').on('click', function () {
+            var $btn = $(this).button('loading');
+        })
+    };
+</script>

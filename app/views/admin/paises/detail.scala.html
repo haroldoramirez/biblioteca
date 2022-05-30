@@ -1,0 +1,80 @@
+@(pais: Pais)
+
+@usuario() = @{
+    Http.Context.current().args.get("usuario").asInstanceOf[Usuario]
+}
+
+@import helper._
+
+@views.html.admin.main(Messages("app.title") + " | Detalhe do País") {
+    <div class="col-md-12">
+        <div class="page-header header-biogas">
+            <div class="btn-group btn-breadcrumb pull-right">
+                <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+                <a href="@routes.PaisController.telaLista()" class="btn btn-default">Países</a>
+                <a disabled class="btn btn-default">Detalhe</a>
+            </div>
+            <h1 class="font-style"><i class="fa fa-flag" aria-hidden="true"></i> Detalhe do País</h1>
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informações
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.PaisController.telaLista()">Voltar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@routes.PaisController.telaEditar(pais.getId)">Editar</a></li>
+                            @if(usuario.isAdmin) {
+                                <li role="separator" class="divider"></li>
+                                <li><a data-toggle="modal" data-target=".bs-example-modal-sm" href="">Excluir</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Título</label>
+                        <p class="display-block margin-left-027em">@pais.getNome</p>
+                    </div>
+                    <hr>
+                    <div class="item-form width-600 margin-bottom-15">
+                        <label class="display-block strong">Data/Hora de Cadastro</label>
+                        <p type="date" class="display-block margin-left-027em">@pais.getDataCadastro.format("dd MMMM yyyy")</p>
+                    </div>
+                    @if(pais.getDataAlteracao != null){
+                    <hr>
+                        <div class="item-form width-600 margin-bottom-15">
+                            <label class="display-block strong">Data/Hora de Alteração</label>
+                            <p class="display-block margin-left-027em">@pais.getDataAlteracao.format("dd MMMM yyyy")</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@Messages("app.title")</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Deseja remover o país <b>"@pais.getNome"</b>?</p>
+                </div>
+                <div class="modal-footer">
+                @form(routes.PaisController.remover(pais.getId)) {
+                    <input id="btnRemover" type="submit" value="Remover" class="btn btn-danger">
+                }
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+}

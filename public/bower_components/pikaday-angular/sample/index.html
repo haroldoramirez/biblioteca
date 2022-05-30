@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>pikaday-angular</title>
+
+  <style type="text/css">
+
+  body {
+    padding: 50px 0 0 150px;
+  }
+
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="../node_modules/pikaday/css/pikaday.css">
+
+</head>
+<body ng-app="sampleApp" ng-controller="sampleController as sample">
+
+  <h2>Sample</h2>
+
+  <input pikaday="myPickerObject1" on-select="sample.onPikadaySelect(pikaday)">
+
+  <input pikaday="myPickerObject2" default-date="01/17/2007" set-default-date="true">
+
+  <input pikaday="myPickerObject3" number-of-months="2" disable-day-fn="sample.filterDays(date)" i18n="{{ sample.local }}">
+
+
+  <script src="../node_modules/pikaday/pikaday.js"></script>
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../pikaday-angular.js"></script>
+
+  <script>
+
+    angular.module('sampleApp', ['pikaday'])
+      .config(['pikadayConfigProvider', function(pikaday) {
+
+        var locales = {
+          de: {
+            previousMonth : 'Vorheriger Monat',
+            nextMonth     : 'Nächster Monat',
+            months        : ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            weekdays      : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+            weekdaysShort : ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."]
+          }
+        };
+
+        pikaday.setConfig({
+
+          locales: locales
+          // disableDayFn: function (day) {
+          //   console.log(arguments);
+          // }
+
+        });
+      }])
+      .controller('sampleController', function() {
+
+        this.local = "de";
+
+        this.onPikadaySelect = function onPikadaySelect(pikaday) {
+          alert(pikaday.toString());
+        };
+
+        this.filterDays = function filterDaysFn(date) {
+          return date.getDay() === 3;
+        };
+
+      });
+
+  </script>
+
+</body>
+</html>

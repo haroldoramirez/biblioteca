@@ -1,0 +1,52 @@
+@views.html.documentacao.main("Biblioteca - Documentação") {
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@routes.DocumentacaoController.inicio()">Início</a>
+        </li>
+        <li class="breadcrumb-item active">API</li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column">
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">1 Introdução</a>
+                    <a class="nav-link active" href="#item-2">2 Passos</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ml-3 my-1" href="#item-2-1">2.1 Novo Campo</a>
+                    </nav>
+                </nav>
+            </nav>
+        </div>
+        <div class="col-10">
+            <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="scrollspy-example-2">
+                <h4 id="item-1">1 Introdução</h4>
+                <p>Uma API é criada quando uma empresa de software tem a intenção de que outros criadores de software desenvolvam produtos associados ao seu serviço.
+                    Existem vários deles que disponibilizam seus códigos e instruções para serem usados em outros sites da maneira mais conveniente para seus usuários.
+                    O Google Maps é um dos grandes exemplos na área de APIs. Por meio de seu código original, muitos outros sites e aplicações utilizam os dados do Google Maps
+                    adaptando-o da melhor forma a fim de utilizar esse serviço.</p>
+                <p>O Sistema RDStation | CRM tem uma API especial, onde proporciona a comunicacoe entre sistemas com o padrao Json e o token do usuario</p>
+                <h4 id="item-2">2 Passos</h4>
+                <h5 id="item-2-1">2.1 Criar campo Custom no RDStation</h5>
+                <p>Texto</p>
+                <code>Mostrar codigo</code>
+                <h5 id="item-2-2">2.2 Implementado Get que pega todas as oportunidades cadastradas no dia</h5>
+                <p>Texto</p>
+                <code>Mostrar codigo</code>
+                <h5 id="item-2-3">2.3 Implementado codigo onde verificar as oportunidades e salva no banco local, informacoes importantes para a logica</h5>
+                <p>Texto</p>
+                <code>Mostrar codigo</code>
+                <h5 id="item-2-4">2.4 Implementado Gerador de codigo, onde e acionado quando as oportunidades recebidas, tem o campo do "numero da proposta" vazio</h5>
+                <p>Texto</p>
+                <code>Mostrar codigo</code>
+                <h5 id="item-2-5">2.5 Implementado a funcao responsavel por alterar a oportunidade atraves da requisicao</h5>
+                <p>Alterar a oportunidade atraves de um endereco, com o ID e contendo o corpo da requisicao apenas os dados que serao alterados.</p>
+                <code>Mostrar codigo</code>
+            </div>
+        </div>
+    </div>
+</div>
+}

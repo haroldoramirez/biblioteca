@@ -1,0 +1,64 @@
+@(versaoDoPlay : String)
+
+@views.html.documentacao.main("Biblioteca - Documentação") {
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="jumbotron">
+                    <h1 class="display-4">Início</h1>
+                    <p class="lead">Centro Internacional de Energias Renováveis - Biogás - CIBiogás</p>
+                    <hr class="my-4">
+                    <p>Este conjunto de páginas tem por objetivo apresentar as características e funcionalidades do Sistema Biblioteca Digital,
+                        com o intuito de possibilitar ao usuário ou desenvolvedor um breve conhecimento de como foi desenvolvido o sistema, bem como para sanar dúvidas e
+                        dificuldades que venham a surgir durante a utilização ou desenvolver novas implementações do mesmo.</p>
+                    <p>Playframework versão: <b>@versaoDoPlay</b></p>
+                </div>
+                <div class="card-deck">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Arquivos do Projeto</h5>
+                            <p class="card-text">Código fonte completo e documentação técnica</p>
+                            <a target="_blank" href="https://github.com/haroldoramirez/biblioteca" class="btn btn-primary"><span class="fa fa-github"></span> GitHub</a>
+                            <a target="_blank" href="https://git.cibiogas.org/projetos/biblioteca" class="btn btn-success"><span class="fa fa-gitlab"></span> Git CIBiogás</a>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Ambiente de Teste</h5>
+                            <p class="card-text">O endereço é apenas acessível na rede interna do CIBiogás</p>
+                            <a target="_blank" href="http://biblioteca.t.cibiogas.org/biblioteca/#!/" class="btn btn-primary"><span class="fa fa-bug"></span> Teste</a>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Ambiente de Desenvolvimento</h5>
+                            <p class="card-text">Sistema Operacional Utilizado e Ambiente de Desenvolvimento Integrado</p>
+                            <a target="_blank" href="https://linuxmint.com/download.php" class="btn btn-info"><span class="fa fa-linux"></span> Linux Mint 18.2</a>
+                            <a target="_blank" href="https://www.jetbrains.com/idea/" class="btn btn-info"><span class="fa fa-coffee"></span> IntelliJ CE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1 class="display-4">RDStation | CRM</h1>
+                    <p class="lead">Application Programming Interface</p>
+                    <hr class="my-4">
+                    <p>Implementado mecanismos de comunicação através da API RDStation CRM</p>
+                    <p>API é um conjunto de rotinas e padrões de programação para acesso a um aplicativo de software ou plataforma baseado na Web.
+                    A sigla API refere-se ao termo em inglês "Application Programming Interface" que significa em tradução para o português "Interface de Programação de Aplicativos".</p>
+                    <hr class="my-4">
+                    <p>Rotas Utilizadas:</p>
+                    <label>Check TOKEN</label><p>GET - https://plugcrm.net/api/v1/token/check</p>
+                    <label>Listar as Oportunidades</label><p>GET - https://plugcrm.net/api/v1/deals</p>
+                    <label>Alterar Oportunidade através do ID</label><p>PUT - https://plugcrm.net/api/v1/deals/iddaoportunidade</p>
+                    <label>Cadastrar contato</label><p>POST - https://plugcrm.net/api/v1/contacts</p>
+                    <p><a href="https://crmsupport.rdstation.com.br/hc/pt-br/articles/360018747911-API-de-integra%C3%A7%C3%A3o" target="_blank">Documentação Completa para Integrar a API</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

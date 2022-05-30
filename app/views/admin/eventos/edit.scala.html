@@ -1,0 +1,113 @@
+@(id: Long, eventoForm: play.data.Form[validators.EventoFormData])
+
+@import helper._
+@import templates.bootstrap._
+
+@views.html.admin.main(Messages("app.title") + " | Editar Evento") {
+<div class="col-md-12">
+    <div class="page-header header-biogas">
+        <div class="btn-group btn-breadcrumb pull-right">
+            <a href="@routes.AdminController.painel()" class="btn btn-default"><i class="fa fa-home"></i></a>
+            <a href="@routes.EventoController.telaLista()" class="btn btn-default">Eventos</a>
+            <a disabled class="btn btn-default">Editar</a>
+        </div>
+        <h1 class="font-style"><i class="fa fa-calendar" aria-hidden="true"></i> Editar Evento</h1>
+    </div>
+</div>
+<div class="container">
+    @form(routes.EventoController.editar(id), 'class -> "form-horizontal", 'id -> "eventoForm") {
+    <!-- Row start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <i class="icon-calendar"></i>
+                    <h3 class="panel-title">Informações</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @if(eventoForm.hasGlobalErrors) {
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <p class="alert alert-danger text-center">@eventoForm.globalError.message</p>
+                        </div>
+                    </div>
+                    }
+
+                    @*nome*@
+                    @texto(eventoForm("nome"),
+                    label = "Nome:",
+                    placeholder = "Insira o Nome")
+
+                    @*data inicio*@
+                    @datetimePickerDataInicio(eventoForm("dataInicio"),
+                    label = "Início:",
+                    placeholder = "Insira a data")
+
+                    @*datafim*@
+                    @datetimePickerDataFim(eventoForm("dataFim"),
+                    label = "Término:",
+                    placeholder = "Insira a data de término")
+
+                    @*site*@
+                    @texto(eventoForm("site"),
+                    label = "Site:",
+                    placeholder = "Insira o Site")
+
+                    @*local*@
+                    @texto(eventoForm("localidade"),
+                    label = "Local:",
+                    placeholder = "Insira o Local")
+
+                    @*instituicao*@
+                    @texto(eventoForm("instituicao"),
+                    label = "Instituição:",
+                    placeholder = "Insira a Instituição Organizadora")
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Row end -->
+
+    <hr >
+    @*botoes*@
+    <div class="form-group">
+        <div class="col-md-12">
+            <button data-loading-text="Loading..." id="btnSalvar" type="submit" class="btn btn-success pull-right" autocomplete="off">Salvar</button>
+            <a class="btn btn-default" type="button" href="@routes.EventoController.telaLista()">Cancelar</a>
+        </div>
+    </div>
+    }
+
+</div>
+}
+
+<script type="text/javascript">
+    window.onload = function() {
+        var form = document.getElementById("eventoForm");
+        form.elements[0].focus();
+
+        $('#btnSalvar').on('click', function () {
+            var $btn = $(this).button('loading');
+        });
+
+        $('#dataInicio').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+        $('#dataFim').datetimepicker({
+            format: 'YYYY-MM-DD',
+            useCurrent: false //Important! See issue #1075
+        });
+
+        $("#dataInicio").on("dp.change", function (e) {
+            $('#dataFim').data("DateTimePicker").minDate(e.date);
+        });
+
+        $("#dataFim").on("dp.change", function (e) {
+            $('#dataInicio').data("DateTimePicker").maxDate(e.date);
+        });
+    };
+</script>

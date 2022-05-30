@@ -1,0 +1,98 @@
+@views.html.documentacao.main("Biblioteca - Dicionário de Dados - Token") {
+    <div class="container">
+            <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@routes.DocumentacaoController.inicio()">Início</a>
+            </li>
+            <li class="breadcrumb-item">Dicionário de Dados</li>
+            <li class="breadcrumb-item active">Token</li>
+        </ol>
+        <div class="row">
+            <div class="col-12">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1>Table Data dictionary report - token</h1><b>Generated: </b>Qui 07 Dez 2017 13:38:04 -02<br /><b>Server: </b>KDE Database (localhost:5432)<br /><b>Database: </b>bibliotecadb<br /><b>Schema: </b>public<br />
+                    </div>
+                </div>
+                <div style="overflow:auto;" class="container">
+                    <h2>Columns</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Data type</th>
+                            <th>Not Null?</th>
+                            <th>Primary key?</th>
+                            <th>Default</th>
+                            <th>Comment</th>
+                        </tr>
+                        <tr>
+                            <td>token</td>
+                            <td>character varying(255)</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>usuario_id</td>
+                            <td>bigint</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>type</td>
+                            <td>character varying(8)</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>date_creation</td>
+                            <td>timestamp without time zone</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>character varying(255)</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                    </table>
+                    <hr>
+                </div>
+                <div style="overflow:auto;" class="container">
+                    <h2>Constraints</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Definition</th>
+                            <th>Comment</th>
+                        </tr>
+                        <tr>
+                            <td>pk_token</td>
+                            <td>Primary key</td>
+                            <td>(token)</td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>ck_token_type</td>
+                            <td>Check</td>
+                            <td>(type::text = ANY (ARRAY['password'::character varying, 'email'::character varying]::text[]))</td>
+                            <td> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}@()

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bower_components/bootstrap/dist/css/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/mensagens.css")">
+    <title>Biblioteca - desconectado</title>
+</head>
+<body>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="mensagens">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Biblioteca Digital
+                        <a href="@routes.Application.index" class="pull-right">Início</a>
+                    </div>
+                    <div class="panel-body">
+                        <p class="mensagem alert alert-warning text-center">Usuário desconectado!</p>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="panel-footer text-center">&copy <script>document.write(new Date().getFullYear())</script> - @Messages("app.title")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

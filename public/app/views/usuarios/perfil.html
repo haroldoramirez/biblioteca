@@ -1,0 +1,33 @@
+<div ng-init="init()">
+    <div class="mdl-grid">
+        <div ng-show="mostrar" class="mdl-card mdl-shadow--3dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone perfil">
+            <div class="mdl-card__title">
+                <h1 class="mdl-card__title-text">{{Messages('client.profile.title')}}</h1>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <strong>{{Messages('client.profile.name')}}</strong>
+                <p>{{usuario.nome}}</p>
+                <strong>{{Messages('client.profile.email')}}</strong>
+                <p>{{usuario.email}}</p>
+                <strong>{{Messages('client.profile.last')}}</strong>
+                <p>{{usuario.ultimoAcesso | date:'dd/MM/yyyy : HH:mm'}}</p>
+            </div>
+            <div class="mdl-card__menu">
+                <!-- Rich Tooltip -->
+                <button id="password" ng-click="opendialog();" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                    <i class="icon material-icons">lock</i>
+                </button>
+                <div class="mdl-tooltip" for="password">
+                    {{Messages('client.profile.tooltip.title')}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="templateDialog">
+    <div class="mdl-dialog__content">{{Messages('client.confirm.email.message')}}</div>
+    <div class="mdl-dialog__actions">
+        <button ng-click="sim()" type="button" class="mdl-button">{{Messages('client.confirm.email.button.update')}}</button>
+        <button ng-click="closeThisDialog('Cancelar')" type="button" class="mdl-button">{{Messages('client.cancel.email.button')}}</button>
+    </div>
+</script>
