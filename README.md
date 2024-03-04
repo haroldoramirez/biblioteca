@@ -2,6 +2,8 @@
 
 ### [![Build Status](https://travis-ci.org/haroldoramirez/biblioteca.svg?branch=master)](https://travis-ci.org/haroldoramirez/biblioteca)
 
+## Projeto desenvolvido quando trabalhava no CIB.
+
 ### Projeto
 * Repositório de arquivos institucionais como PDFs, Fotos, Projetos e atividades.
   Este repositório é apenas para consulta.
