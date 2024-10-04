@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table album (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(50) not null,
   descricao                     varchar(500) not null,
   nome_capa                     varchar(250) not null,
@@ -13,9 +13,10 @@ create table album (
   data_alteracao                date,
   constraint pk_album primary key (id)
 );
+create sequence album_seq;
 
 create table artigo (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(350) not null,
   resumo                        varchar(600) not null,
   nome_arquivo                  varchar(400) not null,
@@ -28,9 +29,10 @@ create table artigo (
   url                           varchar(500),
   constraint pk_artigo primary key (id)
 );
+create sequence artigo_seq;
 
 create table avaliacao (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(200) not null,
   email                         varchar(150) not null,
   telefone                      varchar(18) not null,
@@ -48,17 +50,19 @@ create table avaliacao (
   constraint ck_avaliacao_status check (status in ('APROVADO','REPROVADO','AVALIAR')),
   constraint pk_avaliacao primary key (id)
 );
+create sequence avaliacao_seq;
 
 create table categoria (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(100) not null,
   data_cadastro                 date not null,
   data_alteracao                date,
   constraint pk_categoria primary key (id)
 );
+create sequence categoria_seq;
 
 create table contato (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(80) not null,
   email                         varchar(80) not null,
   assunto                       varchar(50) not null,
@@ -66,9 +70,10 @@ create table contato (
   data_cadastro                 date not null,
   constraint pk_contato primary key (id)
 );
+create sequence contato_seq;
 
 create table curso (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(100) not null,
   descricao                     varchar(400) not null,
   data_inicio                   date not null,
@@ -76,9 +81,10 @@ create table curso (
   nome_capa                     varchar(150) not null,
   constraint pk_curso primary key (id)
 );
+create sequence curso_seq;
 
 create table evento (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(150) not null,
   data_inicio                   date not null,
   data_fim                      date not null,
@@ -89,9 +95,10 @@ create table evento (
   data_alteracao                date,
   constraint pk_evento primary key (id)
 );
+create sequence evento_seq;
 
 create table foto (
-  id                            bigserial not null,
+  id                            bigint not null,
   album_id                      bigint not null,
   nome                          varchar(150) not null,
   descricao                     varchar(400),
@@ -99,9 +106,10 @@ create table foto (
   data_alteracao                date,
   constraint pk_foto primary key (id)
 );
+create sequence foto_seq;
 
 create table home (
-  id                            bigserial not null,
+  id                            bigint not null,
   descricao                     varchar(400) not null,
   url                           varchar(600),
   data_cadastro                 date not null,
@@ -109,18 +117,20 @@ create table home (
   nome_arquivo                  varchar(400) not null,
   constraint pk_home primary key (id)
 );
+create sequence home_seq;
 
 create table idioma (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(200) not null,
   data_cadastro                 date not null,
   data_alteracao                date,
   constraint uq_idioma_nome unique (nome),
   constraint pk_idioma primary key (id)
 );
+create sequence idioma_seq;
 
 create table livro (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(150) not null,
   sub_titulo                    varchar(250) not null,
   isbn                          varchar(20),
@@ -135,9 +145,10 @@ create table livro (
   constraint uq_livro_isbn unique (isbn),
   constraint pk_livro primary key (id)
 );
+create sequence livro_seq;
 
 create table log (
-  id                            bigserial not null,
+  id                            bigint not null,
   mensagem                      varchar(500) not null,
   navegador                     varchar(100),
   versao                        varchar(100),
@@ -145,9 +156,10 @@ create table log (
   data_cadastro                 timestamp not null,
   constraint pk_log primary key (id)
 );
+create sequence log_seq;
 
 create table marco (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(350) not null,
   ambito                        varchar(50) not null,
   responsavel                   varchar(100) not null,
@@ -159,9 +171,10 @@ create table marco (
   categoria_id                  bigint,
   constraint pk_marco primary key (id)
 );
+create sequence marco_seq;
 
 create table nota_tecnica (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(350) not null,
   resumo                        varchar(600) not null,
   url                           varchar(400),
@@ -176,9 +189,10 @@ create table nota_tecnica (
   nome_arquivo                  varchar(400) not null,
   constraint pk_nota_tecnica primary key (id)
 );
+create sequence nota_tecnica_seq;
 
 create table noticia (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(250) not null,
   resumo                        varchar(400) not null,
   url                           varchar(400) not null,
@@ -187,9 +201,10 @@ create table noticia (
   nome_capa                     varchar(250) not null,
   constraint pk_noticia primary key (id)
 );
+create sequence noticia_seq;
 
 create table oportunidade_rd (
-  id                            bigserial not null,
+  id                            bigint not null,
   codigo                        varchar(100) not null,
   nome                          varchar(200) not null,
   id_campo_custom               varchar(200) not null,
@@ -197,18 +212,20 @@ create table oportunidade_rd (
   data_cadastro                 timestamp not null,
   constraint pk_oportunidade_rd primary key (id)
 );
+create sequence oportunidade_rd_seq;
 
 create table pais (
-  id                            bigserial not null,
+  id                            bigint not null,
   nome                          varchar(200) not null,
   data_cadastro                 date not null,
   data_alteracao                date,
   constraint uq_pais_nome unique (nome),
   constraint pk_pais primary key (id)
 );
+create sequence pais_seq;
 
 create table publicacao (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(350) not null,
   resumo                        varchar(600) not null,
   url                           varchar(400),
@@ -223,9 +240,10 @@ create table publicacao (
   nome_arquivo                  varchar(400) not null,
   constraint pk_publicacao primary key (id)
 );
+create sequence publicacao_seq;
 
 create table site (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(250) not null,
   url                           varchar(400) not null,
   pais_id                       bigint,
@@ -233,6 +251,7 @@ create table site (
   data_alteracao                date,
   constraint pk_site primary key (id)
 );
+create sequence site_seq;
 
 create table token (
   token                         varchar(255) not null,
@@ -245,16 +264,17 @@ create table token (
 );
 
 create table token_api (
-  id                            bigserial not null,
+  id                            bigint not null,
   usuario_id                    bigint,
   codigo                        varchar(255),
   expiracao                     timestamp,
   constraint uq_token_api_usuario_id unique (usuario_id),
   constraint pk_token_api primary key (id)
 );
+create sequence token_api_seq;
 
 create table trabalho (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(350) not null,
   resumo                        varchar(600) not null,
   nome_arquivo                  varchar(400),
@@ -267,9 +287,10 @@ create table trabalho (
   url                           varchar(500),
   constraint pk_trabalho primary key (id)
 );
+create sequence trabalho_seq;
 
 create table usuario (
-  id                            bigserial not null,
+  id                            bigint not null,
   confirmacao_token             varchar(255),
   validado                      boolean,
   nome                          varchar(60) not null,
@@ -284,9 +305,10 @@ create table usuario (
   constraint uq_usuario_email unique (email),
   constraint pk_usuario primary key (id)
 );
+create sequence usuario_seq;
 
 create table video (
-  id                            bigserial not null,
+  id                            bigint not null,
   titulo                        varchar(250) not null,
   descricao                     varchar(400) not null,
   url_imagem                    varchar(400) not null,
@@ -296,6 +318,7 @@ create table video (
   nome_capa                     varchar(400) not null,
   constraint pk_video primary key (id)
 );
+create sequence video_seq;
 
 alter table artigo add constraint fk_artigo_idioma_id foreign key (idioma_id) references idioma (id) on delete restrict on update restrict;
 create index ix_artigo_idioma_id on artigo (idioma_id);
@@ -346,51 +369,74 @@ alter table token_api drop constraint if exists fk_token_api_usuario_id;
 alter table trabalho drop constraint if exists fk_trabalho_idioma_id;
 drop index if exists ix_trabalho_idioma_id;
 
-drop table if exists album cascade;
+drop table if exists album;
+drop sequence if exists album_seq;
 
-drop table if exists artigo cascade;
+drop table if exists artigo;
+drop sequence if exists artigo_seq;
 
-drop table if exists avaliacao cascade;
+drop table if exists avaliacao;
+drop sequence if exists avaliacao_seq;
 
-drop table if exists categoria cascade;
+drop table if exists categoria;
+drop sequence if exists categoria_seq;
 
-drop table if exists contato cascade;
+drop table if exists contato;
+drop sequence if exists contato_seq;
 
-drop table if exists curso cascade;
+drop table if exists curso;
+drop sequence if exists curso_seq;
 
-drop table if exists evento cascade;
+drop table if exists evento;
+drop sequence if exists evento_seq;
 
-drop table if exists foto cascade;
+drop table if exists foto;
+drop sequence if exists foto_seq;
 
-drop table if exists home cascade;
+drop table if exists home;
+drop sequence if exists home_seq;
 
-drop table if exists idioma cascade;
+drop table if exists idioma;
+drop sequence if exists idioma_seq;
 
-drop table if exists livro cascade;
+drop table if exists livro;
+drop sequence if exists livro_seq;
 
-drop table if exists log cascade;
+drop table if exists log;
+drop sequence if exists log_seq;
 
-drop table if exists marco cascade;
+drop table if exists marco;
+drop sequence if exists marco_seq;
 
-drop table if exists nota_tecnica cascade;
+drop table if exists nota_tecnica;
+drop sequence if exists nota_tecnica_seq;
 
-drop table if exists noticia cascade;
+drop table if exists noticia;
+drop sequence if exists noticia_seq;
 
-drop table if exists oportunidade_rd cascade;
+drop table if exists oportunidade_rd;
+drop sequence if exists oportunidade_rd_seq;
 
-drop table if exists pais cascade;
+drop table if exists pais;
+drop sequence if exists pais_seq;
 
-drop table if exists publicacao cascade;
+drop table if exists publicacao;
+drop sequence if exists publicacao_seq;
 
-drop table if exists site cascade;
+drop table if exists site;
+drop sequence if exists site_seq;
 
-drop table if exists token cascade;
+drop table if exists token;
 
-drop table if exists token_api cascade;
+drop table if exists token_api;
+drop sequence if exists token_api_seq;
 
-drop table if exists trabalho cascade;
+drop table if exists trabalho;
+drop sequence if exists trabalho_seq;
 
-drop table if exists usuario cascade;
+drop table if exists usuario;
+drop sequence if exists usuario_seq;
 
-drop table if exists video cascade;
+drop table if exists video;
+drop sequence if exists video_seq;
 
